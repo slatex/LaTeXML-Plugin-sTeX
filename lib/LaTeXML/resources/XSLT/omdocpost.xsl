@@ -49,15 +49,15 @@
 
 <!-- old <xsl:include href="graphics.xsl"/>, replaced by LaTeXML treatment -->
 <!-- old <xsl:include href="listings.xsl"/>, replaced by LaTeXML treatment -->
-<xsl:include href="LaTeXML/LaTeXML-common.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-misc-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-inline-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-block-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-para-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-tabular-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-picture-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-structure-xhtml.xsl"/>
-<xsl:include href="LaTeXML/LaTeXML-bib-xhtml.xsl"/>
+<xsl:include href="LaTeXML-common.xsl"/>
+<xsl:include href="LaTeXML-misc-xhtml.xsl"/>
+<xsl:include href="LaTeXML-inline-xhtml.xsl"/>
+<xsl:include href="LaTeXML-block-xhtml.xsl"/>
+<xsl:include href="LaTeXML-para-xhtml.xsl"/>
+<xsl:include href="LaTeXML-tabular-xhtml.xsl"/>
+<xsl:include href="LaTeXML-picture-xhtml.xsl"/>
+<xsl:include href="LaTeXML-structure-xhtml.xsl"/>
+<xsl:include href="LaTeXML-bib-xhtml.xsl"/>
 <!-- we specialize the begin mode hook (thanks Bruce), so that it copies over
      source references --> 
 <xsl:template match="*" mode="begin">
