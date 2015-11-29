@@ -1,14 +1,23 @@
-# -*- CPERL -*-
+# -*- mode: Perl -*-
+# /=====================================================================\ #
+# | sTeX implementation for LaTeXML (statements.sty)                    | #
+# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# |=====================================================================| #
+# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  This work may be distributed and/or modified under the conditions  | #
+# |  of the LaTeX Project Public License, either version 1.3 of this    | #
+# |  license or later; see http://www.latex-project.org/lppl.txt        | # 
+# |---------------------------------------------------------------------| #
+# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
+# | http://github.com/KWARC/sTeX                               (o o)    | #
+# \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 DefConditional('\if@defindex');
-DeclareOption('mh', sub {AssignValue('@statements' => 1,'global');
-     PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
-if(LookupValue('@statements')) {RequirePackage('statements-mh');}
 RequirePackage('omtext');
 sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}#$
 sub dashed { join('-',map($_->toString,@_));}#$
