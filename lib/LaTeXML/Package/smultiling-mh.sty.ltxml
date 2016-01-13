@@ -22,7 +22,7 @@ DefKeyVal('mhmodnl','path','Semiverbatim');
 DefKeyVal('mhmodnl','creators','Semiverbatim');
 DefKeyVal('mhmodnl','contributors','Semiverbatim');
 DefKeyVal('mhmodnl','primary','Semiverbatim');
-DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl {}{}',
+DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
          "?#excluded()(<omdoc:theory xml:id='#2.#3' >"
          .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
          .   "?&defined(&GetKeyVal(#1,'title'))(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
@@ -60,8 +60,8 @@ RawTeX('
 \begin{mhview}[id=#2,#1,ext=tex]{#3}{#4}\fi}
 {\end{mhview}}
 \newenvironment{mhviewnl}[5][]{\def\@test{#1}\ifx\@test\@empty%
-\begin{mhviewsketch}[id=#2.#5,ext=tex]{#3}{#4}\else%
-\begin{mhviewsketch}[id=#2.#5,#1,ext=tex]{#3}{#4}\fi}
+\begin{mhviewsketch}[id=#2.#3,ext=tex]{#4}{#5}\else%
+\begin{mhviewsketch}[id=#2.#3,#1,ext=tex]{#4}{#5}\fi}
 {\end{mhviewsketch}}
 ');
 1;
