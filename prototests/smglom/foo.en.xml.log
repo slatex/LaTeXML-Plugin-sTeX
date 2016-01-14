@@ -1,0 +1,67 @@
+(Loading profile /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/resources/Profiles/stex-module.opt... )
+(Loading profile /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/resources/Profiles/stex-module.opt... )
+
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/TeX.pool.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/eTeX.pool.ltxml... 0.00 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/pdfTeX.pool.ltxml... 0.00 sec) 0.12 sec)
+
+latexmlc (LaTeXML version 0.8.1 (KWARC fork); revision ffe9390)
+processing started Thu Jan 14 13:10:10 2016
+
+(Digesting TeX foo.en...
+(Processing content /home/maeder/kwarc/LaTeXML-Plugin-sTeX/prototests/smglom/post.tex...
+(Processing content /home/maeder/kwarc/LaTeXML-Plugin-sTeX/prototests/smglom/foo.en.tex...
+(Processing content /home/maeder/kwarc/LaTeXML-Plugin-sTeX/prototests/smglom/pre.tex...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/LaTeX.pool.ltxml... 0.16 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/smglom.cls.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/omdoc.cls.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/article.cls.ltxml... 0.01 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/omdoc.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/sref.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/metakeys.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/keyval.sty.ltxml... 0.00 sec) 0.01 sec) 0.01 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/xspace.sty.ltxml... 0.00 sec) 0.02 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/stex.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/stex-logo.sty.ltxml... 0.00 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/structview.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/modules.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/presentation.sty.ltxml... 0.01 sec) 0.02 sec) 0.03 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/statements.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/omtext.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/lxRDFa.sty.ltxml... 0.00 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/latexsym.sty.ltxml... 0.00 sec) 0.03 sec) 0.05 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/sproof.sty.ltxml... 0.01 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/cmath.sty.ltxml... 0.01 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/dcm.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/rdfmeta.sty.ltxml... 0.01 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/workaddress.sty.ltxml... 0.01 sec) 0.03 sec) 0.15 sec) 0.20 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/smglom.sty.ltxml...
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/smultiling.sty.ltxml... 0.02 sec) 0.04 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/amstext.sty.ltxml... 0.00 sec)
+(Loading /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/Package/amsfonts.sty.ltxml... 0.00 sec) 0.27 sec) 0.44 sec)
+Error:missing_file:test Can't find definitions test
+	/home/maeder/kwarc/LaTeXML-Plugin-sTeX/prototests/smglom/foo.en.tex#textrange(from=1;0,to=1;38)
+	search paths are /home/maeder/kwarc/LaTeXML-Plugin-sTeX/prototests/smglom
+	Next token is T_CS[\end@module@scope]
+	In Core::Definition::Constructor[\begin{... from smultiling.sty.ltxml line 69
+	 <= Core::Stomach[@0x2f5d1b0] <= Core::Definition::Constructor[\begin{... <= Core::Stomach[@0x2f5d1b0] <= ...
+ 0.55 sec) 0.55 sec) 0.55 sec)
+(Building...
+(Loading compiled schema /var/data/localmh/ext/perl5lib/lib/perl5/LaTeXML/resources/RelaxNG/omdoc+ltxml.model... 0.03 sec). 0.11 sec)
+(Rewriting... 0.00 sec)
+(Math Parsing...1 formulae ...[1]
+Math parsing succeeded:
+   ltx:XMath: 1/1
+ 0.00 sec)
+(Finalizing... 0.00 sec)
+Conversion complete: 1 error; 1 missing file[test.tex].
+
+(post-processing...
+(Scan foo.en.xml processing... 0.00 sec)
+(CrossRef foo.en.xml processing... 0.00 sec)
+(XMath[w/OpenMath+MathML::Presentation] foo.en.xml processing... 0.00 sec)
+(XSLT[using omdocpost.xsl] foo.en.xml processing... 0.00 sec)
+(Writer foo.en.xml processing... 0.00 sec) 0.00 sec)
+Post-processing complete: No obvious problems
+processing finished Thu Jan 14 13:10:11 2016
+Status:conversion:2 
