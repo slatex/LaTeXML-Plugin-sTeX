@@ -2,9 +2,10 @@ This directory contains the sTeX schema for intermediate files
 
 odmoc+ltxml.rnc     the schema integration
 omdoc		    	the omdoc schema
-LaTeXML			the LaTeXML schema
+LaTeXML			the LaTeXML schema (&-optimized version to be compatible with omdoc.rnc)
 LaTeXML.rnc       	a local copy of LaTeXML/LaTeXML.rnc but without URN referencing
 schemas.xml		reference this in the emacs nxml schema locating files. 
 README			this file
 
-the rest of the files are experimental, and are not used in production (yet). 
+The LaTeXML transformation really only needs omdoc+ltxml.model which is generated
+by compileSchema-omdoc+ltxml.pl from the *.rng made from the *.rnc.
