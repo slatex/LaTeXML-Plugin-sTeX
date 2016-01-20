@@ -33,7 +33,13 @@ tabular_attributes =
   attribute vattach { "top" | "middle" | "bottom" }? &
 
   ## the desired width of the tabular.
-  attribute width { Length.type }?
+  attribute width { Length.type }? &
+
+  ## the spacing between rows
+  attribute rowsep { Length.type}? &
+
+  ## the spacing between columns
+  attribute colsep { Length.type}?
 
 ### MiKo: this can be tightened. Is it really true that we have more than one body?
 ## Content model for \elementref{tabular}.
@@ -123,8 +129,9 @@ td_attributes =
   ## for borders or doubled borders on any side of the cell.
   attribute border { text }? &
 
-  ## whether this cell corresponds to a table head or foot.
-  attribute thead {xsd:boolean}?
+  ## whether this cell corresponds to a table row or column heading or both
+  ## (whether in head or foot).
+  attribute thead { "column" | "column row" | "row"}?
 
 ## Content model for \elementref{td}.
 td_model =  Flow.model

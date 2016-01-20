@@ -58,6 +58,7 @@ Math_attributes =
 Math_model =   Math.class
 
 #======================================================================
+## Common attributes for the various XMath elements.
 XMath.attributes =
 
   ## The role that this item plays in the Grammar.
@@ -186,7 +187,8 @@ element XMApp { XMApp_attributes & XMApp_model }
 XMApp_attributes = 
   Common.attributes & 
   XMath.attributes & 
-  ID.attributes & 
+  ID.attributes &
+  Colorable.attributes & 
   Backgroundable.attributes &
 
   ## The name of the token, typically the control sequence that created it.
@@ -284,6 +286,9 @@ XMWrap_attributes =
   Backgroundable.attributes &
   ID.attributes &
 
+  ## The grammatical rule that should apply to the contained sequence
+  attribute rule { text }? &
+
   attribute name { text }? &
 
   ## A more semantic name corresponding to the intended meaning,
@@ -314,6 +319,8 @@ XMArg_attributes =
   Common.attributes & 
   XMath.attributes & 
   ID.attributes & 
+
+  ## The grammatical rule that should apply to the contained sequence
   attribute rule { text }? &
 
   ## An encoding of the position of this token as a sub/superscript, used
@@ -365,11 +372,16 @@ XMArray_attributes =
   attribute omcd { text }? &
 
   ## which row's baseline aligns with the container's baseline.
-  attribute vattach { "top" | "middle" | "bottom" }? &
+  attribute vattach { "top" | "middle" | "bottom"  | "baseline" }? &
 
   ## the desired width of the array.
   attribute width { Length.type }?
 
+  ## the spacing between rows
+  attribute rowsep { Length.type}? & 
+
+  ## the spacing between columns
+  attribute colsep { Length.type}?
 
 ## Content model for \elementref{XMArray}.
 XMArray_model = XMRow*
@@ -418,8 +430,8 @@ XMCell_attributes =
   ## for borders or doubled borders on any side of the cell.
   attribute border { text }? &
 
-  ## whether this cell corresponds to a table head or foot.
-  attribute thead {xsd:boolean}?
+  ## whether this cell corresponds to a table row or column heading or both
+  attribute thead { "column" | "column row" | "row"}?
 
 ## Content model for \elementref{XMCell}.
 XMCell_model =   XMath.class

@@ -81,7 +81,9 @@ element proof { proof_attributes &  proof_model }
 proof_attributes =
   Common.attributes &
   Labelled.attributes &
-  Backgroundable.attributes
+  Backgroundable.attributes &
+  ## raw data related to the proof
+  attribute data { text }?
 
 ## Content model for \elementref{proof}.
 proof_model = title? & Para.model
@@ -109,11 +111,13 @@ figure_attributes =
   Backgroundable.attributes &
 
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }?
+  attribute placement { text }? &
+  ## raw data related to the figure
+  attribute data { text }?
 
 ### MiKo: only allowing one caption, is this right? same for table, float, and listing below
-## Content model for \elementref{figure}.
-figure_model = figure* & Block.model & Caption.class
+## Content model for \elementref{figure}; allow nested figures, etc for "sub" floats.
+figure_model = figure* & table* & float* & Block.model & Caption.class
 
 #======================================================================
 
@@ -130,10 +134,12 @@ table_attributes =
   Backgroundable.attributes &
 
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }?
+  attribute placement { text }? &
+  ## raw data related to the table; perhaps csv?
+  attribute data { text }?
 
 ## Content model for \elementref{table}.
-table_model = table* & Block.model & Caption.class
+table_model = table* & figure* & float* & Block.model & Caption.class
 
 #======================================================================
 
@@ -150,10 +156,12 @@ float_attributes =
   Backgroundable.attributes &
 
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }?
+  attribute placement { text }? &
+  ## raw data related to the float
+  attribute data { text }?
 
 ## Content model for \elementref{float}.
-float_model = float* & Block.model & Caption.class
+float_model = float* & figure* & table* & Block.model & Caption.class
 
 #======================================================================
 
@@ -168,7 +176,9 @@ listing_attributes =
   Positionable.attributes & 
   Backgroundable.attributes &
   ## the floating placement parameter that determines where the object is displayed.
-  attribute placement { text }?
+  attribute placement { text }? &
+  ## raw data related to the float; presumably the unformatted listing itself
+  attribute data { text }?
 
 ## Content model for \elementref{listing}.
 listing_model = Block.model  &  Caption.class
