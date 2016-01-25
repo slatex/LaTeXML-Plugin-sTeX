@@ -48,6 +48,7 @@ DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
         $keyval->setValue('load',$load_path); }
       # Always load a TeX file
       $keyval->setValue('ext','tex');
+      AssignValue('modnl_signature',$signature); 
       $keyval->setValue('id',"$signature.$language"); }
     module_afterDigestBegin(@_);
     importmoduleI(@_);
