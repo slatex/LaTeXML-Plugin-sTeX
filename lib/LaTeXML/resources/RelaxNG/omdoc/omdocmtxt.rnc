@@ -58,7 +58,7 @@ declaration.attribs = id.attribs & role.attrib & name.attrib
 declaration.model = text & inline.class &  identifiers* & restriction* 
 declaration= element declaration {tref|(declaration.attribs & declaration.model)}
 
-identifiers.attribs = id.attribs & attribute ref {omdocrefs}
+identifiers.attribs = id.attribs & attribute refs {omdocrefs}
 identifiers.model = text & inline.class &  identifiers* & restriction* 
 identifiers= element identifiers {tref|(identifiers.attribs & identifiers.model)}
 

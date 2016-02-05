@@ -240,5 +240,5 @@ DefConstructor('\@ogre',"\x{2B3F}");
 # experimental
 DefConstructor('\vdec {}',"<omdoc:declaration>#1</omdoc:declaration>");
 DefConstructor('\vids []{}',"<omdoc:identifiers refs='#1'>#2</omdoc:identifiers>");
-DefConstructor('\vrest [] {}',"<omdoc:restrition for='#1'>#2</omdoc:restriction>");
+DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction>");
 1;
