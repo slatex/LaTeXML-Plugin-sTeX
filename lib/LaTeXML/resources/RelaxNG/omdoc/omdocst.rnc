@@ -14,13 +14,13 @@ sym.role.attrib = attribute role {"type" | "sort" | "object" |
 theory-unique  = xsd:NCName 
 scope.attrib = attribute scope {"global" | "local"}?
 symbol.attribs = scope.attrib & 
-                         attribute name {theory-unique}? & 
+                         name.attrib & 
 	  		 constitutive.attribs & 
           	         sym.role.attrib? 
 symbol.model = metadata.class & type*
 symbol = element symbol {tref|(symbol.attribs & symbol.model)}
 
-forname.attrib = attribute for {list {xsd:anyURI}}
+forname.attrib = attribute for {list {xsd:anyURI+}}
 axiom.attribs = constitutive.attribs & forname.attrib & attribute type {xsd:string}?
 axiom.model = metadata.class & mcf.class
 axiom = element axiom {tref|(axiom.attribs & axiom.model)}
