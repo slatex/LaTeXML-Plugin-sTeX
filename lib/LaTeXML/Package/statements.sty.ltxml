@@ -129,12 +129,6 @@ sub definitionBody {
     my $for = $keyvals->getValue('for') if $keyvals;
     my $type = $keyvals->getValue('type') if $keyvals;
     my %for_attr=();
-    if (ToString($for)) {
-      $for = ToString($for);
-      $for =~ s/^{(.+)}$/$1/eg;
-      foreach (split(/,\s*/,$for)) {
-        $for_attr{$_}=1;
-    }}
     if ($props{theory}) {
       my @symbols = @{$props{defs} || []};
       my $signature = $props{signature};
