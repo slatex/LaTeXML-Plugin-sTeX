@@ -24,6 +24,7 @@ DefKeyVal('view','id','Semiverbatim');
 DefKeyVal('view','from','Semiverbatim');
 DefKeyVal('view','to','Semiverbatim');
 DefKeyVal('view','title','Semiverbatim');
+DefKeyVal('view','type','Semiverbatim');
 DefKeyVal('view','creators','Semiverbatim');
 DefKeyVal('view','contributors','Semiverbatim');
 DefKeyVal('view','display','Semiverbatim');
@@ -45,6 +46,7 @@ DefMacroI(T_CS('\begin{view}'),'OptionalKeyVals:view {}{}', sub {
 DefMacroI('\end{view}',undef,'\end{viewenv}');
 DefEnvironment('{viewenv} OptionalKeyVals:view {}{}',
    "<omdoc:theory-inclusion from='#2' to='#3'"
+  .      " ?&defined(&GetKeyVal(#1,'type'))(type='&GetKeyVal(#1,'type')')()"
   .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
   .  "<omdoc:morphism>#body</omdoc:morphism>"
   ."</omdoc:theory-inclusion>");

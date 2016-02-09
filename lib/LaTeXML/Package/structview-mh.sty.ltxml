@@ -30,6 +30,7 @@ DefKeyVal('mhview','creators','Semiverbatim');
 DefKeyVal('mhview','contributors','Semiverbatim');
 DefKeyVal('mhview','srccite','Semiverbatim');
 DefKeyVal('mhview','title','Semiverbatim');
+DefKeyVal('mhview','type','Semiverbatim');
 DefKeyVal('mhview','fromrepos','Semiverbatim');
 DefKeyVal('mhview','torepos','Semiverbatim');
 DefKeyVal('mhview','frompath','Semiverbatim');
