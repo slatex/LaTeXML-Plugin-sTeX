@@ -21,6 +21,7 @@ DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 RequirePackage('omtext');
+RequirePackage('latexml');## we should not use this, but only \lxDeclare 
 
 sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}#$
 sub dashed { join('-',map($_->toString,@_));}#$
