@@ -21,6 +21,7 @@ DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 RequirePackage('omtext');
+RequirePackage('latexml');## we should not use this, but only \lxDeclare 
 
 sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}#$
 sub dashed { join('-',map($_->toString,@_));}#$
@@ -129,12 +130,6 @@ sub definitionBody {
     my $for = $keyvals->getValue('for') if $keyvals;
     my $type = $keyvals->getValue('type') if $keyvals;
     my %for_attr=();
-    if (ToString($for)) {
-      $for = ToString($for);
-      $for =~ s/^{(.+)}$/$1/eg;
-      foreach (split(/,\s*/,$for)) {
-        $for_attr{$_}=1;
-    }}
     if ($props{theory}) {
       my @symbols = @{$props{defs} || []};
       my $signature = $props{signature};

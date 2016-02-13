@@ -90,4 +90,8 @@ DefMacro('\anappe[]{}{}{}',    '\@anapp@seq[#1]{#2}{#3}{#4}');
 DefMacro('\anappf[]{}{}{}{}',  '\@anapp@seq[#1]{#2}{#3{#4}}{#3{#5}}');
 DefMacro('\anappli[]{}{}{}{}', '\@anapp@seq[#1]{#2}{#3_{#4}}{#3_{#5}}');
 DefMacro('\anappui[]{}{}{}{}', '\@anapp@seq[#1]{#2}{#3^{#4}}{#3^{#5}}');
+
+# copied over from latexml.sty.ltxml (we do not want the rest).
+DefMacro('\LXMID{}{}', '\@XMArg{#1}{#2}');
+DefMacro('\LXMRef{}', '\@XMRef{#1}');
 1;
