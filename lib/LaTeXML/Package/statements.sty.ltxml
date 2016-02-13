@@ -159,7 +159,7 @@ sub definitionBody {
       $doc->openElement('dc:title');
       $doc->absorb($title);
       $doc->closeElement('dc:title');}
-   if ($doc->isCloseable('omdoc:CMP')) { $doc->openElement('omdoc:CMP'); }
+   if (!$doc->isCloseable('omdoc:definition')) { $doc->openElement('omdoc:CMP'); }
    $doc->absorb($props{body}) if $props{body};
    $doc->maybeCloseElement('omdoc:CMP');
     if ($props{theory}) {
