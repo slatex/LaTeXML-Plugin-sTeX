@@ -292,7 +292,6 @@ DefConstructor('\inlinedef OptionalKeyVals:omtext {}', sub {
  #Prepare for symbol insertion -insert before the parent of the closest ancestor CMP element
  my $original_node = $document->getNode;
  my $statement_ancestor = $document->findnode('../omdoc:omtext[1] | ../omdoc:assertion[1] | ../omdoc:axiom[1]', $original_node);
- warn "hui";
  foreach my $symb(@symbols) {
    next if $for_attr{$symb};
    $for_attr{$symb}=1;
