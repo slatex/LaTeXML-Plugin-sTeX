@@ -14,6 +14,7 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+use Data::Dumper;
 
 DefConditional('\if@defindex');
 
@@ -290,7 +291,8 @@ DefConstructor('\inlinedef OptionalKeyVals:omtext {}', sub {
  my @symbols = @{$props{defs} || []};
  #Prepare for symbol insertion -insert before the parent of the closest ancestor CMP element
  my $original_node = $document->getNode;
- my $statement_ancestor = $document->findnode('./ancestor::omdoc:CMP/..', $original_node);
+ my $statement_ancestor = $document->findnode('../omdoc:omtext[1] | ../omdoc:assertion[1] | ../omdoc:axiom[1]', $original_node);
+ warn "hui";
  foreach my $symb(@symbols) {
    next if $for_attr{$symb};
    $for_attr{$symb}=1;
