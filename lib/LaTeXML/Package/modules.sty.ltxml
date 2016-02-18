@@ -39,6 +39,7 @@ ProcessOptions();
 if(LookupValue('@modules')) {RequirePackage('modules-mh');}		
 RequirePackage('presentation'); # for \@use
 RequirePackage('sref'); # for being synchronous with LaTeX
+RequirePackage('pathsuris'); # for path handling
 
 # =======================================================
 # 0. Introduce parameters:                              #
@@ -67,18 +68,6 @@ DefMacro('\@mark@symdef@scope',sub {AssignValue('symdef_scope'=>
             (LookupValue('symdef_scope')||0)+1)});
 DefMacro('\@unmark@symdef@scope',sub {AssignValue('symdef_scope'=>
             (LookupValue('symdef_scope')||0)-1)});
-DefMacro('\defpath[]{}{}', sub {
-   my ($gullet,$arg1,$arg2,$arg3)=@_;
-   $arg2 = ToString($arg2);
-   $arg3 = ToString($arg3);
-   $arg3 =~ s/(\/+)$//g;
-   $arg3 .= '/';
-   my $paths = LookupValue('defpath')||{};
-   $paths->{$arg2}=$arg3;
-   AssignValue('defpath'=>$paths,'global');
-   DefMacro('\\'.$arg2.' Semiverbatim',$arg3."#1");
- });
-
 # =======================================================
 # 2. Core Modules functionality:                        #
 # =======================================================
