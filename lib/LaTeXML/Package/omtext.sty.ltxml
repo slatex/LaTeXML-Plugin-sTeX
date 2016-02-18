@@ -57,7 +57,7 @@ DefEnvironment('{omtext} OptionalKeyVals:omtext',
   . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
   .     "?&GetKeyVal(#1,'start')(<ltx:text class='startemph'>&GetKeyVal(#1,'start')</ltx:text>)()"
                   .     "#body"
-                 ."</omdoc:omtext>");
+                 ."</omdoc:omtext>",  afterDigestBegin=>\&declareFunctions,);
 DefKeyVal('phrase','id','Semiverbatim');
 DefKeyVal('phrase','style','Semiverbatim');
 DefKeyVal('phrase','class','Semiverbatim');
