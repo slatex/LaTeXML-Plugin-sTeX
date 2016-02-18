@@ -1,0 +1,38 @@
+# -*- mode: Perl -*-
+# /=====================================================================\ #
+# | sTeX implementation for LaTeXML (pathsuris.sty)                     | #
+# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# |=====================================================================| #
+# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  This work may be distributed and/or modified under the conditions  | #
+# |  of the LaTeX Project Public License, either version 1.3 of this    | #
+# |  license or later; see http://www.latex-project.org/lppl.txt        | # 
+# |---------------------------------------------------------------------| #
+# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
+# | http://github.com/KWARC/sTeX                               (o o)    | #
+# \=========================================================ooo==U==ooo=/ #
+package LaTeXML::Package::Pool;
+use strict;
+use LaTeXML::Package;
+use LaTeXML::Util::Pathname;
+use Cwd qw(abs_path);
+ProcessOptions();
+DefMacro('\baseURI []Semiverbatim', sub {
+   my $baselocal = ToString(Digest($_[1]));
+   $baselocal = abs_path($baselocal) unless $baselocal=~/^(\w+):\/\//;
+   AssignValue('BASELOCAL'=>$baselocal,'global');
+   AssignValue('URLBASE'=>ToString(Digest($_[2])),'global');
+ });
+
+DefMacro('\defpath[]{}{}', sub {
+   my ($gullet,$arg1,$arg2,$arg3)=@_;
+   $arg2 = ToString($arg2);
+   $arg3 = ToString($arg3);
+   $arg3 =~ s/(\/+)$//g;
+   $arg3 .= '/';
+   my $paths = LookupValue('defpath')||{};
+   $paths->{$arg2}=$arg3;
+   AssignValue('defpath'=>$paths,'global');
+   DefMacro('\\'.$arg2.' Semiverbatim',$arg3."#1");
+ });
+1;
