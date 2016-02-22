@@ -1,0 +1,16 @@
+\begin{module}[id=foo]
+\symdef{bar}{bar^x}
+\end{module}
+
+\begin{omgroup}{foo}
+\begin{module}
+ This is a new test!
+\end{module}
+\end{omgroup}
+
+\begin{module}[id=hello]
+\importmodule{foo}
+\begin{omgroup}[id=newGroup, loadmodules]{myFoo $\protect\bar$}
+ This is a new test! Hi there.
+\end{omgroup}
+\end{module}

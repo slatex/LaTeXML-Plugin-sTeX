@@ -220,6 +220,7 @@ TO_INST_PM = lib/LaTeXML/Package/cmath.sty.ltxml \
 	lib/LaTeXML/Package/tikzinput-mh.sty.ltxml \
 	lib/LaTeXML/Package/tikzinput.sty.ltxml \
 	lib/LaTeXML/Package/workaddress.sty.ltxml \
+	lib/LaTeXML/Test.pm \
 	lib/LaTeXML/resources/Profiles/stex-migration.opt \
 	lib/LaTeXML/resources/Profiles/stex-module.opt \
 	lib/LaTeXML/resources/Profiles/stex-omdoc-modules.opt \
@@ -356,7 +357,7 @@ TO_INST_PM = lib/LaTeXML/Package/cmath.sty.ltxml \
 	lib/LaTeXML/resources/XSLT/omdocpost.xsl \
 	lib/LaTeXML/resources/XSLT/owl2post.xsl \
 	lib/LaTeXML/resources/XSLT/symbols.xsl \
-	lib/LaTeXML/resources/XSLT/test.xsl
+	lib/sTeXTest.pm
 
 PM_TO_BLIB = lib/LaTeXML/Package/cmath.sty.ltxml \
 	blib/lib/LaTeXML/Package/cmath.sty.ltxml \
@@ -428,6 +429,8 @@ PM_TO_BLIB = lib/LaTeXML/Package/cmath.sty.ltxml \
 	blib/lib/LaTeXML/Package/tikzinput.sty.ltxml \
 	lib/LaTeXML/Package/workaddress.sty.ltxml \
 	blib/lib/LaTeXML/Package/workaddress.sty.ltxml \
+	lib/LaTeXML/Test.pm \
+	blib/lib/LaTeXML/Test.pm \
 	lib/LaTeXML/resources/Profiles/stex-migration.opt \
 	blib/lib/LaTeXML/resources/Profiles/stex-migration.opt \
 	lib/LaTeXML/resources/Profiles/stex-module.opt \
@@ -700,8 +703,8 @@ PM_TO_BLIB = lib/LaTeXML/Package/cmath.sty.ltxml \
 	blib/lib/LaTeXML/resources/XSLT/owl2post.xsl \
 	lib/LaTeXML/resources/XSLT/symbols.xsl \
 	blib/lib/LaTeXML/resources/XSLT/symbols.xsl \
-	lib/LaTeXML/resources/XSLT/test.xsl \
-	blib/lib/LaTeXML/resources/XSLT/test.xsl
+	lib/sTeXTest.pm \
+	blib/lib/sTeXTest.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -983,7 +986,7 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
+	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -1416,6 +1419,7 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  lib/LaTeXML/Package/tikzinput-mh.sty.ltxml blib/lib/LaTeXML/Package/tikzinput-mh.sty.ltxml \
 	  lib/LaTeXML/Package/tikzinput.sty.ltxml blib/lib/LaTeXML/Package/tikzinput.sty.ltxml \
 	  lib/LaTeXML/Package/workaddress.sty.ltxml blib/lib/LaTeXML/Package/workaddress.sty.ltxml \
+	  lib/LaTeXML/Test.pm blib/lib/LaTeXML/Test.pm \
 	  lib/LaTeXML/resources/Profiles/stex-migration.opt blib/lib/LaTeXML/resources/Profiles/stex-migration.opt \
 	  lib/LaTeXML/resources/Profiles/stex-module.opt blib/lib/LaTeXML/resources/Profiles/stex-module.opt \
 	  lib/LaTeXML/resources/Profiles/stex-omdoc-modules.opt blib/lib/LaTeXML/resources/Profiles/stex-omdoc-modules.opt \
@@ -1552,7 +1556,7 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  lib/LaTeXML/resources/XSLT/omdocpost.xsl blib/lib/LaTeXML/resources/XSLT/omdocpost.xsl \
 	  lib/LaTeXML/resources/XSLT/owl2post.xsl blib/lib/LaTeXML/resources/XSLT/owl2post.xsl \
 	  lib/LaTeXML/resources/XSLT/symbols.xsl blib/lib/LaTeXML/resources/XSLT/symbols.xsl \
-	  lib/LaTeXML/resources/XSLT/test.xsl blib/lib/LaTeXML/resources/XSLT/test.xsl 
+	  lib/sTeXTest.pm blib/lib/sTeXTest.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

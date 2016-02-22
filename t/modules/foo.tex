@@ -1,0 +1,16 @@
+\begin{module}[id=foo]
+  \symdef[name=new]{helloOp}{HELLO}
+  \symvariant{helloOp}{help}{NONONONON}
+   This is going to be fun $ \helloOp $
+   Maybe again $ \helloOp{help} $
+\end{module}
+
+\begin{module}[id=newMod]
+\importmodule{foo}
+ Try somehting new $ \helloOp$.
+\end{module}
+
+\begin{omtext}
+  \usemodule{foo}
+   We $ \helloOp $ believesefasd.
+\end{omtext}
