@@ -42,8 +42,6 @@ sub importMHmoduleI {
     $keyval->setValue('load',$load_path);
     AssignValue('current_repos' => $repos, 'global');
     importmoduleI($stomach,$whatsit);
-    my $theoryURI = $repos.'/'.$path;
-    AssignValue('theoryURI' => $theoryURI, 'global');
     AssignValue('current_repos' => $current_repos, 'global'); }
   else {
     importmoduleI($stomach,$whatsit);  }
