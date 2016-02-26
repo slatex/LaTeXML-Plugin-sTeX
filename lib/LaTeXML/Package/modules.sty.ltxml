@@ -91,7 +91,7 @@ sub module_afterDigestBegin {
   $module_paths->{$id} = LookupValue('last_module_path');
   AssignValue('module_paths', $module_paths, 'global');
   # 3. Update the current module reference
-  AssignValue(current_module => $id);
+  AssignValue(current_module => $id, 'global');
   AssignValue(module_cd => $cd);
   # 4. Activate the module in our current scope
   $STATE->activateScope("module:".$id);
@@ -106,7 +106,24 @@ sub module_afterDigest {
    # (after)7. Move a step up on the module ancestry
    AssignValue("parent_module" => LookupValue("parent_of_".LookupValue("parent_module")));
    return; }
-
+sub module_afterConstruct {
+      my($stomach, $whatsit)=@_;
+      # (after)8. Provdie theory URI after the first \end{module} in the log
+      if (!LookupValue("if_uris_exported")){
+	my $location = $whatsit->getProperty('locator');
+	$location = substr($location, 0, index($location, '.'));
+	my $module_paths = LookupValue("module_paths");
+	my $math_index = index $location, "MathHub";
+	$location =  substr $location, $math_index+8, length($location)-length($math_index)-8;
+	my @theory_uris = keys % { $module_paths };
+	foreach my $theory_uri ( @theory_uris){
+	    $theory_uri = $location . '?' . $theory_uri;
+	    Info("provides theory", undef, undef, $theory_uri); 
+	}
+	# Only export uris once
+	AssignValue("if_uris_exported" => 1, 'global');
+    }  
+   return; }
 DefEnvironment('{module} OptionalKeyVals:Module',
          "?#excluded()(<omdoc:theory"
          . "?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
@@ -116,7 +133,8 @@ DefEnvironment('{module} OptionalKeyVals:Module',
          .   "#body"
          . "</omdoc:theory>)",
  afterDigestBegin=>\&module_afterDigestBegin,
- afterDigest =>\&module_afterDigest);
+ afterDigest =>\&module_afterDigest,
+ afterConstruct => \&module_afterConstruct);
 
 DefConstructor('\usemodule OptionalKeyVals:importmodule Semiverbatim',
    "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
