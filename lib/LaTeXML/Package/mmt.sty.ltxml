@@ -1,0 +1,39 @@
+# -*- mode: Perl -*-
+# /=====================================================================\ #
+# | sTeX implementation for LaTeXML (mmt.sty)                           | #
+# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# |=====================================================================| #
+# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  This work may be distributed and/or modified under the conditions  | #
+# |  of the LaTeX Project Public License, either version 1.3 of this    | #
+# |  license or later; see http://www.latex-project.org/lppl.txt        | # 
+# |---------------------------------------------------------------------| #
+# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
+# | http://github.com/KWARC/sTeX                               (o o)    | #
+# \=========================================================ooo==U==ooo=/ #
+package LaTeXML::Package::Pool;
+use strict;
+use LaTeXML::Package;
+use Data::Dumper;
+use Cwd qw(abs_path);
+
+sub mmt_afterDigest{
+	my($stomach, $whatsit)=@_;
+	my $location = $whatsit->getProperty('locator');
+	my ($fileName) = ($location =~ m!^.*\/(.*?)\.tex!);
+	AssignValue('fileName' => $fileName, 'global');
+	# Set the mmt counter
+	my $mmtNum = LookupValue('mmtNum')? LookupValue('mmtNum') : 1 ;
+	my $mmtRef = $fileName. '#MMT'.$mmtNum;
+	AssignValue('mmtNum' => $mmtNum + 1, 'global');
+	AssignValue('mmtRef' => $mmtRef, 'global');
+	return;
+}
+
+DefEnvironment('{mmt}',
+	'<omdoc:oref  '.
+	"?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
+	"<ltx:text class ='mmt'>#body</ltx:text>",
+	afterDigest=> \&mmt_afterDigest);
+	
+1;
