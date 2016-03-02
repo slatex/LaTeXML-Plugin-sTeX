@@ -1,13 +1,7 @@
 <?xml version="1.0"?>
 
-   //foo#MMT1
-a : b = c
-
-   //end foo#MMT1
-<?xml version="1.0"?>
-
   theory bar
   include ?bar
     //foo#MMT1
 a : b = c
-   //end 
+   //end foo#MMT1

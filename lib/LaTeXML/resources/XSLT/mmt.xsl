@@ -45,7 +45,10 @@
 <xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
   <xsl:param name = "moduleName"  />
   <xsl:value-of select="normalize-space(.)"/>
-   //end <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
+   //end <xsl:value-of
+   select="../../preceding-sibling::omdoc:oref[1]/@href" />
+   <!-- When importmodule exists -->
+   <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
 </xsl:template >
 
 <!-- If find oref, store the crossref-->
