@@ -33,20 +33,33 @@
 <xsl:output method="xml" indent="yes" cdata-section-elements="data"/>
 
 <!-- Remove everything until a match -->
-<xsl:template match="* | node()">
-  <xsl:apply-templates select="* | node()"/>
+<xsl:template match="@* | node()">
+  <xsl:apply-templates select="@* | node()"/>
 </xsl:template>
+
+<!-- Ignore text content of nodex -->
+  <xsl:template match="text()" />
+  <xsl:template match="text()" mode="mmt" />
 
 <!-- If find mmt, copy over -->
 <xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
   <xsl:param name = "moduleName"  />
-  <xsl:value-of select="."/>
+  <xsl:value-of select="normalize-space(.)"/>
    //end <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
 </xsl:template >
 
-<!-- If find oref, stove the crossref-->
+<!-- If find oref, store the crossref-->
 <xsl:template match="omdoc:oref" >
-   //<xsl:value-of select="@href" />
+    <xsl:apply-templates select="preceding-sibling::*" mode="mmt"/>
+    //<xsl:value-of select="@href" />
+    <xsl:text>&#xa;</xsl:text>
 </xsl:template >
+
+<xsl:template match="omdoc:imports" mode="mmt">
+  theory <xsl:value-of select="substring-after(@from, '#')" />
+  include ?<xsl:value-of select="substring-after(@from, '#')" />
+</xsl:template>
+
+
 
 </xsl:stylesheet>
