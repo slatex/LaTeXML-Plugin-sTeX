@@ -17,6 +17,14 @@ use LaTeXML::Package;
 use Data::Dumper;
 use Cwd qw(abs_path);
 
+DefKeyVal('mmt@env', 'name', 'Semiverbatim');
+DefKeyVal('mmt@ref', 'path', 'Semiverbatim');
+
+DefMacro('\mmtr {}', '');
+DefMacro('\mmt {}', '');
+
+DefConstructor('\MMTref OptionalKeyVals:mmt@ref {}', '');
+
 sub mmt_afterDigest{
 	my($stomach, $whatsit)=@_;
 	my $location = $whatsit->getProperty('locator');
@@ -30,7 +38,7 @@ sub mmt_afterDigest{
 	return;
 }
 
-DefEnvironment('{mmt}',
+DefEnvironment('{mmt} OptionalKeyVals:mmt@env',
 	'<omdoc:oref  '.
 	"?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
 	"<ltx:text class ='mmt'>#body</ltx:text>",

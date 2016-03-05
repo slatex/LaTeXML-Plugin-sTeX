@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+  theory semigroup
+  include ?semigroup
+    //foo#MMT1
+
+neut : G # e
+eunit : ded (forall [x] x + e = x + e = e)
+
+   //end foo#MMT1

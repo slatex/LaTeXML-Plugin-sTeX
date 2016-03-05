@@ -22,7 +22,8 @@
      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
      -->
 
-<!-- this styilesheet selects all the embedded MMT elements  -->
+<!-- this styilesheet remove all the embedded MMT elements  -->
+
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -35,35 +36,14 @@
 
 <xsl:output method="xml" indent="yes" cdata-section-elements="data" />
 
-<!-- Remove everything until a match -->
-<xsl:template match="@* | node()">
-  <xsl:apply-templates select="@* | node()" />
+<!-- the fallback (mostly for LaTeXML-generated XHTML: 
+     copy the whole thing recursively, until there is something to do -->
+<xsl:template match="*">
+  <xsl:copy><xsl:apply-templates select="*|@*|text()"/></xsl:copy>
 </xsl:template>
+<xsl:template match="@*"><xsl:copy-of select="."/></xsl:template>
 
-<!-- Ignore text content of nodex -->
-  <xsl:template match="text()" />
-  <xsl:template match="text()" mode="mmt" />
-
-<!-- If find mmt, copy over -->
-<xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
-  <xsl:param name = "moduleName"  />
-  <xsl:value-of select="." />
-   //end <xsl:value-of
-   select="../../preceding-sibling::omdoc:oref[1]/@href" />
-   <!-- When importmodule exists -->
-   <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
-</xsl:template >
-
-<!-- If find oref, store the crossref-->
-<xsl:template match="omdoc:oref" >
-    <xsl:apply-templates select="preceding-sibling::*" mode="mmt" />
-    //<xsl:value-of select="@href" />
-    <xsl:text>&#xa;</xsl:text>
-</xsl:template >
-
-<xsl:template match="omdoc:imports" mode="mmt">
-  theory <xsl:value-of select="substring-after(@from, '#')" />
-  include ?<xsl:value-of select="substring-after(@from, '#')" />
-</xsl:template>
+<!-- If find mmt, remove-->
+<xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" />
 
 </xsl:stylesheet>
