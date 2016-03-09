@@ -12,12 +12,10 @@ install:
 script:
  - export PATH=`pwd`/perl5/bin:$PATH
  - cpanm https://github.com/KWARC/LaTeXML.git
- - cpanm .
+ - cpanm . -v
  - cd prototests/smglom
  - rm -f *.xml
  - make
  - cd ../cds
  - make
 
-after_failure:
- - cat /home/travis/.cpanm/work/1457523407.10207/build.log
