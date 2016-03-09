@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 use XML::LibXML;
-use Data::Dumper;
 
 use Test::More tests => 3;
 
@@ -28,10 +27,10 @@ my $tex_input = <<'EOQ';
 \end{module}
 \end{document}
 EOQ
-		  
-my $config = LaTeXML::Common::Config->new(paths=>['blib/lib/LaTeXML/resources/Profiles',
-						  'blib/lib/LaTeXML/Package',
-						  '../sTeX/sty/etc']);
+
+my $perllib = $ENV{'PERL_LOCAL_LIB_ROOT'};
+my $bindings = $perllib . '/lib/perl5/LaTeXML/Package';
+my $config = LaTeXML::Common::Config->new(paths=>["$bindings"]);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
@@ -71,7 +70,7 @@ EOQ
 # Remove searchpaths tag
 my $xml = XML::LibXML->new;
 my $myResponse = $xml->parse_string($response->{result});
-warn Dumper($response);
+$myResponse->removeChild(($myResponse->childNodes())[0]);
 
 is($response->{status_code},0,'Conversion was problem-free.');
 is($myResponse->toString(1),$content_query,'Content query successfully generated');
