@@ -18,3 +18,6 @@ script:
  - make
  - cd ../cds
  - make
+
+after_failure:
+ - cat /home/travis/.cpanm/work/1457523407.10207/build.log
