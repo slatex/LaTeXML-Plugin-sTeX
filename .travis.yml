@@ -11,6 +11,7 @@ install:
 
 script:
  - export PATH=`pwd`/perl5/bin:$PATH
+ - export PERL5LIB=`pwd`/perl5/lib/perl5
  - cpanm https://github.com/KWARC/LaTeXML.git --notest
  - cpanm . -v
  - cd prototests/smglom
