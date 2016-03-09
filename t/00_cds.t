@@ -70,8 +70,8 @@ EOQ
 
 # Remove searchpaths tag
 my $xml = XML::LibXML->new;
-my $expected = $xml->parse_string($response->{result});
-$expected->removeChild(($expected->childNodes())[0]);
+my $myResponse = $xml->parse_string($response->{result});
+$myResponse->removeChild(($myResponse->childNodes())[0]);
 
 is($response->{status_code},0,'Conversion was problem-free.');
-is($expected->toString(1),$content_query,'Content query successfully generated');
+is($myResponse->toString(1),$content_query,'Content query successfully generated');
