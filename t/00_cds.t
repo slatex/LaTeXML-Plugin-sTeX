@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 use XML::LibXML;
-use Data::Dumper;
 
 use Test::More tests => 3;
 
@@ -31,8 +30,7 @@ EOQ
 		  
 my $config = LaTeXML::Common::Config->new(paths=>['blib/lib/LaTeXML/resources/Profiles',
 						  'blib/lib/LaTeXML/Package',
-						  '../sTeX/sty/etc'],
-					  profile=>'stex-smglom');
+						  '../sTeX/sty/etc']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
@@ -74,6 +72,5 @@ my $xml = XML::LibXML->new;
 my $myResponse = $xml->parse_string($response->{result});
 $myResponse->removeChild(($myResponse->childNodes())[0]);
 
-print STDERR Dumper($response);
 is($response->{status_code},0,'Conversion was problem-free.');
 is($myResponse->toString(1),$content_query,'Content query successfully generated');

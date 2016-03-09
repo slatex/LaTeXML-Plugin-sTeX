@@ -32,8 +32,7 @@ EOQ
 		  
 my $config = LaTeXML::Common::Config->new(paths=>['blib/lib/LaTeXML/resources/Profiles',
 						  'blib/lib/LaTeXML/Package',
-						  '../sTeX/sty/etc'],
-					  profile=>'stex-smglom');
+						  '../sTeX/sty/etc']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
