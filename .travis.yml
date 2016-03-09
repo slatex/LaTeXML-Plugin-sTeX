@@ -14,10 +14,11 @@ script:
  - export PERL5LIB=`pwd`/perl5/lib/perl5
  - export PERL_CPANM_OPT=--local-lib=`pwd`/perl5
  - cpanm https://github.com/KWARC/LaTeXML.git --notest
- - cpanm . -v
+ - cpanm . -v -n
  - cd prototests/smglom
  - rm -f *.xml
  - make
+ - cat foo.en.xml.log
  - cd ../cds
  - make
 
