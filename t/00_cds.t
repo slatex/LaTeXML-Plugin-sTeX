@@ -5,6 +5,7 @@
 use strict;
 use warnings;
 use XML::LibXML;
+use Data::Dumper;
 
 use Test::More tests => 3;
 
@@ -70,7 +71,7 @@ EOQ
 # Remove searchpaths tag
 my $xml = XML::LibXML->new;
 my $myResponse = $xml->parse_string($response->{result});
-$myResponse->removeChild(($myResponse->childNodes())[0]);
+warn Dumper($response);
 
 is($response->{status_code},0,'Conversion was problem-free.');
 is($myResponse->toString(1),$content_query,'Content query successfully generated');
