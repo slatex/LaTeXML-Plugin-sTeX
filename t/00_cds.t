@@ -29,8 +29,8 @@ my $tex_input = <<'EOQ';
 \end{document}
 EOQ
 
-my $config = LaTeXML::Common::Config->new(paths=>["lib/perl5/LaTeXML/Package",
-						  "lib/perl5/LaTeXML/resources/Profiles"],
+my $config = LaTeXML::Common::Config->new(paths=>["perl5/lib/perl5/LaTeXML/Package",
+						  "perl5/lib/perl5/LaTeXML/resources/Profiles"],
 					 profiles=>'stex-module');
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
