@@ -29,7 +29,7 @@ my $tex_input = <<'EOQ';
 \end{document}
 EOQ
 
-my $config = LaTeXML::Common::Config->new(paths=>["perl5/lib/perl5/LaTeXML/Package",
+my $config = LaTeXML::Common::Config->new(paths=>["/home/travis/perl5/lib/perl5/LaTeXML/Package/",
 						  "perl5/lib/perl5/LaTeXML/resources/Profiles"],
 					 profiles=>'stex-module');
 my $converter = LaTeXML->get_converter($config);

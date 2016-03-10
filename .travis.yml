@@ -21,5 +21,4 @@ script:
  - make
 
 after_script:
- - ls /home/travis/build/KWARC/LaTeXML-Plugin-sTeX/perl5/lib/perl5/LaTeXML/Package
-  
+ - ls /home/travis/perl5/lib/perl5/LaTeXML/Package/
