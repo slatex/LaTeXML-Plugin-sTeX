@@ -22,6 +22,6 @@ script:
  - cd ../cds
  - make
 
-after_script
+after_script:
  - ls /home/travis/build/KWARC/LaTeXML-Plugin-sTeX/perl5/lib/perl5/LaTeXML/Package
   
