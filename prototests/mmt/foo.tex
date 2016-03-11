@@ -1,8 +1,11 @@
-\begin{module}{foo}
-  \importmodule{semigroup}
-\begin{mmt}[axioms]
-  neut : G \# e
-  eunit : ded (forall [x] x + e = x + e = e)
-\end{mmt}
-This is somehitng
+\begin{module}[id=semigroup,meta=http://kwarc.info/test?FOL]
+\end{module}
+
+
+\begin{module}[id=monoid,meta=http://kwarc.info/test?FOL]
+ \importmodule{semigroup}
+ \begin{MMT}
+  neut : G \# e ^^1e
+  eunit : ded (forall [x] x + e = x + e = e)^^1e
+ \end{MMT}
 \end{module}

@@ -33,16 +33,41 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   exclude-result-prefixes="xsl ltx">
 
-<xsl:output method="xml" indent="yes" cdata-section-elements="data" />
+<!-- get the current file name -->
+<xsl:param name="fileName"/>
+  
+ <!-- Get rid of xml header -->
+ <xsl:output method="xml" indent="yes" cdata-section-elements="data"
+	       omit-xml-declaration="yes" />
 
 <!-- Remove everything until a match -->
 <xsl:template match="@* | node()">
   <xsl:apply-templates select="@* | node()" />
 </xsl:template>
 
+<!-- Add namespace and document ending -->
+<xsl:template match="/">
+  namespace http://cds.omdoc.org/<xsl:value-of select="$fileName" />^]
+  <xsl:apply-templates/>
+ <xsl:text> &quot; </xsl:text> 
+</xsl:template >
+  
 <!-- Ignore text content of nodex -->
-  <xsl:template match="text()" />
-  <xsl:template match="text()" mode="mmt" />
+<xsl:template match="text()" />
+<xsl:template match="text()" mode="mmt" />
+
+<!-- Module stuff -->
+<xsl:template match="omdoc:theory">
+    theory <xsl:value-of select="@xml:id" /> : http://kwarc.info/<xsl:value-of select="substring-before($fileName,
+    '.')" />?FOL =
+    <xsl:apply-templates/>
+    ^]
+</xsl:template>
+
+<!-- include/import module -->
+<xsl:template match="omdoc:imports">
+    include ?<xsl:value-of select="substring-after(@from, '#')" />^^
+</xsl:template>
 
 <!-- If find mmt, copy over -->
 <xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
@@ -54,16 +79,23 @@
    <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
 </xsl:template >
 
-<!-- If find oref, store the crossref-->
+<!-- MMT env -->
+<xsl:template match="*[@class='ltx_text mmt']" >
+    # :mmt1 ^^ 
+  <xsl:value-of select="." />
+</xsl:template>
+
+<!-- If find oref, store the crossref
 <xsl:template match="omdoc:oref" >
     <xsl:apply-templates select="preceding-sibling::*" mode="mmt" />
     //<xsl:value-of select="@href" />
     <xsl:text>&#xa;</xsl:text>
-</xsl:template >
+</xsl:template > -->
 
+<!--
 <xsl:template match="omdoc:imports" mode="mmt">
-  theory <xsl:value-of select="substring-after(@from, '#')" />
+  theory <xsl:value-of select="substring-after(@from, '#')" /> =
   include ?<xsl:value-of select="substring-after(@from, '#')" />
-</xsl:template>
+</xsl:template> -->
 
 </xsl:stylesheet>

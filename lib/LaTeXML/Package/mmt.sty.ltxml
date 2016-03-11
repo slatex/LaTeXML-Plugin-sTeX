@@ -38,10 +38,28 @@ sub mmt_afterDigest{
 	return;
 }
 
-DefEnvironment('{mmt} OptionalKeyVals:mmt@env',
+sub mmt_beforeDigest{
+       my($stomach, $whatsit)=@_;
+       AssignCatcode('#', CC_OTHER);
+       AssignCatcode('1C', CC_OTHER);
+              AssignCatcode('', CC_OTHER);
+       AssignCatcode('1D', CC_OTHER);
+       AssignCatcode('1E', CC_OTHER);
+       AssignCatcode('28', CC_OTHER);
+       AssignCatcode('29', CC_OTHER);
+       AssignCatcode('30', CC_OTHER);
+       AssignCatcode('31', CC_OTHER);
+       AssignCatcode('1e', CC_OTHER);
+
+
+       return;
+}
+
+DefEnvironment('{MMT} OptionalKeyVals:mmt@env',
 	'<omdoc:oref  '.
 	"?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
-	"<ltx:text class ='mmt'>#body</ltx:text>",
+	       "<ltx:text class ='mmt'>#body</ltx:text>",
+	beforeDigest=> \&mmt_beforeDigest,
 	afterDigest=> \&mmt_afterDigest);
 	
 1;
