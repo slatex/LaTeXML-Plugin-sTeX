@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 use XML::LibXML;
-use Data::Dumper;
 
 use Test::More tests => 3;
 
@@ -28,10 +27,11 @@ my $tex_input = <<'EOQ';
 \end{module}
 \end{document}
 EOQ
-
-my $config = LaTeXML::Common::Config->new(paths=>["/home/travis/perl5/lib/perl5/LaTeXML/Package/",
-						  "perl5/lib/perl5/LaTeXML/resources/Profiles"],
-					 profiles=>'stex-module');
+		  
+my $config = LaTeXML::Common::Config->new(paths=>['blib/lib/LaTeXML/resources/Profiles',
+						  'blib/lib/LaTeXML/Package',
+						  '../sTeX/sty/etc'],
+					  profile=>'stex-smglom');
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
@@ -56,7 +56,7 @@ my $content_query = <<'EOQ';
     </notation>
     <symbol about="#foo.def.sym" name="foo" stex:srcref="Literal String \documentc#textrange(from=5;0,to=7;18)" xml:id="foo.def.sym"/>
     <definition about="#foo.def" for="foo" stex:srcref="Literal String \documentc#textrange(from=5;0,to=7;18)" xml:id="foo.def">
-      <CMP about="#foo.def.CMP1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=7;18)" xml:id="foo.def.CMP1">
+      <CMP about="#foo.def.CMP1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=5;32)" xml:id="foo.def.CMP1">
         <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=5;32)" xml:id="foo.def.CMP1.p1">A <term about="#foo.def.CMP1.p1.term1" cd="theory1" name="foo" role="definiendum" stex:srcref="Literal String \documentc#textrange(from=5;42,to=6;17)" xml:id="foo.def.CMP1.p1.term1">foo</term> (we write <Math about="#foo.def.CMP1.p1.m1" mode="inline" stex:srcref="Literal String \documentc#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
             <XMath>
               <XMTok meaning="foo" name="foo" omcd="theory1"/>
@@ -71,8 +71,7 @@ EOQ
 # Remove searchpaths tag
 my $xml = XML::LibXML->new;
 my $myResponse = $xml->parse_string($response->{result});
-warn Dumper($response);
-# $myResponse->removeChild(($myResponse->childNodes())[0]);
+$myResponse->removeChild(($myResponse->childNodes())[0]);
 
 is($response->{status_code},0,'Conversion was problem-free.');
 is($myResponse->toString(1),$content_query,'Content query successfully generated');

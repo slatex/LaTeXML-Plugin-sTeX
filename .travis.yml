@@ -14,6 +14,7 @@ script:
  - export PERL_CPANM_OPT=--local-lib=~/perl5
  - export PERL5LIB=~/perl5/lib/perl5
  - cpanm https://github.com/KWARC/LaTeXML.git --notest
+ - cpanm . -v --notest
  - cpanm . -v 
  - cd prototests/smglom
  - rm -f *.xml

@@ -41,9 +41,10 @@ my $tex_input = <<'EOQ';
 \end{document}
 EOQ
 		  
-my $perllib = $ENV{'PERL_LOCAL_LIB_ROOT'};
-my $bindings = $perllib . '/lib/perl5/LaTeXML/Package';
-my $config = LaTeXML::Common::Config->new(paths=>["$bindings"]);
+my $config = LaTeXML::Common::Config->new(paths=>['blib/lib/LaTeXML/resources/Profiles',
+						  'blib/lib/LaTeXML/Package',
+						  '../sTeX/sty/etc'],
+					  profile=>'stex-smglom');
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
@@ -52,7 +53,7 @@ my $content_query = <<'EOQ';
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
 <omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="Literal String \documentc#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
   <assertion about="#hello" stex:srcref="Literal String \documentc#textrange(from=3;0,to=5;15)" type="lemma" xml:id="hello">
-    <CMP about="#hello.CMP1" stex:srcref="Literal String \documentc#textrange(from=3;0,to=5;15)" xml:id="hello.CMP1">
+    <CMP about="#hello.CMP1" stex:srcref="Literal String \documentc#textrange(from=3;15,to=4;19)" xml:id="hello.CMP1">
       <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#hello.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=3;15,to=4;19)" xml:id="hello.CMP1.p1"><Math about="#hello.CMP1.p1.m1" mode="inline" stex:srcref="Literal String \documentc#textrange(from=3;15,to=4;19)" tex="Waohwerasd_{x}" text="W * a * o * h * w * e * r * a * s * d _ x" xml:id="hello.CMP1.p1.m1">
           <XMath>
             <XMApp>
@@ -77,7 +78,7 @@ my $content_query = <<'EOQ';
     </CMP>
   </assertion>
   <axiom about="#newAx" stex:srcref="Literal String \documentc#textrange(from=7;0,to=9;11)" xml:id="newAx">
-    <CMP about="#newAx.CMP1" stex:srcref="Literal String \documentc#textrange(from=7;0,to=9;11)" xml:id="newAx.CMP1">
+    <CMP about="#newAx.CMP1" stex:srcref="Literal String \documentc#textrange(from=7;0,to=7;23)" xml:id="newAx.CMP1">
       <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#newAx.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=7;0,to=7;23)" xml:id="newAx.CMP1.p1">Thiasdf is not wokraw.</p>
     </CMP>
   </axiom>
