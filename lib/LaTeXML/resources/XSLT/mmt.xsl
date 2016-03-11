@@ -22,7 +22,9 @@
      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
      -->
 
-<!-- this styilesheet selects all the embedded MMT elements  -->
+<!-- this styilesheet selects all the embedded MMT elements
+currently the placeholders are ^^1e and ^] for the real MMT
+delimiters -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -49,7 +51,7 @@
 <xsl:template match="/">
   namespace http://cds.omdoc.org/<xsl:value-of select="$fileName" />^]
   <xsl:apply-templates/>
- <xsl:text> &quot; </xsl:text> 
+  ^]
 </xsl:template >
   
 <!-- Ignore text content of nodex -->
@@ -66,7 +68,7 @@
 
 <!-- include/import module -->
 <xsl:template match="omdoc:imports">
-    include ?<xsl:value-of select="substring-after(@from, '#')" />^^
+    include ?<xsl:value-of select="substring-after(@from, '#')" />^^1e
 </xsl:template>
 
 <!-- If find mmt, copy over -->
@@ -81,7 +83,7 @@
 
 <!-- MMT env -->
 <xsl:template match="*[@class='ltx_text mmt']" >
-    # :mmt1 ^^ 
+    # :mmt1 ^^1e
   <xsl:value-of select="." />
 </xsl:template>
 
