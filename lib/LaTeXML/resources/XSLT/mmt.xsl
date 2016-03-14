@@ -47,34 +47,34 @@ delimiters -->
   <xsl:apply-templates select="@* | node()" />
 </xsl:template>
 
-<!-- Add namespace and document ending -->
+<!-- Currently we don't need this
+    Add namespace and document ending 
 <xsl:template match="/">
   namespace http://cds.omdoc.org/<xsl:value-of select="$fileName" />^]
   <xsl:apply-templates/>
   ^]
 </xsl:template >
+-->
   
 <!-- Ignore text content of nodex -->
 <xsl:template match="text()" />
 <xsl:template match="text()" mode="mmt" />
 
 <!-- Module stuff -->
-<xsl:template match="omdoc:theory">
-    theory <xsl:value-of select="@xml:id" /> : http://kwarc.info/<xsl:value-of select="substring-before($fileName,
-    '.')" />?FOL =
-    <xsl:apply-templates/>
-    ^]
+<xsl:template match="omdoc:theory">theory <xsl:value-of select="@xml:id" /> : http://kwarc.info/<xsl:value-of select="substring-before($fileName,
+'.')" />?FOL = <xsl:apply-templates/>
+^]
 </xsl:template>
 
 <!-- include/import module -->
 <xsl:template match="omdoc:imports">
-    include ?<xsl:value-of select="substring-after(@from, '#')" />^^1e
+  include ?<xsl:value-of select="substring-after(@from, '#')" />^^1e
 </xsl:template>
 
 <!-- If find mmt, copy over -->
 <xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
   <xsl:param name = "moduleName"  />
-  <xsl:value-of select="." />
+      <xsl:value-of select="." />
    //end <xsl:value-of
    select="../../preceding-sibling::omdoc:oref[1]/@href" />
    <!-- When importmodule exists -->
@@ -83,8 +83,7 @@ delimiters -->
 
 <!-- MMT env -->
 <xsl:template match="*[@class='ltx_text mmt']" >
-    # :mmt1 ^^1e
-  <xsl:value-of select="." />
+  # :mmt1 ^^1e  <xsl:value-of select="." />
 </xsl:template>
 
 <!-- If find oref, store the crossref
