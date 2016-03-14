@@ -17,4 +17,6 @@ my $file = path($filename);
 my $data = $file->slurp_utf8;
 $data =~ s/\^\^1e/\/g;
 $data =~ s/\^\]/\/g;
+# Remove blanklines for better formatting
+$data =~ s/\n+/\n/g;
 $file->spew_utf8( $data );
