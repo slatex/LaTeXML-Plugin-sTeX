@@ -1,0 +1,39 @@
+#!/bin/bash
+# Call LaTeXML on the input file 'x'
+# Generate x.omdoc and x.mmt
+# If X does not contain any MMT file
+# Only x.omdoc is generated
+
+########################################
+preamble=pre.tex
+postamble=post.tex
+etcdir=../../../sTeX/sty/etc/
+xsldir=../../lib/LaTeXML/resources/XSLT/
+########################################
+
+# Clean up existing files
+if [ ! -f $preamble ] || [ ! -f $postamble ]
+   then
+	echo "Preamble or postamble not found!"
+    	exit 1
+fi
+
+if [ -f $1.omdoc ]
+   then
+	rm $1.omdoc
+fi
+
+if [ -f $1.mmt ]
+   then
+	rm $1.mmt
+fi
+
+# Generate x.omdoc
+latexmlc --path $etcdir --preamble $preamble --log $1.log.ltxml --postamble $postamble $1 >> $1.omdoc
+
+# Extract MMT stuff from x.omdoc
+xsltproc  --stringparam fileName $1 --output $1.mmt $xsldir/mmt.xsl  $1.omdoc 
+perl replace.pl $1.mmt
+
+# Cleanup MMT stuff from x.omdoc
+xsltproc  --stringparam fileName $1 --output $1.omdoc  $xsldir/mmtCleanup.xsl $1.omdoc 

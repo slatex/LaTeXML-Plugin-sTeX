@@ -82,7 +82,7 @@ delimiters -->
 </xsl:template >
 
 <!-- MMT env -->
-<xsl:template match="*[@class='ltx_text mmt']" >
+<xsl:template match="*[@class='ltx_text mmt'] | *[@class='mmt']" >
   # :mmt1 ^^1e  <xsl:value-of select="." />
 </xsl:template>
 

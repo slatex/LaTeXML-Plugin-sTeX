@@ -44,6 +44,6 @@
 <xsl:template match="@*"><xsl:copy-of select="."/></xsl:template>
 
 <!-- If find mmt, remove-->
-<xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" />
+<xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt'] | *[@class='mmt']" />
 
 </xsl:stylesheet>
