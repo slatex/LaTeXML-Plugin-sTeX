@@ -17,13 +17,22 @@ use LaTeXML::Package;
 use Data::Dumper;
 use Cwd qw(abs_path);
 
+# Make | the delimiter to escape into \mmt
+RawTeX('
+\catcode`\|=13
+\def|#1|{\ensuremath{\mmt{#1}}}');
+
 DefKeyVal('mmt@env', 'name', 'Semiverbatim');
 DefKeyVal('mmt@ref', 'path', 'Semiverbatim');
 
-DefMacro('\mmtr {}', '');
-DefMacro('\mmt {}', '');
-
-DefConstructor('\MMTref OptionalKeyVals:mmt@ref {}', '');
+DefConstructor('\mmtr []{}',
+ "<omdoc:oref href='#1@#2' />");      
+DefConstructor('\mmt OptionalKeyVals Plain', 
+	       "<omdoc:oref ?&GetKeyVal(#1,'id')(href='&GetKeyVal(#1,'id')')(href='mixref1') />"
+	       . "<ltx:text class = 'mmt'>#2</ltx:text>",
+	       mode=>'text');
+DefConstructor('\MMTref []{}[]',
+	       "<omdoc:oref href='#2@#3' />");
 
 sub mmt_afterDigest{
 	my($stomach, $whatsit)=@_;
@@ -37,17 +46,15 @@ sub mmt_afterDigest{
 	AssignValue('mmtRef' => $mmtRef, 'global');
 	return;
 }
-
 sub mmt_beforeDigest{
        my($stomach, $whatsit)=@_;
        AssignCatcode('#', CC_OTHER);
        AssignCatcode('^', CC_OTHER);
        return;
 }
-
 DefEnvironment('{MMT} OptionalKeyVals:mmt@env',
-	'<omdoc:oref  '.
-	"?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
+	'<omdoc:oref  '
+	. "?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
 	       "<ltx:text class ='mmt'>#body</ltx:text>",
 	beforeDigest=> \&mmt_beforeDigest,
 	afterDigest=> \&mmt_afterDigest);
