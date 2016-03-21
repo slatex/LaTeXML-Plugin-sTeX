@@ -1,11 +1,15 @@
 \begin{module}[id=semigroup,meta=http://kwarc.info/test?FOL]
 \end{module}
 
-
 \begin{module}[id=monoid,meta=http://kwarc.info/test?FOL]
  \importmodule{semigroup}
- \begin{MMT}
+\begin{MMT}[axioms]
   neut : G # e ^^1e
   eunit : ded (forall [x] x + e = x + e = e)^^1e
  \end{MMT}
+ \begin{definition}
+ Let $\mvstruct{|G|,\mmt{+} }$ be a \trefi[semigroup]{semigroup}, 
+  then we call en element $\mmtref{neut}$ in $\mmtref[semigroup]{base}$ a
+  \defi{unit}, iff \mmtref{eunit}[type.1.1.1] for all $x$ in $|G|$. 
+ \end{definition}  
 \end{module}

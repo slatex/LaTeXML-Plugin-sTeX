@@ -5,6 +5,7 @@
 # Only x.omdoc is generated
 
 ########################################
+basename=$1
 preamble=pre.tex
 postamble=post.tex
 etcdir=../../../sTeX/sty/etc/
@@ -29,11 +30,11 @@ if [ -f $1.mmt ]
 fi
 
 # Generate x.omdoc
-latexmlc --path $etcdir --preamble $preamble --log $1.log.ltxml --postamble $postamble $1 >> $1.omdoc
+latexmlc --profile stex-omdoc-modules  --path $etcdir --preamble $preamble --postamble $postamble $1 >> $basename.omdoc
 
 # Extract MMT stuff from x.omdoc
-xsltproc  --stringparam fileName $1 --output $1.mmt $xsldir/mmt.xsl  $1.omdoc 
-perl replace.pl $1.mmt
+xsltproc  --stringparam fileName $basename --output $basename.mmt $xsldir/mmt.xsl  $basename.omdoc 
+perl replace.pl $basename.mmt
 
-# Cleanup MMT stuff from x.omdoc
-xsltproc  --stringparam fileName $1 --output $1.omdoc  $xsldir/mmtCleanup.xsl $1.omdoc 
+
+

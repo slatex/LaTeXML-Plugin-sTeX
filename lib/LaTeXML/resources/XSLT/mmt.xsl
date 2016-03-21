@@ -46,15 +46,6 @@ delimiters -->
 <xsl:template match="@* | node()">
   <xsl:apply-templates select="@* | node()" />
 </xsl:template>
-
-<!-- Currently we don't need this
-    Add namespace and document ending 
-<xsl:template match="/">
-  namespace http://cds.omdoc.org/<xsl:value-of select="$fileName" />^]
-  <xsl:apply-templates/>
-  ^]
-</xsl:template >
--->
   
 <!-- Ignore text content of nodex -->
 <xsl:template match="text()" />
@@ -71,32 +62,16 @@ delimiters -->
   include ?<xsl:value-of select="substring-after(@from, '#')" />^^1e
 </xsl:template>
 
-<!-- If find mmt, copy over -->
-<xsl:template name = "mmtEnv" match="*[@class='ltx_text mmt']" >
-  <xsl:param name = "moduleName"  />
-      <xsl:value-of select="." />
-   //end <xsl:value-of
-   select="../../preceding-sibling::omdoc:oref[1]/@href" />
-   <!-- When importmodule exists -->
-   <xsl:value-of select="preceding-sibling::omdoc:oref[1]/@href" />
-</xsl:template >
-
-<!-- MMT env -->
-<xsl:template match="*[@class='ltx_text mmt'] | *[@class='mmt']" >
-  # :mmt1 ^^1e  <xsl:value-of select="." />
+<xsl:template match="omdoc:oref">
+  # :<xsl:value-of select="@href" />^^1e<xsl:value-of select="@about" />
+  #^^1e
 </xsl:template>
 
-<!-- If find oref, store the crossref
-<xsl:template match="omdoc:oref" >
-    <xsl:apply-templates select="preceding-sibling::*" mode="mmt" />
-    //<xsl:value-of select="@href" />
-    <xsl:text>&#xa;</xsl:text>
-</xsl:template > -->
-
-<!--
-<xsl:template match="omdoc:imports" mode="mmt">
-  theory <xsl:value-of select="substring-after(@from, '#')" /> =
-  include ?<xsl:value-of select="substring-after(@from, '#')" />
-</xsl:template> -->
+<xsl:template match="*[@class='ltx_ref mmtRef ltx_ref_self']
+		     | *[@class='ltx_ref ltx_markedasmath mmtRef ltx_ref_self']
+		     | *[@class='ltx_ref ltx_markedasmath mmtRef'] 
+	             | *[@class='ltx_ref mmtRef'] ">
+  xref<xsl:value-of select="@href" /> = <xsl:value-of select="@content" />^^1e
+</xsl:template>
 
 </xsl:stylesheet>

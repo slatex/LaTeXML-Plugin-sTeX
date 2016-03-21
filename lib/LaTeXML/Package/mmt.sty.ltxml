@@ -25,12 +25,19 @@ RawTeX('
 DefKeyVal('mmt@env', 'name', 'Semiverbatim');
 DefKeyVal('mmt@ref', 'path', 'Semiverbatim');
 
+NewCounter('mmt');
+SetCounter('mmt', Number(1));
+
 DefConstructor('\mmtr []{}',
- "<omdoc:oref href='#1@#2' />");      
-DefConstructor('\mmt OptionalKeyVals Plain', 
-	       "<omdoc:oref ?&GetKeyVal(#1,'id')(href='&GetKeyVal(#1,'id')')(href='mixref1') />"
-	       . "<ltx:text class = 'mmt'>#2</ltx:text>",
-	       mode=>'text');
+ "<omdoc:oref href='#1@#2' about='#1'/>");      
+DefConstructor('\mmt OptionalKeyVals {}',
+	       "<ltx:ref href='&ToString(&CounterValue('mmt'))' "
+	       . "class='mmtRef' show='mmtRef' content='#2'/> ",
+	       mode=>'text',
+	       afterConstruct => sub{
+		    my($stomach, $whatsit)=@_;
+		    StepCounter('mmt');
+		    return; } );
 DefConstructor('\MMTref []{}[]',
 	       "<omdoc:oref href='#2@#3' />");
 
@@ -40,9 +47,9 @@ sub mmt_afterDigest{
 	my ($fileName) = ($location =~ m!^.*\/(.*?)\.tex!);
 	AssignValue('fileName' => $fileName, 'global');
 	# Set the mmt counter
-	my $mmtNum = LookupValue('mmtNum')? LookupValue('mmtNum') : 1 ;
+        my $mmtNum = CounterValue('mmt')->valueOf;
+	StepCounter('mmt');
 	my $mmtRef = $fileName. '#MMT'.$mmtNum;
-	AssignValue('mmtNum' => $mmtNum + 1, 'global');
 	AssignValue('mmtRef' => $mmtRef, 'global');
 	return;
 }
@@ -54,8 +61,7 @@ sub mmt_beforeDigest{
 }
 DefEnvironment('{MMT} OptionalKeyVals:mmt@env',
 	'<omdoc:oref  '
-	. "?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')')/>".
-	       "<ltx:text class ='mmt'>#body</ltx:text>",
+         . "?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')') about='#body' />" ,	       	       
 	beforeDigest=> \&mmt_beforeDigest,
 	afterDigest=> \&mmt_afterDigest);
 	
