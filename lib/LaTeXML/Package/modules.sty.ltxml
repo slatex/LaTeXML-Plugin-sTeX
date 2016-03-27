@@ -138,7 +138,7 @@ DefEnvironment('{module} OptionalKeyVals:Module',
 
 DefConstructor('\usemodule OptionalKeyVals:importmodule Semiverbatim',
    "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
-   afterDigest=>\&importmoduleI);
+   afterDigest=>\&usemoduleI);
 DefConstructor('\importmodule OptionalKeyVals:importmodule Semiverbatim',
 	       "<omdoc:imports "
 	       . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
@@ -674,6 +674,15 @@ sub importmoduleI {
      # 5-NEW: Only set excluding_modules after the group has been opened
      $gullet->unread(T_CS('\bgroup'),T_CS('\exclude@modules@scope'));
    }
+   return; }
+# usemodule only imports the SMS file
+sub usemoduleI {
+   my($stomach,$whatsit)=@_;
+   my $keyval = $whatsit->getArg(1);
+   $file = ToString(GetKeyVal($keyval,'load')) if $keyval;
+   my $ext = ToString(GetKeyVal($keyval,'ext')) if $keyval;
+   $ext = 'sms' unless $ext;
+   LaTeXML::Package::InputDefinitions($file,type=>$ext,noltxml=>1);
    return; }
 DefPrimitive('\exclude@modules@scope', sub {
   AssignValue('excluding_modules' => 1);
