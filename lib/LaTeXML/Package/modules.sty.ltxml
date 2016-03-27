@@ -138,7 +138,7 @@ DefEnvironment('{module} OptionalKeyVals:Module',
 
 DefConstructor('\usemodule OptionalKeyVals:importmodule Semiverbatim',
    "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
-   afterDigest=>\&usemoduleI);
+   afterDigest=>\&importmoduleI);
 DefConstructor('\importmodule OptionalKeyVals:importmodule Semiverbatim',
 	       "<omdoc:imports "
 	       . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
@@ -589,20 +589,19 @@ sub activate_module_definitions {
   my($module,%ancestors)=@_;
   $module = ToString($module);
   %ancestors = ('__trace'=>[]) unless %ancestors;
-  if (defined $ancestors{$module}) {
-    my $trace = join(" -> ",(@{$ancestors{__trace}},$module));
-    Fatal(":module \"$module\" leads to import cycle! \nTrace: $trace");
-  } else {
-    $ancestors{$module}=1;
-    # Depth-first load definitions from used modules, disregarding cycles
-    foreach my $used_module (@{ LookupValue("module_${module}_uses") || []}) {
-      push @{$ancestors{__trace}}, $module;
-      activate_module_definitions($used_module,%ancestors);
-      pop @{$ancestors{__trace}};
-    }
-    # then load definitions for this module
-    $STATE->activateScope("module:$module"); 
+  $ancestors{$module}=1;
+  # Might need to use a tree structure to detect cyclic loading 
+  # Depth-first load definitions from used modules, disregarding cycles
+  foreach my $used_module (@{ LookupValue("module_${module}_uses") || []}) {
+      # If being loaded already then we don't have to load it again
+      if (!defined $ancestors{$module}) {
+	  push @{$ancestors{__trace}}, $module;
+	  activate_module_definitions($used_module,%ancestors);
+	  pop @{$ancestors{__trace}};
+      }
   }
+  # then load definitions for this module
+  $STATE->activateScope("module:$module"); 
 }
 
 # Resolve symbolic links and add an omdoc extension, when needed
@@ -674,15 +673,6 @@ sub importmoduleI {
      # 5-NEW: Only set excluding_modules after the group has been opened
      $gullet->unread(T_CS('\bgroup'),T_CS('\exclude@modules@scope'));
    }
-   return; }
-# usemodule only imports the SMS file
-sub usemoduleI {
-   my($stomach,$whatsit)=@_;
-   my $keyval = $whatsit->getArg(1);
-   $file = ToString(GetKeyVal($keyval,'load')) if $keyval;
-   my $ext = ToString(GetKeyVal($keyval,'ext')) if $keyval;
-   $ext = 'sms' unless $ext;
-   LaTeXML::Package::InputDefinitions($file,type=>$ext,noltxml=>1);
    return; }
 DefPrimitive('\exclude@modules@scope', sub {
   AssignValue('excluding_modules' => 1);
