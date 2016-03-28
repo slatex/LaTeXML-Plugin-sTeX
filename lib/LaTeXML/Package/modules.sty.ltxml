@@ -91,7 +91,7 @@ sub module_afterDigestBegin {
   $module_paths->{$id} = LookupValue('last_module_path');
   AssignValue('module_paths', $module_paths, 'global');
   # 3. Update the current module reference
-  AssignValue(current_module => $id, 'global');
+  AssignValue(current_module => $id);
   AssignValue(module_cd => $cd);
   # 4. Activate the module in our current scope
   $STATE->activateScope("module:".$id);
@@ -589,19 +589,20 @@ sub activate_module_definitions {
   my($module,%ancestors)=@_;
   $module = ToString($module);
   %ancestors = ('__trace'=>[]) unless %ancestors;
-  $ancestors{$module}=1;
-  # Might need to use a tree structure to detect cyclic loading 
-  # Depth-first load definitions from used modules, disregarding cycles
-  foreach my $used_module (@{ LookupValue("module_${module}_uses") || []}) {
-      # If being loaded already then we don't have to load it again
-      if (!defined $ancestors{$module}) {
-	  push @{$ancestors{__trace}}, $module;
-	  activate_module_definitions($used_module,%ancestors);
-	  pop @{$ancestors{__trace}};
-      }
+  if (defined $ancestors{$module}) {
+    my $trace = join(" -> ",(@{$ancestors{__trace}},$module));
+    Fatal(":module \"$module\" leads to import cycle! \nTrace: $trace");
+  } else {
+    $ancestors{$module}=1;
+    # Depth-first load definitions from used modules, disregarding cycles
+    foreach my $used_module (@{ LookupValue("module_${module}_uses") || []}) {
+      push @{$ancestors{__trace}}, $module;
+      activate_module_definitions($used_module,%ancestors);
+      pop @{$ancestors{__trace}};
+    }
+    # then load definitions for this module
+    $STATE->activateScope("module:$module"); 
   }
-  # then load definitions for this module
-  $STATE->activateScope("module:$module"); 
 }
 
 # Resolve symbolic links and add an omdoc extension, when needed
