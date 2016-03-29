@@ -91,7 +91,7 @@ sub module_afterDigestBegin {
   $module_paths->{$id} = LookupValue('last_module_path');
   AssignValue('module_paths', $module_paths, 'global');
   # 3. Update the current module reference
-  AssignValue(current_module => $id, 'global');
+  AssignValue(current_module => $id);
   AssignValue(module_cd => $cd);
   # 4. Activate the module in our current scope
   $STATE->activateScope("module:".$id);
