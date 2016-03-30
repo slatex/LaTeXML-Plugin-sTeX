@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 use XML::LibXML;
-use Data::Dumper;
 
 use Test::More tests => 3;
 
@@ -32,7 +31,6 @@ EOQ
 my $config = LaTeXML::Common::Config->new(paths=>['lib/LaTeXML/Package/']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
-warn Dumper($response);
 my $content_query = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>

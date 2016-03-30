@@ -14,3 +14,4 @@ script:
  - cpanm https://github.com/KWARC/LaTeXML.git --notest
  - cpanm . -v --notest
  - cpanm . -v 
+
