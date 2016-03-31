@@ -30,7 +30,7 @@ if [ -f $1.mmt ]
 fi
 
 # Generate x.omdoc
-latexmlc --profile stex-omdoc-modules  --path $etcdir --preamble $preamble --postamble $postamble $1 >> $basename.omdoc
+latexmlc --profile stex-mmt  --path $etcdir --preamble $preamble --postamble $postamble $1 >> $basename.omdoc
 
 # Extract MMT stuff from x.omdoc
 xsltproc  --stringparam fileName $basename --output $basename.mmt $xsldir/mmt.xsl  $basename.omdoc 
