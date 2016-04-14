@@ -350,7 +350,7 @@ RawTeX('
 
 # this should not be used on its own, but if it is, we use it as a substitute for \term 
 DefMacro('\termemph','\term');
-DefConstructor('\defemph',"<omdoc:term role='definiendum'>#1</omdoc:term>");
+DefConstructor('\defemph {}',"<omdoc:term role='definiendum'>#1</omdoc:term>");
 # not defining \stDMemph, since it should not be used on its own. 
 
 DefMacro('\termemph','\term');
