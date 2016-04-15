@@ -20,6 +20,7 @@ DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\Curren
 ProcessOptions();
 RequirePackage('sref');
 RequirePackage('xspace');
+RequirePackage('pathsuris');
 DefMacro('\currentsectionlevel','\@currentsectionlevel\xspace');
 DefMacro('\Currentsectionlevel','\@Currentsectionlevel\xspace');
 DefConstructor('\@currentsectionlevel',
@@ -75,10 +76,4 @@ DefConstructor('\@omdoc@color@content[]{}',
 foreach my $color(qw(black gray blue red green cyan magenta brown yellow orange)) {
   DefMacro("\\".$color.'{}', sub { omdocColorMacro($color, @_); }); }#$
 DefConstructor('\newpage','');
-DefMacro('\baseURI []Semiverbatim', sub {
-   my $baselocal = ToString(Digest($_[1]));
-   $baselocal = abs_path($baselocal) unless $baselocal=~/^(\w+):\/\//;
-   AssignValue('BASELOCAL'=>$baselocal,'global');
-   AssignValue('URLBASE'=>ToString(Digest($_[2])),'global');
- });
 1;

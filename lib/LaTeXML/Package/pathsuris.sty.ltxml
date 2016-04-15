@@ -1,6 +1,6 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
-# | sTeX implementation for LaTeXML (tikzinput-mh.sty)                  | #
+# | sTeX implementation for LaTeXML (pathsuris.sty)                     | #
 # | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
 # |=====================================================================| #
 # |  Copyright (c) Michael Kohlhase 2015.                               | #
@@ -15,15 +15,24 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
-RequirePackage('mathhub');
-RequirePackage('pathsuris');
-RawTeX('
-\define@key{Gin}{mhrepos}{\csxdef\Gin@mhrepos{#1}}
-\newcommand\mhtikzinput[2][]{\def\Gin@mhrepos{}\setkeys{Gin}{#1}%
-\edef\mh@@repos{\mh@currentrepos}%
-\ifx\Gin@mhrepos\@empty\tikzinput[#1]{\MathHub{\mh@currentrepos/source/#2}}%
-\else\tikzinput[#1]{\MathHub{\Gin@mhrepos/source/#2}}\fi
-\def\Gin@mhrepos{}\mhcurrentrepos\mh@@repos}
-\newcommand\cmhtikzinput[2][]{\begin{center}\mhtikzinput[#1]{#2}\end{center}}
-');
+use Cwd qw(abs_path);
+ProcessOptions();
+DefMacro('\baseURI []Semiverbatim', sub {
+   my $baselocal = ToString(Digest($_[1]));
+   $baselocal = abs_path($baselocal) unless $baselocal=~/^(\w+):\/\//;
+   AssignValue('BASELOCAL'=>$baselocal,'global');
+   AssignValue('URLBASE'=>ToString(Digest($_[2])),'global');
+ });
+
+DefMacro('\defpath[]{}{}', sub {
+   my ($gullet,$arg1,$arg2,$arg3)=@_;
+   $arg2 = ToString($arg2);
+   $arg3 = ToString($arg3);
+   $arg3 =~ s/(\/+)$//g;
+   $arg3 .= '/';
+   my $paths = LookupValue('defpath')||{};
+   $paths->{$arg2}=$arg3;
+   AssignValue('defpath'=>$paths,'global');
+   DefMacro('\\'.$arg2.' Semiverbatim',$arg3."#1");
+ });
 1;
