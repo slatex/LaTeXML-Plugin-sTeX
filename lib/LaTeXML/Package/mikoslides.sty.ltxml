@@ -19,7 +19,7 @@ DeclareOption('slides', '');
 DeclareOption('noproblems', '');
 DeclareOption('sectocframes', '');
 DeclareOption('frameimages', '');
-DeclareOption('mh', sub { AssignValue ('@mikoslides' => 1,'global');
+DeclareOption('mh', sub { AssignValue ('@mh' => 1,'global');
                        PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));
                        PassOptions('tikzinput','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption(undef, sub {PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));
@@ -27,7 +27,7 @@ DeclareOption(undef, sub {PassOptions('stex','sty',ToString(Digest(T_CS('\Curren
 ProcessOptions();
 RawTeX('\newif\ifnotes\notesfalse');
 RawTeX('\newif\ifproblems\problemsfalse');
-if(LookupValue('@mikoslides')) {RequirePackage('mikoslides-mh');}
+if(LookupValue('@mh')) {RequirePackage('mikoslides-mh');}
 RequirePackage('stex');
 RequirePackage('smglom');
 RequirePackage('tikzinput', options => ['image']);
