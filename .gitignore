@@ -9,9 +9,9 @@ Build
 !Build/
 Build.bat
 .last_cover_stats
-Makefile
 Makefile.old
 MANIFEST.bak
+Makefile
 META.yml
 MYMETA.yml  
 MYMETA.json
