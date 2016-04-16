@@ -80,7 +80,7 @@ conclusion.model = mobj
 conclusion = element conclusion {tref|(conclusion.attribs & conclusion.model)}
  
 note.attribs = id.attribs &  for.attrib? & parallel.attribs &  attribute type {xsd:NMTOKEN}?
-note.model = inline.model
+note.model = plike.class
 note = element note {tref|(note.attribs & note.model)}
 
 # index 
