@@ -45,11 +45,11 @@ DefMacroI(T_CS('\begin{view}'),'OptionalKeyVals:view {}{}', sub {
 });
 DefMacroI('\end{view}',undef,'\end{viewenv}');
 DefEnvironment('{viewenv} OptionalKeyVals:view {}{}',
-   "<omdoc:theory-inclusion from='#2' to='#3'"
+   "<omdoc:view from='#2' to='#3'"
   .      " ?&defined(&GetKeyVal(#1,'type'))(type='&GetKeyVal(#1,'type')')()"
   .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
-  .  "<omdoc:morphism>#body</omdoc:morphism>"
-  ."</omdoc:theory-inclusion>");
+  .  "#body"
+  ."</omdoc:view>");
 # do the same for viewsketch, pity we cannot share some code.
 DefMacroI(T_CS('\begin{viewsketch}'),'OptionalKeyVals:view {}{}', sub {
   my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
@@ -67,9 +67,9 @@ DefMacroI(T_CS('\begin{viewsketch}'),'OptionalKeyVals:view {}{}', sub {
 });
 DefMacroI('\end{viewsketch}',undef,'\end{viewsketchenv}');
 DefEnvironment('{viewsketchenv} OptionalKeyVals:view {}{}',
-   "<omdoc:theory-inclusion from='#2' to='#3'"
+   "<omdoc:view from='#2' to='#3'"
   .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
   .  "#body"
-  ."</omdoc:theory-inclusion>");
+  ."</omdoc:view>");
 DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' assertion='#3'/>");
 1;
