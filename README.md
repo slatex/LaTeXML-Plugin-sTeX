@@ -3,7 +3,7 @@
 This is a [LaTeXML](http://dlmf.nist.gov/LaTeXML/) plugin for
 [sTeX](http://github.com/KWARC/sTeX). You will only be able to use
 this plugin after you have LaTeXML installed, whose installation steps
-can be found [here}(http://dlmf.nist.gov/LaTeXML/get.html).
+can be found [here](http://dlmf.nist.gov/LaTeXML/get.html).
 
 ### How to install 
 Currently you can do the installation via `cpanm` or manually, however we recommend 
@@ -61,24 +61,24 @@ latexmlc --profile stex-module pl1-semantics.tex  --preamble ../../../../meta-in
 * preamble, postamble: in case many tex files share the same preamble and postamble, we 
 then only need one of each for all the fiels.
 * path: add paths to search for files.
-For more info on how to call LaTeXML, please refer to (commands)[http://dlmf.nist.gov/LaTeXML/manual/commands/].
+For more info on how to call LaTeXML, please refer to [commands](http://dlmf.nist.gov/LaTeXML/manual/commands/).
 
 ### Documentation
 Although LaTeXML-Plugin-sTeX doesn't come with much documentation itself, the use of 
 this plugin is well documented. The documentation has two components:
-* (sTeX)[https://github.com/KWARC/sTeX]: each sTeX package has its
+* [sTeX](https://github.com/KWARC/sTeX): each sTeX package has its
   corresponding LaTeXML bining, by looking at the sTeX documentations
   is a good way to know an intuitive understanding of how all the
   packages work. The LaTeXML bindings do try to mimic the behavior of
   TeX workflow but just has different output format. The TeX workflow
   produces pdf and the LaTeXML workflow produces xml, omdoc, html
   (still under development).
-* (LaTeXML)[http://dlmf.nist.gov/LaTeXML/docs.html]: having an
+* [LaTeXML](http://dlmf.nist.gov/LaTeXML/docs.html): having an
   intuitive understanding is beneficial and it is also important for
   you to understand how LaTeXML works if you want to change the
   behaviors of the bindings.
 
-
+### Copyright
 Copyright (c) 2015 Michael Kohlhase
 The package is distributed under the terms of the LaTeX Project Public License (LPPL)
 
