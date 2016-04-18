@@ -1,0 +1,12 @@
+\.git.+
+^pm_to_blib$
+\.bak$
+~$
+^\#
+^\.
+^Makefile$
+^Makefile.old$
+^blib/
+^prototests/
+^MYMETA.json
+^MYMETA.yml
