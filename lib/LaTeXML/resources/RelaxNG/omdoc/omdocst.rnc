@@ -11,7 +11,6 @@ constitutive.attribs = id.attribs &  attribute generated-from {omdocref}?
 sym.role.attrib = attribute role {"type" | "sort" | "object" |
 		                  "binder" | "attribution" | "application" | "constant" |
 		                  "semantic-attribution" | "error"}
-theory-unique  = xsd:NCName 
 scope.attrib = attribute scope {"global" | "local"}?
 symbol.attribs = scope.attrib & 
                          name.attrib & 
