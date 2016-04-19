@@ -72,8 +72,12 @@ DefEnvironment('{viewsketchenv} OptionalKeyVals:view {}{}',
   .  "#body"
   ."</omdoc:view>");
 DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' assertion='#3'/>");
+
+### we need a way to make a question mark that is not escaped,
+### but see https://github.com/brucemiller/LaTeXML/issues/733
+sub qmark { "?" };
 DefConstructor('\vassign[]{}{}',
-    "<omdoc:definition for='?#1(#1)(#from)" . '?' . "#2' type='simple'>"
+    "<omdoc:definition for='?#1(#1)(#from)&qmark()#2' type='simple'>"
    .  "<ltx:Math><ltx:XMath>#3</ltx:XMath></ltx:Math>"
    ."</omdoc:definition>",
    afterDigest=> sub {
@@ -82,7 +86,7 @@ DefConstructor('\vassign[]{}{}',
      $whatsit->setProperty('to',LookupValue("to_module"));
    });
 DefConstructor('\tassign[]{}{}',
-    "<omdoc:definition for='?#1(#1)(#from)?#2' type='simple'>"
+    "<omdoc:definition for='?#1(#1)(#from)&qmark()#2' type='simple'>"
    .  "<om:OMOBJ><om:OMS cd='#to' name='#3'/></om:OMOBJ>"
    ."</omdoc:definition>",
    afterDigest=> sub {
@@ -91,11 +95,13 @@ DefConstructor('\tassign[]{}{}',
      $whatsit->setProperty('to',LookupValue("to_module"));
    });
 DefConstructor('\ttassign[]{}{}',
-    "<omdoc:definition for='?#1(#1)(#from)?#2'>"
+    "<omdoc:definition for='?#1(#1)(#from)&qmark()#2'>"
    .  "<p>#3</p>"
    ."</omdoc:definition>",
    afterDigest=> sub {
      my ($stomach,$whatsit) = @_;
      $whatsit->setProperty('from',LookupValue("from_module"));
-   });
+	       });
+DefConstructor('\structure [] {}',
+   "<omdoc:term role='structure' name='#1'>#2</omdoc:term>");  
 1;
