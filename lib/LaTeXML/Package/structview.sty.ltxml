@@ -72,4 +72,30 @@ DefEnvironment('{viewsketchenv} OptionalKeyVals:view {}{}',
   .  "#body"
   ."</omdoc:view>");
 DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' assertion='#3'/>");
+DefConstructor('\vassign[]{}{}',
+    "<omdoc:definition for='?#1(#1)(#from)" . '?' . "#2' type='simple'>"
+   .  "<ltx:Math><ltx:XMath>#3</ltx:XMath></ltx:Math>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+     $whatsit->setProperty('to',LookupValue("to_module"));
+   });
+DefConstructor('\tassign[]{}{}',
+    "<omdoc:definition for='?#1(#1)(#from)?#2' type='simple'>"
+   .  "<om:OMOBJ><om:OMS cd='#to' name='#3'/></om:OMOBJ>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+     $whatsit->setProperty('to',LookupValue("to_module"));
+   });
+DefConstructor('\ttassign[]{}{}',
+    "<omdoc:definition for='?#1(#1)(#from)?#2'>"
+   .  "<p>#3</p>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+   });
 1;

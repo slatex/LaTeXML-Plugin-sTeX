@@ -155,36 +155,6 @@ DefEnvironment('{importmoduleenv} OptionalKeyVals:importmodule {}',
   ."</omdoc:imports>");
 DefConstructor('\importmoduleI OptionalKeyVals:importmodule Semiverbatim', '',
    afterDigest=> \&importmoduleI );
-DefConstructor('\vassign[]{}{}',
-    "<omdoc:requation>"
-   .  "<om:OMOBJ><om:OMS cd='?#1(#1)(#from)' name='#2'/></om:OMOBJ>"
-   .  "<ltx:Math><ltx:XMath>#3</ltx:XMath></ltx:Math>"
-   ."</omdoc:requation>",
-   afterDigest=> sub {
-     my ($stomach,$whatsit) = @_;
-     $whatsit->setProperty('from',LookupValue("from_module"));
-     $whatsit->setProperty('to',LookupValue("to_module"));
-   });
-DefConstructor('\tassign[]{}{}',
-    "<omdoc:requation>"
-   .  "<om:OMOBJ><om:OMS cd='?#1(#1)(#from)' name='#2'/></om:OMOBJ>"
-   .  "<om:OMOBJ><om:OMS cd='#to' name='#3'/></om:OMOBJ>"
-   ."</omdoc:requation>",
-   afterDigest=> sub {
-     my ($stomach,$whatsit) = @_;
-     $whatsit->setProperty('from',LookupValue("from_module"));
-     $whatsit->setProperty('to',LookupValue("to_module"));
-   });
-DefConstructor('\ttassign[]{}{}',
-    "<omdoc:requation>"
-   .  "<om:OMOBJ><om:OMS cd='?#1(#1)(#from)' name='#2'/></om:OMOBJ>"
-   .  "<p>#3</p>"
-   ."</omdoc:requation>",
-   afterDigest=> sub {
-     my ($stomach,$whatsit) = @_;
-     $whatsit->setProperty('from',LookupValue("from_module"));
-   });
-
 DefConstructor('\importOMDocmodule OptionalSemiverbatim {} Semiverbatim',
                "<omdoc:imports from='?#3(&canonical_omdoc_path(#3))###2'/>",
   afterDigest=>sub{
