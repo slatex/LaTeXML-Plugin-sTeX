@@ -237,8 +237,12 @@ DefConstructor('\@ergo',"\x{219D}");
 DefMacro('\ogre','\@ogre\xspace');
 DefConstructor('\@ogre',"\x{2B3F}");
 
-# experimental
+# experimental: Declarations 
 DefConstructor('\vdec {}',"<omdoc:declaration>#1</omdoc:declaration>");
 DefConstructor('\vids []{}',"<omdoc:identifiers refs='#1'>#2</omdoc:identifiers>");
 DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction>");
+DefConstructor('\strucdec [] {}',
+   "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
+DefConstructor('\impdec [] {}',
+   "<omdoc:declaration role='imports' name='#1'>#2</omdoc:declaration>");  
 1;

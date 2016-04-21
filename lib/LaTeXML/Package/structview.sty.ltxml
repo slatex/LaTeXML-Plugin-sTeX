@@ -102,6 +102,4 @@ DefConstructor('\ttassign[]{}{}',
      my ($stomach,$whatsit) = @_;
      $whatsit->setProperty('from',LookupValue("from_module"));
 	       });
-DefConstructor('\structure [] {}',
-   "<omdoc:term role='structure' name='#1'>#2</omdoc:term>");  
 1;
