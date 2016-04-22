@@ -243,6 +243,6 @@ DefConstructor('\vids []{}',"<omdoc:identifiers refs='#1'>#2</omdoc:identifiers>
 DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction>");
 DefConstructor('\strucdec [] {}',
    "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
-DefConstructor('\impdec [] {}',
-   "<omdoc:declaration role='imports' name='#1'>#2</omdoc:declaration>");  
+DefConstructor('\impdec {}',
+   "<omdoc:declaration role='imports'>#2</omdoc:declaration>");  
 1;
