@@ -15,15 +15,18 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# -1. Requirements:                                     #
+# =======================================================
+
+
 RequirePackage('mathhub');
-RawTeX('
-\newenvironment{importmhmodulevia}[3][]{%
-  \gdef\@@doit{\importmhmodule[#1]{#2}{#3}}%
-  \ifmod@show\par\noindent importing module #2 via \@@doit\fi
-}{%
-  \aftergroup\@@doit\ifmod@show end import\fi%
-}%
-');
+
+# =======================================================
+# 0. Introduce parameters:                              #
+# =======================================================
+
 DefKeyVal('mhview','id','Semiverbatim');
 DefKeyVal('mhview','display','Semiverbatim');
 DefKeyVal('mhview','creators','Semiverbatim');
@@ -36,6 +39,25 @@ DefKeyVal('mhview','torepos','Semiverbatim');
 DefKeyVal('mhview','frompath','Semiverbatim');
 DefKeyVal('mhview','topath','Semiverbatim');
 DefKeyVal('mhview','ext','Semiverbatim');
+
+# =======================================================
+# 1. Structures
+# =======================================================
+
+DefMacro('\mhstructure [] Semiverbatim Semiverbatim',
+         '\endgroup\importMHmoduleI[#1]{#3}\begin{mhstructurenv}[#1]{#2}{#3}');
+DefMacroI('\end{mhstructure}',undef,'\end{mhstructurenv}');
+
+DefEnvironment('{mhstructurenv} OptionalKeyVals:importmodule Semiverbatim Semiverbatim',
+   '<omdoc:structure name='#2' from="?&GetKeyVal(#1,"load")(&canonical_omdoc_path(&GetKeyVal(#1,"load")))()###2">'
+  .  "#body"
+  ."</omdoc:structure>");
+
+
+# =======================================================
+# 2. Views
+# =======================================================
+
 DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
   my $from = ToString(Digest($from_arg));
