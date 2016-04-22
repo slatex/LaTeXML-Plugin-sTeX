@@ -4,6 +4,7 @@
 
 \begin{module}[id=monoid,meta=http://kwarc.info/test?FOL]
  \importmodule{semigroup}
+\symdef[assocarg=1,name=structure]{mvstructure}[1]{\mixfixa[nobrackets]\langle{#1}\rangle{,}}
 \begin{MMT}[axioms]
   neut : G # e ^^1e
   eunit : ded (forall [x] x + e = x + e = e)^^1e

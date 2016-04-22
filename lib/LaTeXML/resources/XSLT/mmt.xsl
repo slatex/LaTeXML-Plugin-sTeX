@@ -71,7 +71,7 @@ delimiters -->
 		     | *[@class='ltx_ref ltx_markedasmath mmtRef ltx_ref_self']
 		     | *[@class='ltx_ref ltx_markedasmath mmtRef'] 
 	             | *[@class='ltx_ref mmtRef'] ">
-  xref<xsl:value-of select="@href" /> = <xsl:value-of select="@content" />^^1e
+  mixref<xsl:value-of select="@href" /> = <xsl:value-of select="@content" />^^1e
 </xsl:template>
 
 </xsl:stylesheet>

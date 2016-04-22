@@ -38,8 +38,13 @@ DefConstructor('\mmt OptionalKeyVals {}',
 		    my($stomach, $whatsit)=@_;
 		    StepCounter('mmt');
 		    return; } );
-DefConstructor('\MMTref []{}[]',
-	       "<omdoc:oref href='#2@#3' />");
+#DefConstructor('\mmt OptionalKeyVals {}',
+#                 "<ltx:text />");
+DefConstructor('\mmtref []{}[]',
+	       "<om:OMOBJ> "
+	       . "<om:OMV name='#1@#2@#3'/>".
+	       "</om:OMOBJ>");
+	    #   "<omdoc:oref href='#2@#3' />");
 
 sub mmt_afterDigest{
 	my($stomach, $whatsit)=@_;
@@ -49,7 +54,7 @@ sub mmt_afterDigest{
 	# Set the mmt counter
         my $mmtNum = CounterValue('mmt')->valueOf;
 	StepCounter('mmt');
-	my $mmtRef = $fileName. '#MMT'.$mmtNum;
+	my $mmtRef = 'mixref'.$mmtNum . ' ' . $fileName;
 	AssignValue('mmtRef' => $mmtRef, 'global');
 	return;
 }
@@ -64,5 +69,7 @@ DefEnvironment('{MMT} OptionalKeyVals:mmt@env',
          . "?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')') about='#body' />" ,	       	       
 	beforeDigest=> \&mmt_beforeDigest,
 	afterDigest=> \&mmt_afterDigest);
+
+
 	
 1;
