@@ -25,7 +25,7 @@ sub cvar_id {
   if (!$id) {
     $id=LookupValue('cvar_id') || 0;
     AssignValue('cvar_id', $id + 1, 'global'); }
-  "cvar.$id"; }#$
+  "cvar.$id"; }
 DefConstructor('\vname[]{}',
   "<ltx:XMWrap role='ID' xml:id='&cvar_id(#1)'>#2</ltx:XMWrap>",
   requireMath=>1);

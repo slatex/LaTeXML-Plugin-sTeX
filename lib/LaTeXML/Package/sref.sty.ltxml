@@ -75,7 +75,7 @@ afterConstruct => sub {
   $phrase_parent->removeAttribute('citeit-refs');
   $citenode->setAttribute('for',$id);
   $citenode->setAttribute('refs',$refs);
-});#$
+});
 DefEnvironment('{withcitation}{}',
    "<ltx:text citeit-refs='#1'>#body</ltx:text>");
 1;

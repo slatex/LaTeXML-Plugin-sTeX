@@ -57,7 +57,7 @@ DefEnvironment('{problem} OptionalKeyVals:problem',
      foreach my $i(0..$#vals) {
        $kv->setValue($keys[$i],$vals[$i]) if $vals[$i];
      }
-     return;});#$
+     return;});
 DefConstructor('\startsolutions','');
 DefConstructor('\stopsolutions','');
 DefKeyVal('soln','id','Semiverbatim');

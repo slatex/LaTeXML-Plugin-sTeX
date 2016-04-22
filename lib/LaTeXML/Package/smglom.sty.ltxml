@@ -62,7 +62,7 @@ DefConstructor('\g@import OptionalKeyVals:importmhmodule Semiverbatim Semiverbat
   $$whatsit{args}[1] = $name; # Intention: $whatsit->setArg(2,$name);
   undef $$whatsit{args}[2]; # Intention: $whatsit->deleteArg(3);
   importMHmoduleI($stomach,$whatsit);
-  return; }#$
+  return; }
 
 DefMacro('\guse[] Semiverbatim','\g@use[ext=tex,path=#2]{#1}{#2}');
 DefConstructor('\g@use OptionalKeyVals:importmhmodule Semiverbatim Semiverbatim',

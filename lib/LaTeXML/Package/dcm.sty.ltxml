@@ -35,7 +35,7 @@ chop $prop_role if $prop_role;
       } else {print STDERR "Warning: no $role with 'id' $id !\n";}
     }
   }
-  return;}#$
+  return;}
 DefEnvironment('{DCmetadata}[]', "<omdoc:metadata>#body</omdoc:metadata>");
 DefConstructor('\DCMcreators{}',sub{
   my ($document,$args,%properties) = @_;

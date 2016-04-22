@@ -23,8 +23,8 @@ ProcessOptions();
 RequirePackage('omtext');
 RequirePackage('latexml');## we should not use this, but only \lxDeclare 
 
-sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}#$
-sub dashed { join('-',map($_->toString,@_));}#$
+sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}
+sub dashed { join('-',map($_->toString,@_));}
 sub makeNCName {
   my ($name) = @_;
   my $ncname = ToString($name);
@@ -327,7 +327,7 @@ Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom
     my @defs = @$defsref;
     $whatsit->setProperty('defs',\@defs);
     AssignValue('defs',undef);
- return; });#$
+ return; });
 
 DefConstructor('\termref OptionalKeyVals:termref {}',
                "<omdoc:term "
@@ -418,7 +418,7 @@ sub defHelper{
   push(@$addr, $name) if ($addr and $name);
   $whatsit->setProperty('defindex', IfCondition(T_CS('\if@defindex')));
   $whatsit->setProperty(theory=>(LookupValue('modnl_signature') || LookupValue('current_module')));
- return;}#$
+ return;}
 
 ####### Deprecated functionality:
 RawTeX('

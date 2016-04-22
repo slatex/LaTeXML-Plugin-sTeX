@@ -52,7 +52,7 @@ DefEnvironment('{spfstep} OptionalKeyVals:pf',
         .  "<omdoc:CMP>#body</omdoc:derive>\n",
          beforeConstruct=>sub {
           $_[0]->maybeCloseElement('omdoc:CMP');
-         });#$
+         });
 DefEnvironment('{sproofcomment} OptionalKeyVals:pf',
        "<omdoc:omtext "
                .   "?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
@@ -145,7 +145,7 @@ Tag('omdoc:derive', afterClose=>sub {
           $node->removeChild($child);
         } else { $firstCMP = $child; }
       }
-    });#$
+    });
 Tag('omdoc:proof',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:derive',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:method',afterOpen=>\&numberIt,afterClose=>\&locateIt);

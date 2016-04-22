@@ -54,7 +54,7 @@ DefMacro('\textwarning','\@textwarning\xspace');
 DefConstructor('\@textwarning',"");
 DefMacro('\title[]{}', '\@add@frontmatter{ltx:title}{#1}');
 DefMacro('\date[]{}', '\@add@frontmatter{ltx:date}[role=creation]{#1}');
-DefMacro('\author[]{}', sub { andSplit(T_CS('\@author'),$_[1]); });#$
+DefMacro('\author[]{}', sub { andSplit(T_CS('\@author'),$_[1]); });
 DefEnvironment('{columns}',"#body");
 DefEnvironment('{column}{}',"#body");
 DefConstructor('\uncover','#1');

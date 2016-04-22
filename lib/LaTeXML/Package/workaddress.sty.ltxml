@@ -36,7 +36,7 @@ sub ExportMetadata {
    AssignValue('WA_'.$id.'_url',$url,'global') if $url;
    AssignValue('WA_'.$id.'_name',$name,'global') if $name;
   } else {print STDERR "Warning: key 'id' undefined in \\WAperson\n"};
-  return;}#$
+  return;}
 DefKeyVal('wa@person','id','Semiverbatim');
 DefKeyVal('wa@person','birthdate','Semiverbatim');
 DefKeyVal('wa@person','email','Semiverbatim');
@@ -62,7 +62,7 @@ afterDigest=>sub {
   $keys->setValue('name',$name);
   ExportMetadata($keys);
   return;
-});#$
+});
 DefKeyVal('wa@institution','id','Semiverbatim');
 DefKeyVal('wa@institution','url','Semiverbatim');
 DefKeyVal('wa@institution','partof','Semiverbatim');
@@ -74,5 +74,5 @@ afterDigest=>sub {
   $keys->setValue('name',$name);
   ExportMetadata($keys);
   return;
-});#$
+});
 1;

@@ -27,7 +27,7 @@ sub includemhassignment {
     $keyval->setValue('mhrepos',undef); }
   my $mathhub_base = ToString(Digest('\MathHub{}'));
   my $finalpath = $mathhub_base.$repo_path.'/source/'.ToString($arg2);
-  return Invocation(T_CS('\includeassignment'), $keyval, T_OTHER($finalpath)); }#$
+  return Invocation(T_CS('\includeassignment'), $keyval, T_OTHER($finalpath)); }
 DefKeyVal('inclprob','mhrepos','Semiverbatim');
 DefMacro('\includemhassignment OptionalKeyVals:inclprob {}', \&includemhassignment);
 sub inputmhassignment {
@@ -41,6 +41,6 @@ sub inputmhassignment {
     $keyval->setValue('mhrepos',undef); }
   my $mathhub_base = ToString(Digest('\MathHub{}'));
   my $finalpath = $mathhub_base.$repo_path.'/source/'.ToString($arg2);
-  return Invocation(T_CS('\inputassignment'), $keyval, T_OTHER($finalpath)); }#$
+  return Invocation(T_CS('\inputassignment'), $keyval, T_OTHER($finalpath)); }
 DefMacro('\inputmhassignment OptionalKeyVals:inclprob {}', \&inputmhassignment);
 1;

@@ -27,7 +27,7 @@ sub includemhproblem {
     $keyval->setValue('mhrepos',undef); }
   my $mathhub_base = ToString(Digest('\MathHub{}'));
   my $finalpath = $mathhub_base.$repo_path.'/source/'.ToString($arg2);
-  return Invocation(T_CS('\includeproblem'), $keyval, T_OTHER($finalpath)); }#$
+  return Invocation(T_CS('\includeproblem'), $keyval, T_OTHER($finalpath)); }
 DefKeyVal('inclprob','mhrepos','Semiverbatim');
 DefMacro('\includemhproblem OptionalKeyVals:inclprob {}', \&includemhproblem);
 1;

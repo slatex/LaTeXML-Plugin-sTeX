@@ -70,10 +70,10 @@ sub omdocColorMacro {
   (T_BEGIN, T_CS('\@omdoc@color'), T_BEGIN, $tok_color->unlist,
    T_END, T_CS('\@omdoc@color@content'), T_OTHER('['), $tok_color->unlist, T_OTHER(']'),
    T_BEGIN, $args[1]->unlist, T_END, T_END); }
-DefMacro('\@omdoc@color{}', sub { MergeFont(color=>$_[1]->toString); return; });#$
+DefMacro('\@omdoc@color{}', sub { MergeFont(color=>$_[1]->toString); return; });
 DefConstructor('\@omdoc@color@content[]{}',
   "?#isMath(#2)(<ltx:text ?#1(style='color:#1')()>#2</ltx:text>)");
 foreach my $color(qw(black gray blue red green cyan magenta brown yellow orange)) {
-  DefMacro("\\".$color.'{}', sub { omdocColorMacro($color, @_); }); }#$
+  DefMacro("\\".$color.'{}', sub { omdocColorMacro($color, @_); }); }
 DefConstructor('\newpage','');
 1;

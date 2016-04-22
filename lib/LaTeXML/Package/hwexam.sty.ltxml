@@ -48,7 +48,7 @@ DefEnvironment('{assignment} OptionalKeyVals:assig',
 #    foreach my $i(0..$#vals) {
 #       $kv->setValue($keys[$i],$vals[$i]) if $vals[$i];
 #     }}
-);#$
+);
 DefMacro('\includeassignment [] {}', sub {
   my ($stomach, $arg1, $arg2) = @_;
   AssignValue('inclassig',$arg1) if $arg1;

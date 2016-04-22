@@ -1,5 +1,6 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
+
 # | sTeX implementation for LaTeXML (omtext.sty)                        | #
 # | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
 # |=====================================================================| #
@@ -26,7 +27,7 @@ RequirePackage('modules');
 RequirePackage('lxRDFa');
 RequirePackage('latexsym');
 Tag('omdoc:metadata',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1,autoOpen=>1);
-Tag('omdoc:CMP', afterOpen => sub {AssignValue('_LastSeenCMP', $_[1], 'global');return;});#$
+Tag('omdoc:CMP', afterOpen => sub {AssignValue('_LastSeenCMP', $_[1], 'global');return;});
 DefParameterType('IfBeginFollows', sub {
    my ($gullet) = @_;
    $gullet->skipSpaces;
