@@ -7,6 +7,12 @@ use strict;
 use warnings;
 
 #======================================================================
+# Update omdoc+ltxml.model
+#======================================================================
+my $ifTrang = `command -v trang` or die "Trang is required but not installed";
+my $updateModel = `cd lib/LaTeXML/resources/RelaxNG/; make; make distclean`;
+
+#======================================================================
 # Use "perl Makefile.PL <options>"
 #======================================================================
 WriteMakefile(
