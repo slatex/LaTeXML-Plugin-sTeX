@@ -4,7 +4,7 @@ language: perl
 
 before_install:
  - sudo apt-get update -qq 
- - sudo apt-get install -qq libdb-dev libxml2-dev libxslt1-dev texlive-latex-base trang
+ - sudo apt-get install -qq libdb-dev libxml2-dev libxslt1-dev texlive-latex-base trang bash
 
 install:
  - cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
