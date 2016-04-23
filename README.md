@@ -10,7 +10,7 @@ have LaTeXML installed, whose installation steps can be found
 [here](http://dlmf.nist.gov/LaTeXML/get.html).
 
 #### Trang
-This plug will also need
+This plug in will also need
 [Trang](http://www.thaiopensource.com/relaxng/trang.html) for
 transforming the schema. 
 ##### MAC OS 
