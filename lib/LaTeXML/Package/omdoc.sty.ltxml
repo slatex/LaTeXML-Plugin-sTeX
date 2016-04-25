@@ -16,11 +16,23 @@ use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(abs_path);
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('sref');
 RequirePackage('xspace');
 RequirePackage('pathsuris');
+
+# =======================================================
+# 1. Document structure                                 #
+# =======================================================
 DefMacro('\currentsectionlevel','\@currentsectionlevel\xspace');
 DefMacro('\Currentsectionlevel','\@Currentsectionlevel\xspace');
 DefConstructor('\@currentsectionlevel',
@@ -47,12 +59,19 @@ DefConstructor('\tableofcontents',
 Tag('omdoc:tableofcontents',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 DefConstructor('\bibliography{}',"<omdoc:bibliography files='#1'/>");
 Tag('omdoc:bibliography',afterOpen=>\&numberIt,afterClose=>\&locateIt);
+
+# =======================================================
+# 2. Ignoring inputs                                    #
+# =======================================================
 DefKeyVal('ignore','type','Semiverbatim');
 DefKeyVal('ignore','comment','Semiverbatim');
 DefEnvironment('{ignore} OptionalKeyVals:ignore',
                "<omdoc:ignore  %&GetKeyVals(#1)>#body</omdoc:ignore>");
 Tag('omdoc:ignore',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
+# =======================================================
+# 3. Structure sharing                                  #
+# =======================================================
 DefConstructor('\STRlabel{}{}', sub {
   my($document,$label,$object)=@_;
   $document->absorb($object);
@@ -64,6 +83,10 @@ DefConstructor('\STRsemantics[]{}{}', sub {
   $document->absorb($object);
   $document->addAttribute('xml:id'=>ToString($label)) if $label; });
 DefMacro('\STRlabeldef{}{}', "");
+
+# =======================================================
+# 4. Colors                                  #
+# =======================================================
 sub omdocColorMacro {
   my ($color, @args) = @_;
   my $tok_color = TokenizeInternal($color);

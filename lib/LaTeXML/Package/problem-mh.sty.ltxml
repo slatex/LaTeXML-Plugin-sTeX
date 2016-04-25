@@ -15,7 +15,15 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('mathhub');
+
+# =======================================================
+# 2. Support for Problems:                              #
+# =======================================================
 sub includemhproblem {
   my ($gullet,$keyval,$arg2) = @_;
   my $repo_path;

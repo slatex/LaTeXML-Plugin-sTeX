@@ -14,9 +14,17 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('showmeta', '');
 DeclareOption(undef, '');
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('keyval');
 DefConstructor('\showmetakeys','');
 DefConstructor('\hidemetakeys','');

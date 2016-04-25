@@ -15,14 +15,23 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DefConditional('\if@defindex');
-
 DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('omtext');
 RequirePackage('latexml');## we should not use this, but only \lxDeclare 
 
+# =======================================================
+# 2. Core functionality:                                #
+# =======================================================
 sub lowcase {my ($string) = @_; $string ? return lc(ToString($string)) : return('')}
 sub dashed { join('-',map($_->toString,@_));}
 sub makeNCName {
@@ -68,6 +77,9 @@ sub hash_wrapper{
   "#$output"||'';
 }
 
+# =======================================================
+# 2.1 Axioms and Assertions:                            #
+# =======================================================
 DefStatement('{assertion} OptionalKeyVals:omtext',
   "<omdoc:assertion "
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
@@ -92,6 +104,9 @@ DefStatement('{axiom} OptionalKeyVals:omtext',
  . "#body"
   . "</omdoc:axiom>\n");
 
+# =======================================================
+# 2.2 Symbols I:                                        #
+# =======================================================
 DefStatement('{symboldec} OptionalKeyVals:symboldec',
        "<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
@@ -101,6 +116,9 @@ DefStatement('{symboldec} OptionalKeyVals:symboldec',
       .  "<dc:description>#body"
       ."</omdoc:symbol>\n");
 
+# =======================================================
+# 2.3 Types:                                            #
+# =======================================================
 DefConstructor('\symtype OptionalKeyVals:omtext {}{}',
   "<omdoc:type for='#2'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
@@ -125,6 +143,9 @@ DefStatement('{typedec} OptionalKeyVals:omtext {}',
  .  "#body"
  ."</omdoc:type>");
 
+# =======================================================
+# 2.4 Definitions and Definienda:                       #
+# =======================================================
 sub definitionBody {
     my ($doc, $keyvals, %props) = @_;
     my $for = $keyvals->getValue('for') if $keyvals;
@@ -268,6 +289,9 @@ DefConstructor('\adefiii[]{}{}{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'adefiii')},
        alias=>'\adefiii');
 
+# =======================================================
+# 2.5 Examples:                                         #
+# =======================================================
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
 
@@ -277,6 +301,9 @@ DefConstructor('\inlineass OptionalKeyVals:omtext {}',
             .    "#2"
             . "</ltx:text>");
 
+# =======================================================
+# 2.5 Symbols II:                                       #
+# =======================================================
 DefConstructor('\inlinedef OptionalKeyVals:omtext {}', sub {
  my ($document, $keyvals, $body, %props) = @_;
  my $for = $keyvals->getValue('for') if $keyvals;
@@ -329,6 +356,9 @@ Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom
     AssignValue('defs',undef);
  return; });
 
+# =======================================================
+# 3. Cross-Referencing Symbols and Concepts:            #
+# =======================================================
 DefConstructor('\termref OptionalKeyVals:termref {}',
                "<omdoc:term "
               .  "?&GetKeyVal(#1,'cdbase')(cdbase='&GetKeyVal(#1,'cdbase')')() "
@@ -375,7 +405,7 @@ Tag('omdoc:type',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:term',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
 # =======================================================
-#  Auxiliary Functions:                               #
+# 4. Auxiliary Functions:                               #
 # =======================================================
 
 sub DefStatement {

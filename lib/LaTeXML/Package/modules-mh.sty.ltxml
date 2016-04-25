@@ -15,12 +15,24 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('mathhub');
+
+# =======================================================
+# 2. Introduce parameters:                              #
+# =======================================================
 DefKeyVal('importmhmodule','id','Semiverbatim');
 DefKeyVal('importmhmodule','repos','Semiverbatim');
 DefKeyVal('importmhmodule','path','Semiverbatim');
 DefKeyVal('importmhmodule','ext','Semiverbatim');
 DefKeyVal('importmhmodule','conservative','Semiverbatim');
+
+# =======================================================
+# 3. MH variants for modules                            #
+# =======================================================
 DefConstructor('\importmhmodule OptionalKeyVals:importmhmodule Semiverbatim',
        "<omdoc:imports "
        . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"

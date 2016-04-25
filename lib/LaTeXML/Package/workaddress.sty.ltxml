@@ -16,10 +16,22 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Global;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef,sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('sref');
- sub getKeyValue_noDelim {
+
+# =======================================================
+# 2. Core functionality:                                #
+# =======================================================
+sub getKeyValue_noDelim {
  my ($keyval,$key)=@_;
  my $valuelist = $keyval && ToString($keyval->getValue($key));
  $valuelist =~ s/^{(.*)}$/$1/g if $valuelist;
@@ -37,6 +49,10 @@ sub ExportMetadata {
    AssignValue('WA_'.$id.'_name',$name,'global') if $name;
   } else {print STDERR "Warning: key 'id' undefined in \\WAperson\n"};
   return;}
+
+# =======================================================
+# 2.1 Persons:                                          #
+# =======================================================
 DefKeyVal('wa@person','id','Semiverbatim');
 DefKeyVal('wa@person','birthdate','Semiverbatim');
 DefKeyVal('wa@person','email','Semiverbatim');
@@ -63,6 +79,10 @@ afterDigest=>sub {
   ExportMetadata($keys);
   return;
 });
+
+# =======================================================
+# 2.2 Institutions:                                     #
+# =======================================================
 DefKeyVal('wa@institution','id','Semiverbatim');
 DefKeyVal('wa@institution','url','Semiverbatim');
 DefKeyVal('wa@institution','partof','Semiverbatim');

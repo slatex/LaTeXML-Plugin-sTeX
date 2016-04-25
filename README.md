@@ -1,9 +1,28 @@
 # LaTeXML-Plugin-sTeX
 
 This is a [LaTeXML](http://dlmf.nist.gov/LaTeXML/) plugin for
-[sTeX](http://github.com/KWARC/sTeX). You will only be able to use this plugin after you
+[sTeX](http://github.com/KWARC/sTeX).
+
+### Prerequisites
+#### LaTeXML
+ You will only be able to use this plugin after you
 have LaTeXML installed, whose installation steps can be found
 [here](http://dlmf.nist.gov/LaTeXML/get.html).
+
+#### Trang
+This plug in will also need
+[Trang](http://www.thaiopensource.com/relaxng/trang.html) for
+transforming the schema. 
+##### MAC OS 
+```
+brew install trang
+```
+##### Linux
+```
+sudo apt-get install trang
+```
+##### Windows 
+You can build trang from [Github](https://github.com/relaxng/jing-trang).
 
 ### How to install 
 Currently you can do the installation via `cpanm` or manually. Even though the two methods
