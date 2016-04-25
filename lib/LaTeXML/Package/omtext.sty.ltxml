@@ -16,16 +16,28 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('mh', sub { AssignValue ('@omtext' => 1,'global');
 PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 DeclareOption('noindex','');
 DeclareOption(undef,sub {PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@omtext')) {RequirePackage('omtext-mh');}
 RequirePackage('xspace');
 RequirePackage('modules');
 RequirePackage('lxRDFa');
 RequirePackage('latexsym');
+
+# =======================================================
+# 2. Mathematical Text:                                 #
+# =======================================================
 Tag('omdoc:metadata',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1,autoOpen=>1);
 Tag('omdoc:CMP', afterOpen => sub {AssignValue('_LastSeenCMP', $_[1], 'global');return;});
 DefParameterType('IfBeginFollows', sub {
@@ -49,6 +61,10 @@ DefKeyVal('omtext','start','Plain'); #Math mode in start phrases
 DefKeyVal('omtext','theory','Semiverbatim');
 DefKeyVal('omtext','continues','Semiverbatim');
 DefKeyVal('omtext','verbalizes','Semiverbatim');
+
+# =======================================================
+# 2. Core omtext:                                       #
+# =======================================================
 DefEnvironment('{omtext} OptionalKeyVals:omtext',
   "<omdoc:omtext "
      . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
@@ -59,6 +75,10 @@ DefEnvironment('{omtext} OptionalKeyVals:omtext',
   .     "?&GetKeyVal(#1,'start')(<ltx:text class='startemph'>&GetKeyVal(#1,'start')</ltx:text>)()"
                   .     "#body"
                  ."</omdoc:omtext>",  afterDigestBegin=>\&declareFunctions,);
+
+# =======================================================
+# 3. Phrase-Level Markup:                               #
+# =======================================================
 DefKeyVal('phrase','id','Semiverbatim');
 DefKeyVal('phrase','style','Semiverbatim');
 DefKeyVal('phrase','class','Semiverbatim');
@@ -80,6 +100,10 @@ DefConstructor('\sinlinequote [] {}',
                . "?#1(<dc:source>#1</dc:source>\n)()"
                . "#2"
             . "</ltx:quote>");
+
+# =======================================================
+# 3. Block-Level Markup:                                #
+# =======================================================
 DefEnvironment('{sblockquote} []',
   "<ltx:quote>?#1(<ltx:note role='source'>#1</ltx:note>)()#body</ltx:quote>");
 DefEnvironment('{sboxquote} []',
@@ -92,6 +116,10 @@ RawTeX('
 \newcommand\mybgraphics[2][]{\fbox{\mygraphics[#1]{#2}}}
 \newcommand\mycbgraphics[2][]{\begin{center}\fbox{\mygraphics[#1]{#2}}\end{center}}
 ');
+
+# =======================================================
+# 4. Index Markup:                                      #
+# =======================================================
 DefConstructor('\indexalt[]{}{}',
        "<omdoc:idx>"
       .  "<omdoc:idt>#2</omdoc:idt>"
@@ -229,6 +257,10 @@ sub locateIt {
   $node->setAttribute('stex:srcref' => $locator);
   return;
 }
+
+# =======================================================
+# 5. Miscellaneous:                                     #
+# =======================================================
 DefMacro('\hateq','\@hateq\xspace');
 DefConstructor('\@hateq',"\x{2259}");
 DefMacro('\hatequiv','\@hatequiv\xspace');

@@ -15,7 +15,15 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('keyval');
+
+# =======================================================
+# 1. General infrastructure :                           #
+# =======================================================
 DefMacro('\mhcurrentrepos{}','\@mhcurrentrepos{#1}');
 DefMacro('\@mhcurrentrepos{}','\def\mh@currentrepos{#1}\@@mhcurrentrepos{#1}');
 DefConstructor('\@@mhcurrentrepos{}','',

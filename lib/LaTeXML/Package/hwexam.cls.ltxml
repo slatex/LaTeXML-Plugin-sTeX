@@ -16,6 +16,10 @@ use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(cwd abs_path);
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef,sub{
    PassOptions('omdoc','cls',ToString(Digest(T_CS('\CurrentOption'))));
    PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));
@@ -23,6 +27,10 @@ DeclareOption(undef,sub{
    PassOptions('tikzinput','cls',ToString(Digest(T_CS('\CurrentOption'))));
 });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 LoadClass('omdoc');
 RequirePackage('stex');
 RequirePackage('hwexam');

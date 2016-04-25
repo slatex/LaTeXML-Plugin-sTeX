@@ -14,6 +14,10 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef, sub {PassOptions('statements','sty',ToString(Digest(T_CS('\CurrentOption'))));
   PassOptions('structview','sty',ToString(Digest(T_CS('\CurrentOption'))));
   PassOptions('sproof','sty',ToString(Digest(T_CS('\CurrentOption'))));
@@ -22,6 +26,10 @@ DeclareOption(undef, sub {PassOptions('statements','sty',ToString(Digest(T_CS('\
   PassOptions('dcm','sty',ToString(Digest(T_CS('\CurrentOption'))));
 });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('stex-logo');
 RequirePackage('structview');
 RequirePackage('statements');

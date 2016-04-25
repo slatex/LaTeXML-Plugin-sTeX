@@ -17,6 +17,10 @@ use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(abs_path);
 ProcessOptions();
+
+# =======================================================
+# 1. Base URIs:                                         #
+# =======================================================
 DefMacro('\baseURI []Semiverbatim', sub {
    my $baselocal = ToString(Digest($_[1]));
    $baselocal = abs_path($baselocal) unless $baselocal=~/^(\w+):\/\//;
@@ -24,6 +28,9 @@ DefMacro('\baseURI []Semiverbatim', sub {
    AssignValue('URLBASE'=>ToString(Digest($_[2])),'global');
  });
 
+# =======================================================
+# 2. Using Absolute Paths:                              #
+# =======================================================
 DefMacro('\defpath[]{}{}', sub {
    my ($gullet,$arg1,$arg2,$arg3)=@_;
    $arg2 = ToString($arg2);

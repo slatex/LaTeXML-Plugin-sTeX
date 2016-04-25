@@ -15,7 +15,15 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('mathhub');
+
+# =======================================================
+# 1. Support for MiKo slides:                           #
+# =======================================================
 DefKeyVal('Gin','mhrepos','Semiverbatim');
 RawTeX('
 \newcommand\mhframeimage[2][]{%

@@ -16,16 +16,28 @@ use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(cwd abs_path);
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('mh', sub { AssignValue('@hwexam' => 1,'global');
 PassOptions('problem','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('test', '');
 DeclareOption('multiple', '');
 DeclareOption(undef, sub {PassOptions('problem','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if (LookupValue('@hwexam')){RequirePackage('hwexam-mh');}
 RequirePackage('problem');
 RegisterNamespace('assig'=>"http://omdoc.org/ontology/assignments#");
 RegisterDocumentNamespace('assig'=>"http://omdoc.org/ontology/assignments#");
+
+# =======================================================
+# 2. Assignment:                                        #
+# =======================================================
 DefEnvironment('{assignment} OptionalKeyVals:assig',
   "<omdoc:omgroup ?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
   .  "assig:dummy='for the namespace'>"
@@ -49,12 +61,20 @@ DefEnvironment('{assignment} OptionalKeyVals:assig',
 #       $kv->setValue($keys[$i],$vals[$i]) if $vals[$i];
 #     }}
 );
+
+# =======================================================
+# 2.1 Including assignments:                            #
+# =======================================================
 DefMacro('\includeassignment [] {}', sub {
   my ($stomach, $arg1, $arg2) = @_;
   AssignValue('inclassig',$arg1) if $arg1;
   (Invocation(T_CS('\input'),$arg2)->unlist);
 });
 DefMacro('\inputassignment [] {}','\includeassignment[#1]{#2}');
+
+# =======================================================
+# 3.Typesetting exams:                                  #
+# =======================================================
 DefEnvironment('{testheading}OptionalKeyVals:omdoc','');
 DefConstructor('\testspace{}','');
 DefConstructor('\testnewpage','');
