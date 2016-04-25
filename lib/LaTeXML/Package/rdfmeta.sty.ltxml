@@ -14,13 +14,25 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('sectioning','');
 DeclareOption(undef,sub
     {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption'))));
      PassOptions('omdoc','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('sref');
 RequirePackage('modules');
+
+# =======================================================
+# 1. Key Definitions:                                   #
+# =======================================================
 DefConstructor('\keydef','');
 DefConstructor('\listkeydef','');
 1;

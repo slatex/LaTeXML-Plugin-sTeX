@@ -15,8 +15,16 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('mathhub');
 RequirePackage('pathsuris');
+
+# =======================================================
+# 2. Support for tikzinput:                             #
+# =======================================================
 RawTeX('
 \define@key{Gin}{mhrepos}{\csxdef\Gin@mhrepos{#1}}
 \newcommand\mhtikzinput[2][]{\def\Gin@mhrepos{}\setkeys{Gin}{#1}%

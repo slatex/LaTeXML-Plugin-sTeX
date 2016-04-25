@@ -14,6 +14,10 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('notes', '');
 DeclareOption('slides', '');
 DeclareOption('noproblems', '');
@@ -27,6 +31,10 @@ DeclareOption(undef, sub {PassOptions('stex','sty',ToString(Digest(T_CS('\Curren
 ProcessOptions();
 RawTeX('\newif\ifnotes\notesfalse');
 RawTeX('\newif\ifproblems\problemsfalse');
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@mikoslides')) {RequirePackage('mikoslides-mh');}
 RequirePackage('stex');
 RequirePackage('smglom');
@@ -38,6 +46,10 @@ RequirePackage('url');
 DefRegister('\slidewidth'     => Dimension('13.6cm'));
 DefRegister('\slideheight'     => Dimension('9cm'));
 DefEnvironment('{note}','#body');
+
+# =======================================================
+# 2. Notes and slides:                                  #
+# =======================================================
 DefEnvironment('{frame}[]',
    "<omdoc:omgroup layout='slide'>"
   .  "#body\n"
@@ -59,7 +71,7 @@ DefEnvironment('{columns}',"#body");
 DefEnvironment('{column}{}',"#body");
 DefConstructor('\uncover','#1');
 #Define a Beamer Overlay Parameter type
- DefParameterType('BeamerOverlay', sub {
+DefParameterType('BeamerOverlay', sub {
    my ($gullet) = @_;
    my $tok = $gullet->readXToken;
    if (ref $tok && ToString($tok) eq '<') {
@@ -103,7 +115,15 @@ DefConstructor('\beamer@description@item[] OptionalBeamerOverlay',
        "<omdoc:di ?#2(overlay='&overlayFrom(#2)')() >"
        . "?#1(<omdoc:dt>#1</omdoc:dt>)()<omdoc:dd>", # trust di and dt to autoclose
        properties=>sub{ RefStepItemCounter(); });
+
+# =======================================================
+# 3. Front Matter, Titles, etc                          #
+# =======================================================
 DefMacro('\putgraphicsat{}{}{}','\mygraphics[#2]{#3}');
 DefMacro('\putat{}{}','#2');
+
+# =======================================================
+# 4. Problems                                           #
+# =======================================================
 DefEnvironment('{problems}','#body');
 1;

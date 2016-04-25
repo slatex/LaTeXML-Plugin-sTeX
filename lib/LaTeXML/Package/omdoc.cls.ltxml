@@ -16,6 +16,10 @@ use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(abs_path);
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 AssignValue('omdoc@class'=>'article');
 DeclareOption('report', sub {AssignValue('omdoc@class' => 'report');
   PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));
@@ -27,6 +31,10 @@ DeclareOption(undef, sub  {PassOptions('omdoc@cls','cls',ToString(Digest(T_CS('\
   PassOptions('omdoc','sty',ToString(Digest(T_CS('\CurrentOption'))));
   PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 my $class = LookupValue('omdoc@class');
 LoadClass($class);
 RegisterNamespace('omdoc'=>"http://omdoc.org/ns");
@@ -46,6 +54,10 @@ RelaxNGSchema('omdoc+ltxml',
        'ltx'=>"http://dlmf.nist.gov/LaTeXML");
 RequirePackage('omdoc');
 RequirePackage('stex');
+
+# =======================================================
+# 2. Document structure                                 #
+# =======================================================
 sub xmlBase {
   my $baseuri = LookupValue('URLBASE');
   $baseuri =~ s/\/$//g; # No trailing slashes
@@ -88,6 +100,10 @@ DefEnvironment('{document}',
   mode => 'text');
 Tag('omdoc:omdoc', 'afterOpen:late'=>\&insertFrontMatter,
        afterOpen=>\&numberIt,afterClose=>\&locateIt);
+
+# =======================================================
+# 2. Front and Backmatter:                              #
+# =======================================================
 DefEnvironment('{frontmatter}','#body');
 DefEnvironment('{backmatter}','#body');
 

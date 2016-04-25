@@ -15,13 +15,25 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('mathhub');
+
+# =======================================================
+# 2. Introduce parameters:                              #
+# =======================================================
 DefKeyVal('mhmodnl','title','Semiverbatim');
 DefKeyVal('mhmodnl','repos','Semiverbatim');
 DefKeyVal('mhmodnl','path','Semiverbatim');
 DefKeyVal('mhmodnl','creators','Semiverbatim');
 DefKeyVal('mhmodnl','contributors','Semiverbatim');
 DefKeyVal('mhmodnl','primary','Semiverbatim');
+
+# =======================================================
+# 3. MH Variants for Multilinguality:                   #
+# =======================================================
 DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
          "?#excluded()(<omdoc:theory xml:id='#2.#3' >"
          .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"

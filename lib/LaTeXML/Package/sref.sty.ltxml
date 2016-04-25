@@ -14,11 +14,23 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DefConditional('\if@extrefs');
 DeclareOption('extrefs', sub{Digest(T_CS('\@extrefstrue')); });
 DeclareOption(undef,sub {PassOptions('metakeys','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('metakeys');
+
+# =======================================================
+# 1. Cross-Referencing:                                 #
+# =======================================================
 DefKeyVal('sref','linktext','Semiverbatim');
 DefKeyVal('sref','fallback','Semiverbatim');
 DefKeyVal('sref','pre','Semiverbatim');
@@ -36,7 +48,11 @@ DefConstructor('\srefs[]{}',
 DefConstructor('\srefl[]{}',
  "<omdoc:oref href='&withhash()#2'/>");
 DefConstructor('\spageref{}',
- "<omdoc:oref href='&withhash()#1'/>");
+    "<omdoc:oref href='&withhash()#1'/>");
+
+# =======================================================
+# 2. Inter-Document Crossreferencing:                   #
+# =======================================================
 DefConstructor('\makeextrefs{}','');
 DefConstructor('\extref[]{}{}',
   "<omdoc:oref href='#2@#3'/>");
@@ -47,6 +63,11 @@ DefConstructor('\theextref','');
 DefConstructor('\extrefstyle{}{}',"");
 DefConstructor('\extrefstyle{}{}',"");
 DefConstructor('\inputrefs{}{}','');
+
+# =======================================================
+# 3. Semantic Versions of Commonly                      #
+#    used Referencing Commands                          #
+# =======================================================
 DefEnvironment('{sequation} OptionalKeyVals',
        "<ltx:equation "
              .     "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')' "
@@ -60,6 +81,10 @@ DefEnvironment('{sequation} OptionalKeyVals',
        locked=>1);
 DefMacro('\seqnarray OptionalKeyVals','\begin{eqnarray*}');
 DefMacro('\endseqnarray','\end{eqnarray*}');
+
+# =======================================================
+# 4. Semantic Citations:                                #
+# =======================================================
 DefMacro('\withcite{}{}','\begin{withcitation}{#1}#2\citeit\end{withcitation}');
 DefConstructor('\citeit',"<omdoc:citation/> ",
 afterConstruct => sub {
