@@ -5,11 +5,18 @@
 use ExtUtils::MakeMaker;
 use strict;
 use warnings;
+require Term::ANSIColor;
+use Term::ANSIColor;
 
 #======================================================================
 # Update omdoc+ltxml.model
 #======================================================================
-my $ifTrang = `type trang` or die "Trang is required but not installed";
+my $ifTrang = `type trang`;
+print color 'red';
+print "\nTrang is not found which could lead to a make failure.
+You can ignore this message if you do not intend to change the schema.
+See README for more info!\n\n" unless $ifTrang;
+print color 'reset';
 my $updateModel = `cd lib/LaTeXML/resources/RelaxNG/; make; make distclean`;
 
 #======================================================================
