@@ -55,7 +55,7 @@ term.model = inline.model
 term = element term {tref|(term.attribs & term.model)}
 
 forids.attrib = attribute for {xsd:IDREFS}
-declaration.attribs = id.attribs & role.attrib & forids.attrib
+declaration.attribs = id.attribs & role.attrib & forids.attrib?
 declaration.model = text & inline.class &  condition* & restriction* 
 declaration= element declaration {tref|(declaration.attribs & declaration.model)}
 
