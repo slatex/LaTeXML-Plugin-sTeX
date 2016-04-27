@@ -245,5 +245,5 @@ DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction
 DefConstructor('\strucdec [] {}',
    "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
 DefConstructor('\impdec {}',
-   "<omdoc:declaration role='imports'>#2</omdoc:declaration>");  
+   "<omdoc:declaration role='imports'>#1</omdoc:declaration>");  
 1;
