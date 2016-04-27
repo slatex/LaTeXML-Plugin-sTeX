@@ -15,11 +15,19 @@ package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use Unicode::Normalize;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('mh', sub {  AssignValue ('@tikzinput' => 1,'global');
 PassOptions('tikz','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('image', sub { AssignValue('tikzinput@image' => 1); });
 DeclareOption(undef,sub {PassOptions('tikz','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@tikzinput')) {RequirePackage('tikzinput-mh');}
 if (LookupValue('tikzinput@image')) {
 RequirePackage('graphicx');
@@ -28,6 +36,10 @@ RawTeX(' \providecommand\usetikzlibrary[1]{}'); }
 else {
 RequirePackage('tikz');
 RequirePackage('standalone');}
+
+# =======================================================
+# 2. Inputting Standalone TIKZ Pictures:                #
+# =======================================================
 if (LookupValue('tikzinput@image')) {
 DefMacro('\tikzinput[] {}','\includegraphics[#1]{#2}');}
 else {DefMacro('\tikzinput[] {}','\input{#2}');}

@@ -14,9 +14,22 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('sref');
+
+# =======================================================
+# 2. Proofs:                                      #
+# =======================================================
+
 DefConstructor('\sproofend',"");
 DefConstructor('\sProofEndSymbol{}','');
 DefConstructor('\spfsketch OptionalKeyVals:pf{}',
@@ -90,6 +103,10 @@ DefConstructor('\spfcasesketch OptionalKeyVals:pf{}{}',
                .      "</omdoc:omtext>\n)()"
        . "#3"
      . "</omdoc:proof>\n");
+
+# =======================================================
+# 3. Justifications:                                    #
+# =======================================================							   
 DefKeyVal('just','id','Semiverbatim');
 DefKeyVal('just','method','Semiverbatim');
 DefKeyVal('just','premises','Semiverbatim');

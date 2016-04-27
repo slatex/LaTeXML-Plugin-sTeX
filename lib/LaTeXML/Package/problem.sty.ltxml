@@ -14,6 +14,10 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 RawTeX('
 \newif\ifexnotes\exnotesfalse
 \newif\ifhints\hintsfalse
@@ -32,10 +36,18 @@ DeclareOption('min', '');
 DeclareOption('boxed', '');
 DeclareOption(undef,sub {PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@problem')) {RequirePackage('problem-mh');}
 RequirePackage('omtext');
 RegisterNamespace('prob'=>"http://omdoc.org/ontology/problems#");
 RegisterDocumentNamespace('prob'=>"http://omdoc.org/ontology/problems#");
+
+# =======================================================
+# 2. Core problem functionality:                        #
+# =======================================================
 DefEnvironment('{problem} OptionalKeyVals:problem',
  "<omdoc:exercise ?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')()>"
 .    "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
@@ -58,6 +70,10 @@ DefEnvironment('{problem} OptionalKeyVals:problem',
        $kv->setValue($keys[$i],$vals[$i]) if $vals[$i];
      }
      return;});
+
+# =======================================================
+# 2.1 Starting and Stopping Solutions:                  #
+# =======================================================
 DefConstructor('\startsolutions','');
 DefConstructor('\stopsolutions','');
 DefKeyVal('soln','id','Semiverbatim');
@@ -71,6 +87,10 @@ DefEnvironment('{solution} OptionalKeyVals:soln',
      . "</omdoc:solution>");
 DefEnvironment('{exnote}',"<omdoc:hint>#body</omdoc:hint>");
 DefEnvironment('{hint}',"<omdoc:hint>#body</omdoc:hint>");
+
+# =======================================================
+# 2.2 Including Problems:                               #
+# =======================================================
 DefConstructor('\pts{}',"");
 DefConstructor('\min{}',"");
 DefKeyVal('prob','pts','Semiverbatim');

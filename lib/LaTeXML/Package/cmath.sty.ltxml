@@ -14,10 +14,21 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef, sub{PassOptions('presentation','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('presentation');
 
+# =======================================================
+# 2. The user interface:                                #
+# =======================================================
 # return: unique ID for variable
 sub cvar_id {
   my ($id) = @_;
@@ -26,6 +37,10 @@ sub cvar_id {
     $id=LookupValue('cvar_id') || 0;
     AssignValue('cvar_id', $id + 1, 'global'); }
   "cvar.$id"; }
+
+# =======================================================
+# 2.1 Variable names:                                   #
+# =======================================================
 DefConstructor('\vname[]{}',
   "<ltx:XMWrap role='ID' xml:id='&cvar_id(#1)'>#2</ltx:XMWrap>",
   requireMath=>1);
@@ -40,6 +55,10 @@ DefMacro('\primvar[]{}',    '\vname[#1]{#2^\prime}');
 DefMacro('\pprimvar[]{}',   '\vname[#1]{#2^{\prime\prime}}');
 # \nappa{<function>}{<(var)(,\1)*>}
 # @#1(#2)
+
+# =======================================================
+# 2.2 Applications:                                     #
+# =======================================================
 DefConstructor('\nappa[]{}{}',
   "<ltx:XMApp>"
     ."#2"
@@ -91,6 +110,9 @@ DefMacro('\anappf[]{}{}{}{}',  '\@anapp@seq[#1]{#2}{#3{#4}}{#3{#5}}');
 DefMacro('\anappli[]{}{}{}{}', '\@anapp@seq[#1]{#2}{#3_{#4}}{#3_{#5}}');
 DefMacro('\anappui[]{}{}{}{}', '\@anapp@seq[#1]{#2}{#3^{#4}}{#3^{#5}}');
 
+# =======================================================
+# 3. Sharing:                                           #
+# =======================================================
 # copied over from latexml.sty.ltxml (we do not want the rest).
 DefMacro('\LXMID{}{}', '\@XMArg{#1}{#2}');
 DefMacro('\LXMRef{}', '\@XMRef{#1}');
