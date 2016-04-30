@@ -1,6 +1,4 @@
 Changes
-lib/LaTeXML/Package/#sproof.sty.ltxml#
-lib/LaTeXML/Package/#sref.sty.ltxml#
 lib/LaTeXML/Package/cmath.sty.ltxml
 lib/LaTeXML/Package/dcm.sty.ltxml
 lib/LaTeXML/Package/hwexam-mh.sty.ltxml
