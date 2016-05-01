@@ -34,6 +34,7 @@ lib/LaTeXML/Package/structview.sty.ltxml
 lib/LaTeXML/Package/tikzinput-mh.sty.ltxml
 lib/LaTeXML/Package/tikzinput.sty.ltxml
 lib/LaTeXML/Package/workaddress.sty.ltxml
+lib/LaTeXML/resources/Profiles/README.md
 lib/LaTeXML/resources/Profiles/stex-migration.opt
 lib/LaTeXML/resources/Profiles/stex-module.opt
 lib/LaTeXML/resources/Profiles/stex-omdoc-modules.opt
@@ -78,9 +79,7 @@ lib/LaTeXML/resources/RelaxNG/omdoc/omdoc-common.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdoc.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocadt.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdoccc.rnc
-lib/LaTeXML/resources/RelaxNG/omdoc/omdoccth.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocdc.rnc
-lib/LaTeXML/resources/RelaxNG/omdoc/omdocdg.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocdoc.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocext.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocmeta.rnc
@@ -93,6 +92,7 @@ lib/LaTeXML/resources/RelaxNG/omdoc/omdocquiz.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocrt.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocst.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/omdocverb.rnc
+lib/LaTeXML/resources/RelaxNG/omdoc/omdocview.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/openmath2.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/openmath2ext.rnc
 lib/LaTeXML/resources/RelaxNG/omdoc/pxhtml.rnc
@@ -182,4 +182,5 @@ t/03_modules2.t
 t/04_omtext.t
 t/05_statements.t
 t/06_smglom.t
+t/07_inlinedef.t
 t/README
