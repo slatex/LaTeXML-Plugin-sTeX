@@ -49,7 +49,7 @@ my $content_query = <<'EOQ';
               <XMApp>
                 <XMTok meaning="times" role="MULOP">⁢</XMTok>
                 <XMApp>
-                  <XMTok name="f"/>
+                  <XMTok font="italic" role="UNKNOWN">f</XMTok>
                   <XMDual>
                     <XMApp>
                       <XMTok meaning="list"/>
@@ -79,7 +79,7 @@ my $content_query = <<'EOQ';
                   </XMDual>
                 </XMApp>
                 <XMApp>
-                  <XMTok name="f"/>
+                  <XMTok font="italic" role="UNKNOWN">f</XMTok>
                   <XMApp>
                     <XMTok meaning="sequence"/>
                     <XMApp>
@@ -96,7 +96,7 @@ my $content_query = <<'EOQ';
                   </XMApp>
                 </XMApp>
                 <XMApp>
-                  <XMTok name="f"/>
+                  <XMTok font="italic" role="UNKNOWN">f</XMTok>
                   <XMApp>
                     <XMTok meaning="sequence"/>
                     <XMApp>
@@ -113,7 +113,7 @@ my $content_query = <<'EOQ';
                   </XMApp>
                 </XMApp>
                 <XMApp>
-                  <XMTok name="f"/>
+                  <XMTok font="italic" role="UNKNOWN">f</XMTok>
                   <XMApp>
                     <XMTok meaning="sequence"/>
                     <XMApp>
