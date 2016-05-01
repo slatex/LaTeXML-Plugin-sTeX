@@ -217,74 +217,74 @@ DefConstructor('\notatiendum OptionalKeyVals:notation {}',
               "<ltx:text class='notatiendum'>#2</ltx:text>");
 
 DefConstructor('\definiendum [] {}',
-       "<omdoc:term role='definiendum' name='#name' cd='#theory'>#2</omdoc:term>",
+       "<omdoc:definiendum name='#name' cd='#theory'>#2</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_, 'definiendum'); });
 
 DefConstructor('\defi[]{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
- .     "<omdoc:term role='definiendum' name='?#1(#1)(#2)' cd='#theory'>#2</omdoc:term>"
+ .     "<omdoc:definiendum name='?#1(#1)(#2)' cd='#theory'>#2</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
  afterDigest => sub { defHelper(@_, 'defi'); },
  alias=>'\defi');
 
 DefConstructor('\defis[]{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
- .     "<omdoc:term role='definiendum' name='?#1(#1)(#2)' cd='#theory'>#2s</omdoc:term>"
+ .     "<omdoc:definiendum name='?#1(#1)(#2)' cd='#theory'>#2s</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
  afterDigest => sub { defHelper(@_, 'defi'); },
  alias=>'\defi');
 
 DefConstructor('\adefi[]{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
-       .     "<omdoc:term role='definiendum' name='?#1(#1)(#3)' cd='#theory'>#2</omdoc:term>"
+       .     "<omdoc:definiendum name='?#1(#1)(#3)' cd='#theory'>#2</omdoc:definiendum>"
        ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'adefi'); },
        alias=>'\adefi');
 
 DefConstructor('\defii[]{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:term role='definiendum' name='?#1(#1)(&dashed(#2,#3))' cd='#theory'>"
+ .    "<omdoc:definiendum name='?#1(#1)(&dashed(#2,#3))' cd='#theory'>"
  .      "#2 #3"
- .    "</omdoc:term>"
+ .    "</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defii'); },
        alias=>'\defii');
 
 DefConstructor('\defiis[]{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:term role='definiendum' name='?#1(#1)(&dashed(#2,#3))' cd='#theory'>"
+ .    "<omdoc:definiendum name='?#1(#1)(&dashed(#2,#3))' cd='#theory'>"
  .      "#2 #3s"
- .    "</omdoc:term>"
+ .    "</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defii'); },
        alias=>'\defii');
 
 DefConstructor('\adefii[]{}{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
-         .    "<omdoc:term role='definiendum' name='?#1(#1)(&dashed(#3,#4))' cd='#theory'>"
+         .    "<omdoc:definiendum name='?#1(#1)(&dashed(#3,#4))' cd='#theory'>"
          .       "#2"
-         .    "</omdoc:term>"
+         .    "</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'adefii'); },
        alias=>'\adefii');
 
 DefConstructor('\defiii[]{}{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:term role='definiendum' cd='#theory' name='?#1(#1)(&dashed(#2,#3,#4))'>#2 #3 #4</omdoc:term>"
+         . "<omdoc:definiendum cd='#theory' name='?#1(#1)(&dashed(#2,#3,#4))'>#2 #3 #4</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiii'); },
        alias=>'\defiii');
 
 DefConstructor('\defiiis[]{}{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:term role='definiendum' cd='#theory' name='?#1(#1)(&dashed(#2,#3,#4))'>#2 #3 #4s</omdoc:term>"
+         . "<omdoc:definiendum cd='#theory' name='?#1(#1)(&dashed(#2,#3,#4))'>#2 #3 #4s</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiii'); },
        alias=>'\defiii');
 
 DefConstructor('\adefiii[]{}{}{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
- . "<omdoc:term role='definiendum' cd='#theory' name='?#1(#1)(&dashed(#3,#4,#5))'>#2</omdoc:term>"
+ . "<omdoc:definiendum cd='#theory' name='?#1(#1)(&dashed(#3,#4,#5))'>#2</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'adefiii')},
        alias=>'\adefiii');
@@ -383,7 +383,7 @@ RawTeX('
 
 # this should not be used on its own, but if it is, we use it as a substitute for \term 
 DefMacro('\termemph','\term');
-DefConstructor('\defemph {}',"<omdoc:term role='definiendum'>#1</omdoc:term>");
+DefConstructor('\defemph {}',"<omdoc:definiendum>#1</omdoc:definiendum>");
 # not defining \stDMemph, since it should not be used on its own. 
 
 DefMacro('\termemph','\term');
