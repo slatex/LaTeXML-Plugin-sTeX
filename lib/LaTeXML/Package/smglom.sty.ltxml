@@ -78,15 +78,6 @@ DefConstructor('\gstructureI OptionalKeyVals:importmhmodule Semiverbatim Semiver
 
 
 RawTeX('
-\newenvironment{gstructure}[3][]{%
-  \gdef\@@doit{\importmhmodule[#1,path=#3,ext=tex]{#3}}%
-  \ifmod@show\par\noindent structure import "#2" from module #3 \@@doit\fi%
-  \ignorespacesandpars}
-{\aftergroup\@@doit\ifmod@show end import\fi%
-  \ignorespacesandparsafterend}
-       ');
-
-RawTeX('
 \newenvironment{gviewsig}[4][]{%
   \def\test{#1}%
   \ifx\@test\@empty%
