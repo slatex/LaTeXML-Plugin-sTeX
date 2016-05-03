@@ -54,7 +54,7 @@ my $content_query = <<'EOQ';
     <symbol about="#foo.def.sym" name="foo" stex:srcref="Literal String \documentc#textrange(from=5;0,to=7;18)" xml:id="foo.def.sym"/>
     <definition about="#foo.def" for="foo" stex:srcref="Literal String \documentc#textrange(from=5;0,to=7;18)" xml:id="foo.def">
       <CMP about="#foo.def.CMP1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=5;32)" xml:id="foo.def.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=5;32)" xml:id="foo.def.CMP1.p1">A <term about="#foo.def.CMP1.p1.term1" cd="theory1" name="foo" role="definiendum" stex:srcref="Literal String \documentc#textrange(from=5;42,to=6;17)" xml:id="foo.def.CMP1.p1.term1">foo</term> (we write <Math about="#foo.def.CMP1.p1.m1" mode="inline" stex:srcref="Literal String \documentc#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=5;0,to=5;32)" xml:id="foo.def.CMP1.p1">A <definiendum cd="theory1" name="foo">foo</definiendum> (we write <Math about="#foo.def.CMP1.p1.m1" mode="inline" stex:srcref="Literal String \documentc#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
             <XMath>
               <XMTok meaning="foo" name="foo" omcd="theory1"/>
             </XMath>
