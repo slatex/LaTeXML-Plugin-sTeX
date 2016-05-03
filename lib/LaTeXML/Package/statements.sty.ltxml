@@ -217,7 +217,12 @@ DefConstructor('\notatiendum OptionalKeyVals:notation {}',
               "<ltx:text class='notatiendum'>#2</ltx:text>");
 
 DefConstructor('\definiendum [] {}',
-       "<omdoc:definiendum name='#name' cd='#theory'>#2</omdoc:definiendum>",
+       "<omdoc:definiendum name='#name' cd='#theory'>"
+     .   "?&GetKeyVal(#1,'lemma')"
+     .              "(<omdoc:meta property='smglom:lemma' content='&GetKeyVal(#1,'lemma')'>)"
+     .              "()/>"
+     .   "#2"
+     . "</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_, 'definiendum'); });
 
 DefConstructor('\defi[]{} OptionalKeyVals:DEF',
@@ -236,7 +241,10 @@ DefConstructor('\defis[]{} OptionalKeyVals:DEF',
 
 DefConstructor('\adefi[]{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
-       .     "<omdoc:definiendum name='?#1(#1)(#3)' cd='#theory'>#2</omdoc:definiendum>"
+       .     "<omdoc:definiendum name='?#1(#1)(#3)' cd='#theory'>"
+       .       "<omdoc:meta property='smglom:lemma'>#3</omdoc:meta>"
+       .       "#2"
+       .     "</omdoc:definiendum>"
        ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'adefi'); },
        alias=>'\adefi');
@@ -262,6 +270,7 @@ DefConstructor('\defiis[]{}{} OptionalKeyVals:DEF',
 DefConstructor('\adefii[]{}{}{} OptionalKeyVals:DEF',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          .    "<omdoc:definiendum name='?#1(#1)(&dashed(#3,#4))' cd='#theory'>"
+         .       "<omdoc:meta property='smglom:lemma'>#3 #4</omdoc:meta>"
          .       "#2"
          .    "</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
@@ -283,9 +292,12 @@ DefConstructor('\defiiis[]{}{}{} OptionalKeyVals:DEF',
        alias=>'\defiii');
 
 DefConstructor('\adefiii[]{}{}{}{} OptionalKeyVals:DEF',
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- . "<omdoc:definiendum cd='#theory' name='?#1(#1)(&dashed(#3,#4,#5))'>#2</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
+      "?#defindex(<omdoc:idx><omdoc:idt>)"
+       . "<omdoc:definiendum cd='#theory' name='?#1(#1)(&dashed(#3,#4,#5))'>"
+       .  "<omdoc:meta property='smglom:lemma'>#3 #4 #5</omdoc:meta>"
+       .  "#2"
+       . "</omdoc:definiendum>"
+       ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'adefiii')},
        alias=>'\adefiii');
 
