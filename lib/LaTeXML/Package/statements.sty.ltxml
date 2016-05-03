@@ -219,7 +219,7 @@ DefConstructor('\notatiendum OptionalKeyVals:notation {}',
 DefConstructor('\definiendum [] {}',
        "<omdoc:definiendum name='#name' cd='#theory'>"
      .   "?&GetKeyVal(#1,'lemma')"
-     .              "(<omdoc:meta property='smglom:lemma' content='&GetKeyVal(#1,'lemma')'>)"
+     .              "(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)"
      .              "()/>"
      .   "#2"
      . "</omdoc:definiendum>",
