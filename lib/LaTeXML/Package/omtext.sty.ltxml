@@ -271,9 +271,12 @@ DefMacro('\ogre','\@ogre\xspace');
 DefConstructor('\@ogre',"\x{2B3F}");
 
 # experimental: Declarations 
-DefConstructor('\vdec {}',"<omdoc:declaration>#1</omdoc:declaration>");
-DefConstructor('\vids []{}',"<omdoc:identifiers refs='#1'>#2</omdoc:identifiers>");
-DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction>");
+DefConstructor('\vdec [] {}',
+     "<omdoc:declaration ?#1(for='#1')()>#2</omdoc:declaration>");
+DefConstructor('\vcond []{}',
+	       "<omdoc:identifiers ?#1(for='#1')()>#2</omdoc:identifiers>");
+DefConstructor('\vrest [] {}',
+	       "<omdoc:restriction ?#1(for='#1')()>#2</omdoc:restriction>");
 DefConstructor('\strucdec [] {}',
    "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
 DefConstructor('\impdec {}',
