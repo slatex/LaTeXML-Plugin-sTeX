@@ -84,9 +84,9 @@ my $content_query = <<'EOQ';
   </axiom>
   <omtext about="#test.one" stex:srcref="Literal String \documentc#textrange(from=11;0,to=15;16)" type="definition" xml:id="test.one">
     <CMP about="#test.one.CMP1" stex:srcref="Literal String \documentc#textrange(from=11;0,to=15;16)" xml:id="test.one.CMP1">
-      <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#test.one.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=11;7,to=12;16)" xml:id="test.one.CMP1.p1"><term about="#test.one.CMP1.p1.term1" name="concept" role="definiendum" stex:srcref="Literal String \documentc#textrange(from=11;7,to=12;16)" xml:id="test.one.CMP1.p1.term1">concept</term> is this
-<term about="#test.one.CMP1.p1.term2" name="new-concerpt" role="definiendum" stex:srcref="Literal String \documentc#textrange(from=13;1,to=13;23)" xml:id="test.one.CMP1.p1.term2">new concerpt</term>
-<term about="#test.one.CMP1.p1.term3" name="old-new-concerpt" role="definiendum" stex:srcref="Literal String \documentc#textrange(from=14;1,to=14;29)" xml:id="test.one.CMP1.p1.term3">old new concerpt</term></p>
+      <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#test.one.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=11;7,to=12;16)" xml:id="test.one.CMP1.p1"><definiendum name="concept">concept</definiendum> is this
+<definiendum name="new-concerpt">new concerpt</definiendum>
+<definiendum name="old-new-concerpt">old new concerpt</definiendum></p>
     </CMP>
   </omtext>
   <omtext about="#omdoc1.omtext4" stex:srcref="Literal String \documentc#textrange(from=17;1,to=21;16)" type="definition" xml:id="omdoc1.omtext4">
