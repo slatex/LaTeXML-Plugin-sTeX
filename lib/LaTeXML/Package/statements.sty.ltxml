@@ -216,11 +216,9 @@ DefStatement('{notation} OptionalKeyVals:omtext',
 DefConstructor('\notatiendum OptionalKeyVals:notation {}',
               "<ltx:text class='notatiendum'>#2</ltx:text>");
 
-DefConstructor('\definiendum [] {}',
+DefConstructor('\definiendum OptionalKeyVals:DEF {}',
        "<omdoc:definiendum name='#name' cd='#theory'>"
-     .   "?&GetKeyVal(#1,'lemma')"
-     .              "(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)"
-     .              "()/>"
+     .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()/>"
      .   "#2"
      . "</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_, 'definiendum'); });
