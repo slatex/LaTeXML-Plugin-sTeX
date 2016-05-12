@@ -38,7 +38,8 @@ DefKeyVal('mhview','fromrepos','Semiverbatim');
 DefKeyVal('mhview','torepos','Semiverbatim');
 DefKeyVal('mhview','frompath','Semiverbatim');
 DefKeyVal('mhview','topath','Semiverbatim');
-DefKeyVal('mhview','ext','Semiverbatim');
+DefKeyVal('mhview','fromext','Semiverbatim');
+DefKeyVal('mhview','toext','Semiverbatim');
 
 # =======================================================
 # 1. Structures
@@ -63,14 +64,16 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my $repos = LookupValue('current_repos');
   my $from_path = ToString(GetKeyVal($keyvals,'frompath'));
   my $to_path = ToString(GetKeyVal($keyvals,'topath'));
-  my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
-  $ext = 'sms' unless $ext;
+  my $from_ext = ToString(GetKeyVal($keyvals,'fromext')) if $keyvals;
+  $from_ext = 'sms' unless $from_ext;
+  my $to_ext = ToString(GetKeyVal($keyvals,'toext')) if $keyvals;
+  $to_ext = 'sms' unless $to_ext;
   my $current_repos = LookupValue('current_repos');
   if (!$from_repos) { $from_repos = $current_repos; }
   if (!$to_repos) { $to_repos = $current_repos; }
   return (
-    Tokenize("\\importMHmoduleI[repos=$from_repos,path=$from_path,ext=$ext]{$from}")->unlist,
-    Tokenize("\\importMHmoduleI[repos=$to_repos,path=$to_path,ext=$ext]{$to}")->unlist,
+    Tokenize("\\importMHmoduleI[repos=$from_repos,path=$from_path,ext=$from_ext]{$from}")->unlist,
+    Tokenize("\\importMHmoduleI[repos=$to_repos,path=$to_path,ext=$to_ext]{$to}")->unlist,
     Invocation(T_CS('\begin{viewenv}'),$keyvals,$from_arg,$to_arg)->unlist
   );
 });

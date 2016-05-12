@@ -46,12 +46,14 @@ sub importMHmoduleI {
   if ($keyval) {
     my $repos = ToString($keyval->getValue('repos'));
     my $path = ToString($keyval->getValue('path'));
+    my $ext = ToString($keyval->getValue('ext'));
     my $current_repos = LookupValue('current_repos');
     if (!$repos) { # Use the implicit current repository
       $repos = $current_repos; }
     my $defpaths = LookupValue('defpath');
     my $load_path = ($$defpaths{MathHub}).$repos.'/source/'.$path;
     $keyval->setValue('load',$load_path);
+    $keyval->setValue('ext',$ext);
     AssignValue('current_repos' => $repos, 'global');
     importmoduleI($stomach,$whatsit);
     AssignValue('current_repos' => $current_repos, 'global'); }
