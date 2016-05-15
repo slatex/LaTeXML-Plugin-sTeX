@@ -107,26 +107,14 @@ DefEnvironment('{viewenv} OptionalKeyVals:view {}{}',
   .  "#body"
   ."</omdoc:view>");
 # do the same for viewsketch, pity we cannot share some code.
-DefMacroI(T_CS('\begin{viewsketch}'),'OptionalKeyVals:view {}{}', sub {
-  my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
-  my $from = ToString(Digest($from_arg));
-  my $to = ToString(Digest($to_arg));
-  my $from_file = ToString(GetKeyVal($keyvals,'from'));
-  my $to_file = ToString(GetKeyVal($keyvals,'to'));
-  my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
-  $ext = 'sms' unless $ext;
-  return (
-    Tokenize("\\importmoduleI[load=$from_file]{$from}")->unlist,
-    Tokenize("\\importmoduleI[load=$to_file]{$to}")->unlist,
-    Invocation(T_CS('\begin{viewsketchenv}'),$keyvals,$from_arg,$to_arg)->unlist
-  );
-});
-DefMacroI('\end{viewsketch}',undef,'\end{viewsketchenv}');
-DefEnvironment('{viewsketchenv} OptionalKeyVals:view {}{}',
-   "<omdoc:view from='#2' to='#3'"
-  .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
-  .  "#body"
-  ."</omdoc:view>");
+RawTeX('
+\newenvironment{viewsketch}[3][]%
+{\PackageError{structview}%
+  {The {viewsketch} environment is deprecated}{use the {view} instead!}%
+  \begin{view}[#1]{#2}{#3}}
+{\end{view}}
+');
+
 DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' assertion='#3'/>");
 
 1;
