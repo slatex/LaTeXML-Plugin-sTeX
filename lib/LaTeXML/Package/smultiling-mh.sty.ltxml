@@ -69,12 +69,28 @@ DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
     module_afterDigest(@_); });
 RawTeX('
 \newenvironment{mhviewsig}[4][]{\def\@test{#1}\ifx\@test\@empty%
-\begin{mhview}[id=#2,ext=tex]{#3}{#4}\else%
-\begin{mhview}[id=#2,#1,ext=tex]{#3}{#4}\fi}
-{\end{mhview}}
-\newenvironment{mhviewnl}[5][]{\def\@test{#1}\ifx\@test\@empty%
-\begin{mhviewsketch}[id=#2.#3,ext=tex]{#4}{#5}\else%
-\begin{mhviewsketch}[id=#2.#3,#1,ext=tex]{#4}{#5}\fi}
-{\end{mhviewsketch}}
+\begin{mhview}[id=#2,fromext=tex,toext=tex]{#3}{#4}\else%
+\begin{mhview}[id=#2,#1,fromext=tex,toext=tex]{#3}{#4}\fi%
+\ignorespacesandpars}
+{\end{mhview}\ignorespacesandparsafterend}
+\addmetakey{mhview}{sigpath}
+\addmetakey{mhview}{sigrepos}
+\newenvironment{mhviewnl}[3][]{\def\@test{#1}%
+  \metasetkeys{mhview}{#1}%
+  \if@langfiles\requiremodules{#2}{tex}\else%
+    \ifx\mhview@loadsig\@empty%
+    \PackageError{smultiling-mh}%
+                          {Cannot load view signature}%
+                          {please specify the file name via the 'sigpath' and 'sigrepos' keys!}%
+    \fi
+    \ifx\mhview@sigrepos\@empty%
+    \requiremodules{\MathHub{\mh@currentrepos/source/\mhview@sigpath.tex}}\else%
+    \requiremodules{\MathHub{\mhview@sigrepos/source/\mhview@sigpath.tex}}\fi%
+  \fi% if@langfiles
+  \ifx\@test\@empty%
+  \begin{mhview}[id=#2.#3,fromext=tex,toext=tex]{\csuse{views@#2@from}}{\csuse{views@#2@to}}\else%
+  \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{\csuse{views@#2@from}}{\csuse{views@#2@to}}\fi%
+  \ignorespacesandpars}
+{\end{mhview}\ignorespacesandparsafterend}
 ');
 1;
