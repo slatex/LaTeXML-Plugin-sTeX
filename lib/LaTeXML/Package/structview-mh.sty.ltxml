@@ -63,6 +63,9 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my $from_path = ToString(GetKeyVal($keyvals,'frompath'));
   my $to_path = ToString(GetKeyVal($keyvals,'topath'));
   my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
+  my $id = ToString(GetKeyVal($keyvals, 'id'));
+  AssignValue('views@'.$id.'from' => $from, 'global') ;
+  AssignValue('views@'.$id.'to' => $to, 'global');
   $ext = 'sms' unless $ext;
   my $current_repos = LookupValue('current_repos');
   if (!$from_repos) { $from_repos = $current_repos; }

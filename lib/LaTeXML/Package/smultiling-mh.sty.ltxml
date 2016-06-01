@@ -67,7 +67,7 @@ DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
     return; },
   afterDigest=>sub {
     module_afterDigest(@_); });
-RawTeX('
+RawTeX(<<'EoTeX');
 \newenvironment{mhviewsig}[4][]{\def\@test{#1}\ifx\@test\@empty%
 \begin{mhview}[id=#2,fromext=tex,toext=tex]{#3}{#4}\else%
 \begin{mhview}[id=#2,#1,fromext=tex,toext=tex]{#3}{#4}\fi%
@@ -92,5 +92,6 @@ RawTeX('
   \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{\csuse{views@#2@from}}{\csuse{views@#2@to}}\fi%
   \ignorespacesandpars}
 {\end{mhview}\ignorespacesandparsafterend}
-');
+EoTeX
+    
 1;
