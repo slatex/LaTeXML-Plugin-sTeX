@@ -55,6 +55,17 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
   my $from = ToString(Digest($from_arg));
   my $to = ToString(Digest($to_arg));
+  my $id = ToString(GetKeyVal($keyvals, 'id'));
+  my $test = $keyvals->getValue('id');
+  # if $from or $to contains doesn't contian '@' then
+  # we need to store the loading info
+  if ($from =~ /views/ && $to =~ /views/) {
+      $from = LookupValue($from);
+      $to = LookupValue($to);
+  } else {
+      AssignValue('views@' . $id . '@from', $from, 'global');
+      AssignValue('views@' . $id . '@to', $to, 'global');
+  }
   AssignValue(from_module => $from);
   AssignValue(to_module => $to);
   my $from_repos = ToString(GetKeyVal($keyvals,'fromrepos'));
@@ -63,7 +74,6 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my $from_path = ToString(GetKeyVal($keyvals,'frompath'));
   my $to_path = ToString(GetKeyVal($keyvals,'topath'));
   my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
-  my $id = ToString(GetKeyVal($keyvals, 'id'));
   AssignValue('views@'.$id.'from' => $from, 'global') ;
   AssignValue('views@'.$id.'to' => $to, 'global');
   $ext = 'sms' unless $ext;
