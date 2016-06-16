@@ -85,10 +85,8 @@ RawTeX('
   \else%
     \begin{mhviewsig}[frompath=#3,topath=#4,fromext=tex,toext=tex,#1]{#2}{#3}{#4}%
   \fi%
-  \ignorespacesandpars%
 }{%
   \end{mhviewsig}%
-  \ignorespacesandparsafterend%
 }%
 
 \newenvironment{gviewnl}[3][]{%
@@ -97,10 +95,8 @@ RawTeX('
   \else%
     \begin{mhviewnl}[sigpath=#2,#1]{#2}{#3}%
   \fi%
-\ignorespacesandpars%
 }{%
   \end{mhviewnl}%
-  \ignorespacesandparsafterend%
 }%
 ');
 DefConstructor('\gincludeview[]{}','');
