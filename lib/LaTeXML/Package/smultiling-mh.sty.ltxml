@@ -94,8 +94,8 @@ RawTeX(<<'EoTeX');
     \requiremodules{\MathHub{\mhview@sigrepos/source/\mhview@sigpath.tex}}\fi%
   \fi% if@langfiles
   \ifx\@test\@empty%
-  \begin{mhview}[id=#2.#3,fromext=tex,toext=tex]{\csuse{views@#2@from}}{\csuse{views@#2@to}}\else%
-  \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{\csuse{views@#2@from}}{\csuse{views@#2@to}}\fi%
+  \begin{mhview}[id=#2.#3,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\else%
+  \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\fi%
   \ignorespacesandpars}
 {\end{mhview}\ignorespacesandparsafterend}
 EoTeX
