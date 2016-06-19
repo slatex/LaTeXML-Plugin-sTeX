@@ -91,9 +91,9 @@ RawTeX('
 
 \newenvironment{gviewnl}[3][]{%
   \def\@test{#1}\ifx\@test\@empty%
-    \begin{mhviewnl}[sigpath=#2]{#2}{#3}%
+    \begin{mhviewnl}[#2]{#2}{#3}%
   \else%
-    \begin{mhviewnl}[sigpath=#2,#1]{#2}{#3}%
+    \begin{mhviewnl}[#2,#1]{#2}{#3}%
   \fi%
 }{%
   \end{mhviewnl}%
