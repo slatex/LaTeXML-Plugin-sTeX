@@ -80,10 +80,10 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   if (!$to_repos) { $to_repos = $current_repos; }
   # Load the signature if the loading paths aren't provided
   if (!$from_path || !$to_path) {
-        my $sig = substr($id, 0, index($id, '.'));
-        InputDefinitions($sig, type => 'tex', noltxml => 1);
-	$from_path = LookupValue('views@' . $sig . '@from');
-	$to_path = LookupValue('views@' . $sig . '@to');
+      my $sig = substr($id, 0, index($id, '.'));
+      InputDefinitions($sig, type => 'tex', noltxml => 1);
+      $from_path = LookupValue('views@' . $sig . '@from');
+      $to_path = LookupValue('views@' . $sig . '@to');
   }
   return (
     Tokenize("\\importMHmoduleI[repos=$from_repos,path=$from_path,ext=$ext]{$from}")->unlist,
