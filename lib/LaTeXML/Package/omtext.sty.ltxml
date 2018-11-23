@@ -230,7 +230,9 @@ sub locateIt {
   my $locator = $node->getAttribute('stex:srcref');
   return unless $locator; # Nothing to do here...
   my $trailer = $whatsit && $whatsit->getProperty('trailer');
-  $trailer = $trailer->getLocator->toAttribute if $trailer;
+  if ($trailer) {
+    if (my $locator = $trailer->getLocator) {
+      $trailer = $locator->toAttribute; } }
   $trailer = $locator unless $trailer; # bootstrap
   # TODO: Both should be local, or both remote, any mixture or undefinedness will produce garbage
   my $file_path = LookupValue('SOURCEFILE');
