@@ -25,7 +25,7 @@ WriteMakefile(
   ABSTRACT => "A LaTeXML extension for sTeX (Semantic LaTeX)",
   VERSION => "0.2",
   PREREQ_PM => { 
-    'LaTeXML'=>'0.8.1',
+    'LaTeXML'=>'0.8.3',
   },
   (eval { ExtUtils::MakeMaker->VERSION(6.46) } ? (META_MERGE => {
     'meta-spec' => { version => 2 },
