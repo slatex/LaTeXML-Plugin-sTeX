@@ -674,7 +674,7 @@ sub symdef_assemble_presentation {
   # When @args is undefined, we are creating a generic <omdoc:rendering>
   if ($nargs) {
     @args = map(Invocation(T_CS('\@SYMBOL'),T_OTHER("arg:".($_))),1..$nargs) unless scalar(@args);
-    $presentation = Tokens(LaTeXML::Core::Definition::Expandable::substituteTokens($presentation,@args));
+    $presentation = Tokens($presentation->substituteParameters(@args));
   }
   #Tokens(Invocation(T_CS('\@ensuremath'),$presentation)->unlist); 
   $presentation;}
