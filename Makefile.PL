@@ -1,5 +1,5 @@
 #======================================================================
-# Makefile Maker for LaTeXML::MathSyntax
+# Makefile Maker for LaTeXML::Plugin::sTeX
 # m.kohlhase@jacobs-university.de, d.ginev@jacobs-university.de
 #======================================================================
 use ExtUtils::MakeMaker;
@@ -24,7 +24,7 @@ WriteMakefile(
   AUTHOR => 'Deyan Ginev <d.ginev@jacobs-university.de>',
   ABSTRACT => "A LaTeXML extension for sTeX (Semantic LaTeX)",
   VERSION => "0.2",
-  PREREQ_PM => { 
+  PREREQ_PM => {
     'LaTeXML'=>'0.8.3',
   },
   (eval { ExtUtils::MakeMaker->VERSION(6.46) } ? (META_MERGE => {

@@ -29,10 +29,8 @@ $$ \nappa{f}{a_1, a_2, a_3}
 \end{module}
 \end{document}
 EOQ
-		  
-my $perllib = $ENV{'PERL_LOCAL_LIB_ROOT'};
-my $bindings = $perllib . '/lib/perl5/LaTeXML/Package';
-my $config = LaTeXML::Common::Config->new(paths=>["$bindings"]);
+
+my $config = LaTeXML::Common::Config->new(local=>1, paths=>['./lib/LaTeXML/Package','./lib/LaTeXML/resources/RelaxNG','./lib/LaTeXML/resources/Profiles','./lib/LaTeXML/resources/XSLT']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
 my $content_query = <<'EOQ';
