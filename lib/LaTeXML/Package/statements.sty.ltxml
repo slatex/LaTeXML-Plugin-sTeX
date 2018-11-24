@@ -355,14 +355,16 @@ Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom
  $document->closeElement('ltx:text'); },
  #Prepare 'defs' hooks for \defi and \definiendum symbol names
   beforeDigest=>sub {
-    my @symbols = ();
-    AssignValue('defs', \@symbols); return; },
+    AssignValue('defs', []);
+    return; },
  #Adopt collected names as 'defs' property, remove hooks
   afterDigest=>sub {
     my ($stomach, $whatsit) = @_;
-    my $defsref = LookupValue('defs');
-    my @defs = @$defsref;
-    $whatsit->setProperty('defs',\@defs);
+    my $defsref = LookupValue('defs') || [];
+    # pass a shallow clone of the defined symbol names, to avoid pass-by-reference errors
+    # where multiple definitions share a 'defs' state var
+    my $local_defs = [ @$defsref ];
+    $whatsit->setProperty('defs', $local_defs);
     AssignValue('defs',undef);
  return; });
 

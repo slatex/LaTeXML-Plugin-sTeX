@@ -210,9 +210,15 @@ sub numberIt {
   my $about = $node -> getAttribute('about');
   $node->setAttribute('about'=>'#'.$node->getAttribute('xml:id')) unless $about;
   #Also, provide locators:
-  my $locator = $whatsit && $whatsit->getProperty('locator');
-  #Need to inherit locators if missing:
-  $locator = (@parents ? $parents[$#parents]->getAttribute('stex:srcref') : '') unless $locator;
+  my $locator;
+  if ($whatsit) {
+    if (my $locator_prop = $whatsit->getProperty('locator')) {
+      $locator = $locator_prop->toAttribute; } }
+  # Bootstrap: inherit locators, if none provided explicitly
+  if (!$locator) {
+    $locator = (@parents ? $parents[$#parents]->getAttribute('stex:srcref') : ''); }
+
+  # If we managed to obtain a locator, serialize it on the document  
   if ($locator) {
     # There is a BUG with namespace declarations (or am I using the API wrongly??) which
     # does not recognize the stex namespace. Hence, I need to redeclare it...
@@ -221,8 +227,8 @@ sub numberIt {
       { # namespace not already declared?
         $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
       }
-    $node->setAttribute('stex:srcref'=>$locator);
-  }return;}
+    $node->setAttribute('stex:srcref'=>$locator); }
+  return; }
 
 sub locateIt {
   my($document,$node,$whatsit)=@_;
@@ -230,8 +236,14 @@ sub locateIt {
   my $locator = $node->getAttribute('stex:srcref');
   return unless $locator; # Nothing to do here...
   my $trailer = $whatsit && $whatsit->getProperty('trailer');
-  $trailer = $trailer->getLocator if $trailer;
-  $trailer = $locator unless $trailer; # bootstrap
+
+  if ($trailer) {
+    if (my $locator = $trailer->getLocator) {
+      $trailer = $locator->toAttribute; } }
+  # bootstrap if no explicit trailer
+  if (!$trailer) {
+    $trailer = $locator; }
+  
   # TODO: Both should be local, or both remote, any mixture or undefinedness will produce garbage
   my $file_path = LookupValue('SOURCEFILE');
   my $baselocal = LookupValue('BASELOCAL');

@@ -102,28 +102,34 @@ sub module_afterDigestBegin {
   AssignValue("parent_of_$id"=>$parent_module,'global');
   AssignValue("parent_module"=>$id);
   return; }
+
 sub module_afterDigest {
    # (after)7. Move a step up on the module ancestry
    AssignValue("parent_module" => LookupValue("parent_of_".LookupValue("parent_module")));
    return; }
+
 sub module_afterConstruct {
-      my($stomach, $whatsit)=@_;
-      # (after)8. Provdie theory URI after the first \end{module} in the log
-      if (!LookupValue("if_uris_exported")){
-	my $location = $whatsit->getProperty('locator');
-	$location = substr($location, 0, index($location, '.'));
-	my $module_paths = LookupValue("module_paths");
-	my $math_index = index $location, "MathHub";
-	$location =  substr $location, $math_index+8, length($location)-length($math_index)-8;
-	my @theory_uris = keys % { $module_paths };
-	foreach my $theory_uri ( @theory_uris){
-	    $theory_uri = $location . '?' . $theory_uri;
-	    Info("provides theory", undef, undef, $theory_uri); 
-	}
-	# Only export uris once
-	AssignValue("if_uris_exported" => 1, 'global');
-    }  
-   return; }
+  my($stomach, $whatsit)=@_;
+  # (after)8. Provide theory URI after the first \end{module} in the log
+  if (!LookupValue("if_uris_exported")) {
+    my $location = $whatsit->getProperty('locator');
+    $location = $location ? $location->toAttribute : '';
+    # DEPRECATED? very brittle slicing in any case, consider entirely removing / generalizing 
+    my $dot_index = index($location, '.');
+    if ($dot_index != -1) {
+      $location = substr($location, 0, $dot_index); }
+    my $math_index = index($location, "MathHub");
+    if ($math_index != -1) {
+      $location =  substr $location, $math_index+8, length($location)-length($math_index)-8; }
+
+    my $module_paths = LookupValue("module_paths") || {};
+    my @theory_uris = keys %$module_paths;
+    foreach my $theory_uri ( @theory_uris){
+      $theory_uri = $location . '?' . $theory_uri;
+      Info("provides theory", undef, undef, $theory_uri); }
+    # Only export uris once
+    AssignValue("if_uris_exported" => 1, 'global'); }
+  return; }
 DefEnvironment('{module} OptionalKeyVals:Module',
          "?#excluded()(<omdoc:theory"
          . "?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
