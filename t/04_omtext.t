@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use XML::LibXML;
 
-use Test::More tests => 3;
+use Test::More tests => 20;
 
 my $eval_return = eval {
   use LaTeXML;
@@ -32,7 +32,7 @@ EOQ
 my $config = LaTeXML::Common::Config->new(local=>1, paths=>['./lib/LaTeXML/Package','./lib/LaTeXML/resources/RelaxNG','./lib/LaTeXML/resources/Profiles','./lib/LaTeXML/resources/XSLT']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
-my $content_query = <<'EOQ';
+my $target_xml = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
@@ -41,8 +41,8 @@ my $content_query = <<'EOQ';
     <metadata about="#omdoc1.omtext1.metadata1" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" xml:id="omdoc1.omtext1.metadata1">
       <dc:title about="#omdoc1.omtext1.metadata1.title1" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" xml:id="omdoc1.omtext1.metadata1.title1">newTitle</dc:title>
     </metadata>
-    <CMP about="#omdoc1.omtext1.CMP2" stex:srcref="anonymous_string#textrange(from=3;0,to=3;45)" xml:id="omdoc1.omtext1.CMP2">
-      <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.omtext1.CMP2.p1" stex:srcref="anonymous_string#textrange(from=3;0,to=3;45)" xml:id="omdoc1.omtext1.CMP2.p1">Ni hao me.</p>
+    <CMP about="#omdoc1.omtext1.CMP2" stex:srcref="anonymous_string#textrange(from=3;9,to=4;2)" xml:id="omdoc1.omtext1.CMP2">
+      <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.omtext1.CMP2.p1" stex:srcref="anonymous_string#textrange(from=3;9,to=4;2)" xml:id="omdoc1.omtext1.CMP2.p1">Ni hao me.</p>
     </CMP>
   </omtext>
   <omtext about="#omdoc1.omtext2" stex:srcref="anonymous_string#textrange(from=7;0,to=9;12)" type="introduction" xml:id="omdoc1.omtext2">
@@ -59,4 +59,12 @@ my $myResponse = $xml->parse_string($response->{result});
 $myResponse->removeChild(($myResponse->childNodes())[0]);
 
 is($response->{status_code},0,'Conversion was problem-free.');
-is($myResponse->toString(1),$content_query,'Content query successfully generated');
+my @got_lines = split("\n", $myResponse->toString(1));
+my @expected_lines = split("\n", $target_xml);
+my $index = 0;
+while (@got_lines) {
+  $index++;
+  my $got_line = shift @got_lines;
+  my $expected_line = shift @expected_lines;
+  is($got_line, $expected_line,"Compared line $index of XML output.");
+}
