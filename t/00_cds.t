@@ -53,8 +53,8 @@ my $content_query = <<'EOQ';
     </notation>
     <symbol about="#foo.def.sym" name="foo" stex:srcref="anonymous_string#textrange(from=5;0,to=7;18)" xml:id="foo.def.sym"/>
     <definition about="#foo.def" for="foo" stex:srcref="anonymous_string#textrange(from=5;0,to=7;18)" xml:id="foo.def">
-      <CMP about="#foo.def.CMP1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;5)" xml:id="foo.def.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;5)" xml:id="foo.def.CMP1.p1">A <definiendum cd="theory1" name="foo">foo</definiendum> (we write <Math about="#foo.def.CMP1.p1.m1" font="italic" mode="inline" stex:srcref="anonymous_string#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
+      <CMP about="#foo.def.CMP1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;33)" xml:id="foo.def.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;33)" xml:id="foo.def.CMP1.p1">A <definiendum cd="theory1" name="foo">foo</definiendum> (we write <Math about="#foo.def.CMP1.p1.m1" font="italic" mode="inline" stex:srcref="anonymous_string#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
             <XMath>
               <XMTok meaning="foo" name="foo" omcd="theory1"/>
             </XMath>
@@ -79,6 +79,6 @@ while (@got_lines) {
   $index++;
   my $got_line = shift @got_lines;
   my $expected_line = shift @expected_lines;
-  is($got_line, $expected_line,'Line $index was different than expected.');
+  is($got_line, $expected_line,"Compared line $index of XML output.");
 }
 
