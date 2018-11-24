@@ -31,7 +31,7 @@ EOQ
 my $config = LaTeXML::Common::Config->new(local=>1, paths=>['./lib/LaTeXML/Package','./lib/LaTeXML/resources/RelaxNG','./lib/LaTeXML/resources/Profiles','./lib/LaTeXML/resources/XSLT']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
-my $content_query = <<'EOQ';
+my $target_xml = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
@@ -73,7 +73,7 @@ $myResponse->removeChild(($myResponse->childNodes())[0]);
 is($response->{status_code},0,'Conversion was problem-free.');
 
 my @got_lines = split("\n", $myResponse->toString(1));
-my @expected_lines = split("\n", $content_query);
+my @expected_lines = split("\n", $target_xml);
 my $index = 0;
 while (@got_lines) {
   $index++;
