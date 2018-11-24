@@ -62,58 +62,58 @@ my $content_query = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="Literal String \documentc#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
-  <theory about="#omdoc1.theory1" stex:srcref="Literal String \documentc#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1">
-    <metadata about="#omdoc1.theory1.metadata1" stex:srcref="Literal String \documentc#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1">
-      <dc:creator about="#omdoc1.theory1.metadata1.creator1" stex:srcref="Literal String \documentc#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.creator1"/>
-      <dc:contributor about="#omdoc1.theory1.metadata1.contributor2" stex:srcref="Literal String \documentc#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.contributor2"/>
-      <meta about="#omdoc1.theory1.metadata1.meta3" property="smglom:state" stex:srcref="Literal String \documentc#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.meta3"/>
+<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+  <theory about="#omdoc1.theory1" stex:srcref="anonymous_string#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1">
+    <metadata about="#omdoc1.theory1.metadata1" stex:srcref="anonymous_string#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1">
+      <dc:creator about="#omdoc1.theory1.metadata1.creator1" stex:srcref="anonymous_string#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.creator1"/>
+      <dc:contributor about="#omdoc1.theory1.metadata1.contributor2" stex:srcref="anonymous_string#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.contributor2"/>
+      <meta about="#omdoc1.theory1.metadata1.meta3" property="smglom:state" stex:srcref="anonymous_string#textrange(from=3;1,to=36;12)" xml:id="omdoc1.theory1.metadata1.meta3"/>
     </metadata>
     <symbol name="this" xml:id="this.def.sym"/>
-    <omtext about="#omdoc1.theory1.omtext2" stex:srcref="Literal String \documentc#textrange(from=5;1,to=7;14)" xml:id="omdoc1.theory1.omtext2">
-      <CMP about="#omdoc1.theory1.omtext2.CMP1" stex:srcref="Literal String \documentc#textrange(from=6;0,to=6;42)" xml:id="omdoc1.theory1.omtext2.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.omtext2.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=6;0,to=6;42)" xml:id="omdoc1.theory1.omtext2.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="this">this</definiendum></text></p>
+    <omtext about="#omdoc1.theory1.omtext2" stex:srcref="anonymous_string#textrange(from=5;1,to=7;14)" xml:id="omdoc1.theory1.omtext2">
+      <CMP about="#omdoc1.theory1.omtext2.CMP1" stex:srcref="anonymous_string#textrange(from=6;0,to=6;42)" xml:id="omdoc1.theory1.omtext2.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.omtext2.CMP1.p1" stex:srcref="anonymous_string#textrange(from=6;0,to=6;42)" xml:id="omdoc1.theory1.omtext2.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="this">this</definiendum></text></p>
       </CMP>
     </omtext>
-    <omtext about="#omdoc1.theory1.omtext4" stex:srcref="Literal String \documentc#textrange(from=9;1,to=11;14)" xml:id="omdoc1.theory1.omtext4">
-      <CMP about="#omdoc1.theory1.omtext4.CMP1" stex:srcref="Literal String \documentc#textrange(from=9;1,to=9;17)" xml:id="omdoc1.theory1.omtext4.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.omtext4.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=9;1,to=9;17)" xml:id="omdoc1.theory1.omtext4.CMP1.p1">Here is some text <text class="inlinedef">This is called <definiendum cd="theory1" name="this">this</definiendum></text></p>
+    <omtext about="#omdoc1.theory1.omtext4" stex:srcref="anonymous_string#textrange(from=9;1,to=11;14)" xml:id="omdoc1.theory1.omtext4">
+      <CMP about="#omdoc1.theory1.omtext4.CMP1" stex:srcref="anonymous_string#textrange(from=9;1,to=9;17)" xml:id="omdoc1.theory1.omtext4.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.omtext4.CMP1.p1" stex:srcref="anonymous_string#textrange(from=9;1,to=9;17)" xml:id="omdoc1.theory1.omtext4.CMP1.p1">Here is some text <text class="inlinedef">This is called <definiendum cd="theory1" name="this">this</definiendum></text></p>
       </CMP>
     </omtext>
     <symbol name="seasdcond" xml:id="seasdcond.def.sym"/>
-    <assertion about="#omdoc1.theory1.assertion5" stex:srcref="Literal String \documentc#textrange(from=13;1,to=15;17)" xml:id="omdoc1.theory1.assertion5">
-      <CMP about="#omdoc1.theory1.assertion5.CMP1" stex:srcref="Literal String \documentc#textrange(from=14;0,to=14;46)" xml:id="omdoc1.theory1.assertion5.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.assertion5.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=14;0,to=14;46)" xml:id="omdoc1.theory1.assertion5.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="seasdcond">seasdcond</definiendum></text></p>
+    <assertion about="#omdoc1.theory1.assertion5" stex:srcref="anonymous_string#textrange(from=13;1,to=15;17)" xml:id="omdoc1.theory1.assertion5">
+      <CMP about="#omdoc1.theory1.assertion5.CMP1" stex:srcref="anonymous_string#textrange(from=14;0,to=14;46)" xml:id="omdoc1.theory1.assertion5.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.assertion5.CMP1.p1" stex:srcref="anonymous_string#textrange(from=14;0,to=14;46)" xml:id="omdoc1.theory1.assertion5.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="seasdcond">seasdcond</definiendum></text></p>
       </CMP>
     </assertion>
     <symbol name="second-asdf-gas" xml:id="second-asdf-gas.def.sym"/>
-    <assertion about="#omdoc1.theory1.assertion7" stex:srcref="Literal String \documentc#textrange(from=17;1,to=19;17)" xml:id="omdoc1.theory1.assertion7">
-      <CMP about="#omdoc1.theory1.assertion7.CMP1" stex:srcref="Literal String \documentc#textrange(from=17;1,to=17;20)" xml:id="omdoc1.theory1.assertion7.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.assertion7.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=17;1,to=17;20)" xml:id="omdoc1.theory1.assertion7.CMP1.p1">Ni hall <text class="inlinedef">This is called <definiendum cd="theory1" name="second-asdf-gas">second asdf gas</definiendum></text></p>
+    <assertion about="#omdoc1.theory1.assertion7" stex:srcref="anonymous_string#textrange(from=17;1,to=19;17)" xml:id="omdoc1.theory1.assertion7">
+      <CMP about="#omdoc1.theory1.assertion7.CMP1" stex:srcref="anonymous_string#textrange(from=17;1,to=17;20)" xml:id="omdoc1.theory1.assertion7.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.assertion7.CMP1.p1" stex:srcref="anonymous_string#textrange(from=17;1,to=17;20)" xml:id="omdoc1.theory1.assertion7.CMP1.p1">Ni hall <text class="inlinedef">This is called <definiendum cd="theory1" name="second-asdf-gas">second asdf gas</definiendum></text></p>
       </CMP>
     </assertion>
     <symbol name="thistry" xml:id="thistry.def.sym"/>
-    <axiom about="#omdoc1.theory1.axiom9" stex:srcref="Literal String \documentc#textrange(from=21;1,to=23;13)" xml:id="omdoc1.theory1.axiom9">
-      <CMP about="#omdoc1.theory1.axiom9.CMP1" stex:srcref="Literal String \documentc#textrange(from=21;1,to=21;16)" xml:id="omdoc1.theory1.axiom9.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.axiom9.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=21;1,to=21;16)" xml:id="omdoc1.theory1.axiom9.CMP1.p1">asdf <text class="inlinedef">This is called <definiendum cd="theory1" name="thistry">thistry</definiendum></text></p>
+    <axiom about="#omdoc1.theory1.axiom9" stex:srcref="anonymous_string#textrange(from=21;1,to=23;13)" xml:id="omdoc1.theory1.axiom9">
+      <CMP about="#omdoc1.theory1.axiom9.CMP1" stex:srcref="anonymous_string#textrange(from=21;1,to=21;16)" xml:id="omdoc1.theory1.axiom9.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.axiom9.CMP1.p1" stex:srcref="anonymous_string#textrange(from=21;1,to=21;16)" xml:id="omdoc1.theory1.axiom9.CMP1.p1">asdf <text class="inlinedef">This is called <definiendum cd="theory1" name="thistry">thistry</definiendum></text></p>
       </CMP>
     </axiom>
 <!--  %**** String Line 25 **** -->    <symbol name="thisfastry" xml:id="thisfastry.def.sym"/>
-    <axiom about="#omdoc1.theory1.axiom11" stex:srcref="Literal String \documentc#textrange(from=25;1,to=27;13)" xml:id="omdoc1.theory1.axiom11">
-      <CMP about="#omdoc1.theory1.axiom11.CMP1" stex:srcref="Literal String \documentc#textrange(from=26;0,to=26;55)" xml:id="omdoc1.theory1.axiom11.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.axiom11.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=26;0,to=26;55)" xml:id="omdoc1.theory1.axiom11.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="thisfastry">thisfastry</definiendum>gasdg</text></p>
+    <axiom about="#omdoc1.theory1.axiom11" stex:srcref="anonymous_string#textrange(from=25;1,to=27;13)" xml:id="omdoc1.theory1.axiom11">
+      <CMP about="#omdoc1.theory1.axiom11.CMP1" stex:srcref="anonymous_string#textrange(from=26;0,to=26;55)" xml:id="omdoc1.theory1.axiom11.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.axiom11.CMP1.p1" stex:srcref="anonymous_string#textrange(from=26;0,to=26;55)" xml:id="omdoc1.theory1.axiom11.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="thisfastry">thisfastry</definiendum>gasdg</text></p>
       </CMP>
     </axiom>
     <symbol name="ffss" xml:id="ffss.def.sym"/>
-    <example about="#omdoc1.theory1.example13" stex:srcref="Literal String \documentc#textrange(from=29;1,to=31;15)" xml:id="omdoc1.theory1.example13">
-      <CMP about="#omdoc1.theory1.example13.CMP1" stex:srcref="Literal String \documentc#textrange(from=30;0,to=30;43)" xml:id="omdoc1.theory1.example13.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.example13.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=30;0,to=30;43)" xml:id="omdoc1.theory1.example13.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="ffss">ffss</definiendum></text></p>
+    <example about="#omdoc1.theory1.example13" stex:srcref="anonymous_string#textrange(from=29;1,to=31;15)" xml:id="omdoc1.theory1.example13">
+      <CMP about="#omdoc1.theory1.example13.CMP1" stex:srcref="anonymous_string#textrange(from=30;0,to=30;43)" xml:id="omdoc1.theory1.example13.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.example13.CMP1.p1" stex:srcref="anonymous_string#textrange(from=30;0,to=30;43)" xml:id="omdoc1.theory1.example13.CMP1.p1"><text class="inlinedef">This is called <definiendum cd="theory1" name="ffss">ffss</definiendum></text></p>
       </CMP>
     </example>
     <symbol name="asd-fasd" xml:id="asd-fasd.def.sym"/>
-    <example about="#omdoc1.theory1.example15" stex:srcref="Literal String \documentc#textrange(from=33;1,to=35;15)" xml:id="omdoc1.theory1.example15">
-      <CMP about="#omdoc1.theory1.example15.CMP1" stex:srcref="Literal String \documentc#textrange(from=33;1,to=33;18)" xml:id="omdoc1.theory1.example15.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.example15.CMP1.p1" stex:srcref="Literal String \documentc#textrange(from=33;1,to=33;18)" xml:id="omdoc1.theory1.example15.CMP1.p1">nothign <text class="inlinedef">This is called <definiendum cd="theory1" name="asd-fasd">asd fasd</definiendum></text></p>
+    <example about="#omdoc1.theory1.example15" stex:srcref="anonymous_string#textrange(from=33;1,to=35;15)" xml:id="omdoc1.theory1.example15">
+      <CMP about="#omdoc1.theory1.example15.CMP1" stex:srcref="anonymous_string#textrange(from=33;1,to=33;18)" xml:id="omdoc1.theory1.example15.CMP1">
+        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.theory1.example15.CMP1.p1" stex:srcref="anonymous_string#textrange(from=33;1,to=33;18)" xml:id="omdoc1.theory1.example15.CMP1.p1">nothign <text class="inlinedef">This is called <definiendum cd="theory1" name="asd-fasd">asd fasd</definiendum></text></p>
       </CMP>
     </example>
   </theory>

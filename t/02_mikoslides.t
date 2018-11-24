@@ -43,25 +43,25 @@ my $content_query = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="mikoslides" options="slides,showmeta,mh"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="Literal String \documentc#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
   <para xmlns="http://dlmf.nist.gov/LaTeXML" xml:id="omdoc1.p1">
     <p about="#omdoc1.p1.p1" xml:id="omdoc1.p1.p1">that is this…</p>
   </para>
-  <omgroup about="#omdoc1.omgroup2" layout="slide" stex:srcref="Literal String \documentc#textrange(from=7;13,to=10;11)" xml:id="omdoc1.omgroup2">
-    <metadata about="#omdoc1.omgroup2.metadata1" stex:srcref="Literal String \documentc#textrange(from=8;0,to=8;26)" xml:id="omdoc1.omgroup2.metadata1">
-      <dc:title about="#omdoc1.omgroup2.metadata1.title1" stex:srcref="Literal String \documentc#textrange(from=8;0,to=8;26)" xml:id="omdoc1.omgroup2.metadata1.title1">asdfadslfjk</dc:title>
+  <omgroup about="#omdoc1.omgroup2" layout="slide" stex:srcref="anonymous_string#textrange(from=7;13,to=10;11)" xml:id="omdoc1.omgroup2">
+    <metadata about="#omdoc1.omgroup2.metadata1" stex:srcref="anonymous_string#textrange(from=8;0,to=8;26)" xml:id="omdoc1.omgroup2.metadata1">
+      <dc:title about="#omdoc1.omgroup2.metadata1.title1" stex:srcref="anonymous_string#textrange(from=8;0,to=8;26)" xml:id="omdoc1.omgroup2.metadata1.title1">asdfadslfjk</dc:title>
     </metadata>
     <para xmlns="http://dlmf.nist.gov/LaTeXML" xml:id="omdoc1.omgroup2.p1">
       <p about="#omdoc1.omgroup2.p1.p1" xml:id="omdoc1.omgroup2.p1.p1">this is a frame….</p>
     </para>
   </omgroup>
-  <theory about="#omdoc1.theory3" stex:srcref="Literal String \documentc#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3">
-    <metadata about="#omdoc1.theory3.metadata1" stex:srcref="Literal String \documentc#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1">
-      <dc:creator about="#omdoc1.theory3.metadata1.creator1" stex:srcref="Literal String \documentc#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.creator1"/>
-      <dc:contributor about="#omdoc1.theory3.metadata1.contributor2" stex:srcref="Literal String \documentc#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.contributor2"/>
-      <meta about="#omdoc1.theory3.metadata1.meta3" property="smglom:state" stex:srcref="Literal String \documentc#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.meta3"/>
+  <theory about="#omdoc1.theory3" stex:srcref="anonymous_string#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3">
+    <metadata about="#omdoc1.theory3.metadata1" stex:srcref="anonymous_string#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1">
+      <dc:creator about="#omdoc1.theory3.metadata1.creator1" stex:srcref="anonymous_string#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.creator1"/>
+      <dc:contributor about="#omdoc1.theory3.metadata1.contributor2" stex:srcref="anonymous_string#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.contributor2"/>
+      <meta about="#omdoc1.theory3.metadata1.meta3" property="smglom:state" stex:srcref="anonymous_string#textrange(from=12;1,to=16;12)" xml:id="omdoc1.theory3.metadata1.meta3"/>
     </metadata>
-    <omgroup about="#omdoc1.theory3.omgroup2" layout="slide" stex:srcref="Literal String \documentc#textrange(from=13;10,to=15;14)" xml:id="omdoc1.theory3.omgroup2">
+    <omgroup about="#omdoc1.theory3.omgroup2" layout="slide" stex:srcref="anonymous_string#textrange(from=13;10,to=15;14)" xml:id="omdoc1.theory3.omgroup2">
       <para xmlns="http://dlmf.nist.gov/LaTeXML" xml:id="omdoc1.theory3.omgroup2.p1">
         <p about="#omdoc1.theory3.omgroup2.p1.p1" xml:id="omdoc1.theory3.omgroup2.p1.p1">try again!!</p>
       </para>

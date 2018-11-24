@@ -41,13 +41,13 @@ my $content_query = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="Literal String \documentc#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
-  <theory about="#foo" stex:srcref="Literal String \documentc#textrange(from=3;0,to=5;12)" xml:id="foo"/>
-  <theory about="#foo2" stex:srcref="Literal String \documentc#textrange(from=7;0,to=9;12)" xml:id="foo2">
-    <imports about="#foo2.imports1" from="#foo" stex:srcref="Literal String \documentc#textrange(from=8;0,to=8;18)" xml:id="foo2.imports1"/>
+<omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+  <theory about="#foo" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" xml:id="foo"/>
+  <theory about="#foo2" stex:srcref="anonymous_string#textrange(from=7;0,to=9;12)" xml:id="foo2">
+    <imports about="#foo2.imports1" from="#foo" stex:srcref="anonymous_string#textrange(from=8;0,to=8;18)" xml:id="foo2.imports1"/>
   </theory>
-  <theory about="#foo3" stex:srcref="Literal String \documentc#textrange(from=11;0,to=14;12)" xml:id="foo3">
-    <imports about="#foo3.imports1" from="#foo2" stex:srcref="Literal String \documentc#textrange(from=12;0,to=12;19)" xml:id="foo3.imports1"/>
+  <theory about="#foo3" stex:srcref="anonymous_string#textrange(from=11;0,to=14;12)" xml:id="foo3">
+    <imports about="#foo3.imports1" from="#foo2" stex:srcref="anonymous_string#textrange(from=12;0,to=12;19)" xml:id="foo3.imports1"/>
   </theory>
 </omdoc>
 EOQ

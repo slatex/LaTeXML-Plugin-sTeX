@@ -37,12 +37,12 @@ my $content_query = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="Literal String \documentc#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
-  <theory about="#mathapp" stex:srcref="Literal String \documentc#textrange(from=3;0,to=10;12)" xml:id="mathapp">
-    <omtext about="#mathapp.omtext1" stex:srcref="Literal String \documentc#textrange(from=4;1,to=9;12)" xml:id="mathapp.omtext1">
-      <CMP about="#mathapp.omtext1.CMP1" stex:srcref="Literal String \documentc#textrange(from=4;25,to=8;16)" xml:id="mathapp.omtext1.CMP1">
+<omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+  <theory about="#mathapp" stex:srcref="anonymous_string#textrange(from=3;0,to=10;12)" xml:id="mathapp">
+    <omtext about="#mathapp.omtext1" stex:srcref="anonymous_string#textrange(from=4;1,to=9;12)" xml:id="mathapp.omtext1">
+      <CMP about="#mathapp.omtext1.CMP1" stex:srcref="anonymous_string#textrange(from=4;25,to=8;16)" xml:id="mathapp.omtext1.CMP1">
         <equation xmlns="http://dlmf.nist.gov/LaTeXML" xml:id="S0.Ex1">
-          <Math about="#S0.Ex1.m1" mode="display" stex:srcref="Literal String \documentc#textrange(from=4;25,to=8;16)" tex="\nappa{f}{a_{1},a_{2},a_{3}}\@napp@seq[]{f}{a_{1}}{a_{n}}\@napp@seq[]{f}{a_{1}%&#10;}{a_{n}}\@napp@seq[]{f}{a^{1}}{a^{n}}" text="f@(list@(a _ 1, a _ 2, a _ 3)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a ^ 1, sequencefromto, a ^ n))" xml:id="S0.Ex1.m1">
+          <Math about="#S0.Ex1.m1" mode="display" stex:srcref="anonymous_string#textrange(from=4;25,to=8;16)" tex="\nappa{f}{a_{1},a_{2},a_{3}}\@napp@seq[]{f}{a_{1}}{a_{n}}\@napp@seq[]{f}{a_{1}%&#10;}{a_{n}}\@napp@seq[]{f}{a^{1}}{a^{n}}" text="f@(list@(a _ 1, a _ 2, a _ 3)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a ^ 1, sequencefromto, a ^ n))" xml:id="S0.Ex1.m1">
             <XMath>
               <XMApp>
                 <XMTok meaning="times" role="MULOP">⁢</XMTok>
