@@ -147,7 +147,7 @@ DefStatement('{typedec} OptionalKeyVals:omtext {}',
 # =======================================================
 sub definitionBody {
     my ($doc, $keyvals, %props) = @_;
-    my $for = $keyvals->getValue('for') if $keyvals;
+    my $for = $keyvals ? ToString($keyvals->getValue('for')) : '';
     my $type = $keyvals->getValue('type') if $keyvals;
     my %for_attr=();
     if ($props{theory}) {
@@ -162,7 +162,8 @@ sub definitionBody {
       }
     }
     my %attrs = ();
-    $for = join(" ",(sort keys %for_attr));
+    # use both the keyval for= information, as well as the theory-collected internals
+    $for .= join(" ",(sort keys %for_attr));
     $attrs{'for'} = $for if $for;
     my $id = $keyvals->getValue('id') if $keyvals;
     $attrs{'xml:id'} = $id if $id;
@@ -314,49 +315,47 @@ DefConstructor('\inlineass OptionalKeyVals:omtext {}',
 # 2.5 Symbols II:                                       #
 # =======================================================
 DefConstructor('\inlinedef OptionalKeyVals:omtext {}', sub {
- my ($document, $keyvals, $body, %props) = @_;
- my $for = $keyvals->getValue('for') if $keyvals;
- my %for_attr=();
- if (ToString($for)) {
-   $for = ToString($for);
-   $for =~ s/^{(.+)}$/$1/eg;
-   foreach (split(/,\s*/,$for)) {
-     $for_attr{$_}=1;
-   }}
- my @symbols = @{$props{defs} || []};
- #Prepare for symbol insertion -insert before the parent of the closest ancestor CMP element
- my $original_node = $document->getNode;
- my $statement_ancestor = $document->findnode('ancestor-or-self::omdoc:omtext[1] |
-					       ancestor-or-self::omdoc:assertion[1] | 
-					       ancestor-or-self::omdoc:axiom[1] |
-					       ancestor-or-self::omdoc:example[1]', $original_node);
- foreach my $symb(@symbols) {
-   next if $for_attr{$symb};
-   $for_attr{$symb}=1;
-   my $symbolnode = XML::LibXML::Element->new('symbol');
-   $symbolnode->setAttribute(name=>$symb);
-   $symbolnode->setAttribute("xml:id"=>makeNCName("$symb.def.sym"));
- if ($statement_ancestor) {
-   $statement_ancestor->parentNode->insertBefore($symbolnode,$statement_ancestor);
+  my ($document, $keyvals, $body, %props) = @_;
+  my %for_attr=();
+  my $for = $keyvals ? ToString($keyvals->getValue('for')) : '';
+  if ($for) {
+    $for =~ s/^{(.+)}$/$1/eg; # unwrap braces if given
+    foreach (split(/,?\s*/,$for)) { # support coma-delimited, as well as space-delimited
+      $for_attr{$_}=1; } }
+  my @symbols = @{$props{defs} || []};
+  #Prepare for symbol insertion -insert before the parent of the closest ancestor CMP element
+  my $original_node = $document->getNode;
+  my $statement_ancestor = $document->findnode('ancestor-or-self::omdoc:omtext[1] |
+                  ancestor-or-self::omdoc:assertion[1] | 
+                  ancestor-or-self::omdoc:axiom[1] |
+                  ancestor-or-self::omdoc:example[1]', $original_node);
+  foreach my $symb(@symbols) {
+    next if $for_attr{$symb};
+    $for_attr{$symb}=1;
+    my $symbolnode = XML::LibXML::Element->new('symbol');
+    $symbolnode->setAttribute(name=>$symb);
+    $symbolnode->setAttribute("xml:id"=>makeNCName("$symb.def.sym"));
+  if ($statement_ancestor) {
+    $statement_ancestor->parentNode->insertBefore($symbolnode,$statement_ancestor);
   } else {
     Error('malformed', $statement_ancestor, $original_node, "\\inlinedef outside a statement!
-Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom}...\nwhatever is suitable semantically.")}}
- #Restore the insertion point
- $document->setNode($original_node);
- my %attrs = ();
- $for = join(" ",(sort keys %for_attr));
- $attrs{'for'} = $for if $for;
- my $id = $keyvals->getValue('id') if $keyvals;
- $attrs{'xml:id'} = $id if $id;
- $attrs{'class'} = 'inlinedef';
- $document->openElement('ltx:text',%attrs);
- $document->absorb($body);
- $document->closeElement('ltx:text'); },
- #Prepare 'defs' hooks for \defi and \definiendum symbol names
+  Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom}...\nwhatever is suitable semantically.")}}
+  #Restore the insertion point
+  $document->setNode($original_node);
+  my %attrs = ();
+  $for = join(" ",(sort keys %for_attr));
+  $attrs{'for'} = $for if $for;
+  my $id = $keyvals->getValue('id') if $keyvals;
+  $attrs{'xml:id'} = $id if $id;
+  $attrs{'class'} = 'inlinedef';
+  $document->openElement('ltx:text',%attrs);
+  $document->absorb($body);
+  $document->closeElement('ltx:text'); },
+  #Prepare 'defs' hooks for \defi and \definiendum symbol names
   beforeDigest=>sub {
     AssignValue('defs', []);
     return; },
- #Adopt collected names as 'defs' property, remove hooks
+  #Adopt collected names as 'defs' property, remove hooks
   afterDigest=>sub {
     my ($stomach, $whatsit) = @_;
     my $defsref = LookupValue('defs') || [];
@@ -365,7 +364,7 @@ Try wrapping the paragraph in a begin{omtext}, \\begin{assertion}, \\begin{axiom
     my $local_defs = [ @$defsref ];
     $whatsit->setProperty('defs', $local_defs);
     AssignValue('defs',undef);
- return; });
+return; });
 
 # =======================================================
 # 3. Cross-Referencing Symbols and Concepts:            #
