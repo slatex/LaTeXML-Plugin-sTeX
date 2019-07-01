@@ -31,7 +31,7 @@ DefKeyVal('mi','pi','Semiverbatim');
 DefKeyVal('mi','pii','Semiverbatim'); #Why are we using this at mixfixai ?
 DefKeyVal('mi','cd','Semiverbatim');
 DefKeyVal('mi','name','Semiverbatim');
-DefKeyVal('mi','nobrackets','Semiverbatim');
+DefKeyVal('mi','nobrackets','Semiverbatim','true');
 DefKeyVal('mii','lbrack','Semiverbatim');
 DefKeyVal('mii','rbrack','Semiverbatim');
 DefKeyVal('mii','p','Semiverbatim');
