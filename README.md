@@ -15,8 +15,9 @@ This plug in will also need
 transforming the schema. 
 ##### MAC OS 
 ```
-brew install trang
+brew install jing-trang
 ```
+This may prompt you to cask-install `Java8`, for which you will need `sudo` rights. 
 ##### Linux
 ```
 sudo apt-get install trang
