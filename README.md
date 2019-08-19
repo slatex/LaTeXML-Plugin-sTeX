@@ -107,7 +107,7 @@ this plugin is well documented. The documentation has two components:
   to change the behaviors of the bindings.
 
 ### Copyright
-Copyright (c) 2016 Michael Kohlhase
+Copyright (c) 2019 Michael Kohlhase
 The package is distributed under the terms of the LaTeX Project Public License (LPPL)
 
 
