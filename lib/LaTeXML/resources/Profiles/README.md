@@ -7,6 +7,6 @@ Profiles are used during `latexmlc` startup time to preload stylesheets and spec
 also preloads the stylesheets.
 * `stex`: for a standalone stex document into an omdoc file.
 * `stex-module`: similar to texml-module, stex-module is for fragmented stex documents into an omdoc file.
-* `stex-smglom-module`, `stex-omdoc-modules`, `stex-slides-module`: for fragmented `smglom`, `omdoc`, `mikoslides` class stex into
-omdoc files
+* `stex-smglom-module`, `stex-omdoc-modules`, `stex-slides-module`: for fragmented
+  `smglom`, `omdoc`, `mikoslides` class stex into omdoc files
 * `migration`: for a stand-alone stex document using the `migration.xsl` postprocessor.
