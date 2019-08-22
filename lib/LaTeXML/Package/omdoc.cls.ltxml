@@ -21,6 +21,8 @@ use Cwd qw(abs_path);
 # 0. Options handling:                                  #
 # =======================================================
 AssignValue('omdoc@class'=>'article');
+PassOptions('modules','sty','omdocmode');
+PassOptions('statements','sty','omdocmode');
 DeclareOption('report', sub {AssignValue('omdoc@class' => 'report');
   PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));
   PassOptions('omdoc','sty',ToString(Digest(T_CS('\CurrentOption'))));});

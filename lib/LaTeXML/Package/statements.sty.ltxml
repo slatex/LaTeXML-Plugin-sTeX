@@ -19,6 +19,7 @@ use LaTeXML::Package;
 # 0. Options handling:                                  #
 # =======================================================
 DefConditional('\if@defindex');
+DeclareOption('omdocmode', sub {AssignValue ('@omdocmode' => 1)});
 DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
@@ -79,68 +80,104 @@ sub hash_wrapper{
 # =======================================================
 # 2.1 Axioms and Assertions:                            #
 # =======================================================
-DefStatement('{assertion} OptionalKeyVals:omtext',
-  "<omdoc:assertion "
+DefStatement('{assertion} OptionalKeyVals:omtext', LookupValue('@omdocmode') ?
+  ("<omdoc:assertion "
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
   .   "?&GetKeyVal(#1,'theory')(theory='&GetKeyVal(#1,'theory')')() "
   .   "type='&lowcase(&GetKeyVal(#1,'type'))'>"
   .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "#body"
-  ."</omdoc:assertion>\n");
+  ."</omdoc:assertion>\n") : ("<ltx:block class='omdoc_assertions'"
+  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
+  .   "?&GetKeyVal(#1,'theory')(stex:theory='&GetKeyVal(#1,'theory')')() "
+  .   "stex:type='&lowcase(&GetKeyVal(#1,'type'))'>"
+  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+ .  "#body"
+  ."</ltx:block>\n"));
 
-DefStatement('{example} OptionalKeyVals:omtext',
-       "<omdoc:example "
+DefStatement('{example} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
+       ("<omdoc:example "
        . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
        . "?&GetKeyVal(#1,'for')(for='&hash_wrapper(&GetKeyVal(#1,'for'))')()>"
        . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       . "#body"
-     . "</omdoc:example>\n");
+     . "</omdoc:example>\n") : ("<ltx:block class='omdoc_example'"
+       . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
+       . "?&GetKeyVal(#1,'for')(stex:for='&hash_wrapper(&GetKeyVal(#1,'for'))')()>"
+       . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+      . "#body"
+     . "</ltx:block>\n"));
 
-DefStatement('{axiom} OptionalKeyVals:omtext',
-  "<omdoc:axiom "
+DefStatement('{axiom} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
+  ("<omdoc:axiom "
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')()>"
   .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  . "#body"
-  . "</omdoc:axiom>\n");
+  . "</omdoc:axiom>\n") : ("<ltx:block class='omdoc_axiom'"
+  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')()>"
+  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+ . "#body"
+  . "</ltx:block>\n"));
 
 # =======================================================
 # 2.2 Symbols I:                                        #
 # =======================================================
-DefStatement('{symboldec} OptionalKeyVals:symboldec',
-       "<omdoc:symbol "
+DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
+       ("<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "name='&GetKeyVal(#1,'name')'>"
       .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       .  "<dc:description>#body"
-      ."</omdoc:symbol>\n");
+      ."</omdoc:symbol>\n") : ("<ltx:block class='omdoc_symbol'"
+      .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
+      .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
+      .               "stex:name='&GetKeyVal(#1,'name')'>"
+      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+      .  "<dc:description>#body"
+      ."</ltx:block>\n"));
 
 # =======================================================
 # 2.3 Types:                                            #
 # =======================================================
-DefConstructor('\symtype OptionalKeyVals:omtext {}{}',
-  "<omdoc:type for='#2'"
+DefConstructor('\symtype OptionalKeyVals:omtext {}{}',LookupValue('@omdocmode') ?
+  ("<omdoc:type for='#2'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
  .  "<ltx:Math><ltx:XMath>#3</ltx:XMath></ltx:Math>"
- ."</omdoc:type>");
+ ."</omdoc:type>") : ("<ltx:block class='omdoc_type' stex:for='#2'"
+ .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
+ .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
+ .  "<ltx:Math><ltx:XMath>#3</ltx:XMath></ltx:Math>"
+ ."</ltx:block>"));
 
-DefConstructor('\inlinetypedec OptionalKeyVals:omtext {}{}',
-  "<omdoc:type for='&GetKeyVal(#1,'for')'"
+DefConstructor('\inlinetypedec OptionalKeyVals:omtext {}{}',LookupValue('@omdocmode') ?
+  ("<omdoc:type for='&GetKeyVal(#1,'for')'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
  .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
  .  "#body"
- ."</omdoc:type>");
+ ."</omdoc:type>") : ("<ltx:block class='omdoc_type' stex:for='&GetKeyVal(#1,'for')'"
+ .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
+ .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
+ .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
+ .  "#body"
+ ."</ltx:block>"));
 
-DefStatement('{typedec} OptionalKeyVals:omtext {}',
-  "<omdoc:type for='&GetKeyVal(#1,'for')'"
+DefStatement('{typedec} OptionalKeyVals:omtext {}',LookupValue('@omdocmode') ?
+  ("<omdoc:type for='&GetKeyVal(#1,'for')'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
  .  "#body"
- ."</omdoc:type>");
+ ."</omdoc:type>") : ("<ltx:block class='omdoc_type' stex:for='&GetKeyVal(#1,'for')'"
+ .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
+ .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
+ .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+ .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
+ .  "#body"
+ ."</ltx:block>"));
 
 # =======================================================
 # 2.4 Definitions and Definienda:                       #
@@ -158,7 +195,12 @@ sub definitionBody {
         my $qualified_symbol = $signature ? "$signature?$symb" : $symb;
         $for_attr{$qualified_symbol}=1;
         if (!$props{multiling}) {
-          $doc->insertElement('omdoc:symbol', undef, (name=>$symb, "xml:id"=>makeNCName("$symb.def.sym"))); }
+          if (LookupValue('@omdocmode')) {
+            $doc->insertElement('omdoc:symbol', undef, (name=>$symb, "xml:id"=>makeNCName("$symb.def.sym"))); 
+          } else {
+            $doc->insertElement('ltx:block', undef, (class=>'omdoc_symbol',name=>$symb, "xml:id"=>makeNCName("$symb.def.sym"))); 
+          }
+        }
       }
     }
     my %attrs = ();
@@ -369,13 +411,18 @@ return; });
 # =======================================================
 # 3. Cross-Referencing Symbols and Concepts:            #
 # =======================================================
-DefConstructor('\termref OptionalKeyVals:termref {}',
-               "<omdoc:term "
+DefConstructor('\termref OptionalKeyVals:termref {}',(LookupValue('@omdocmode') ?
+                "<omdoc:term "
               .  "?&GetKeyVal(#1,'cdbase')(cdbase='&GetKeyVal(#1,'cdbase')')() "
              .  "cd='?&GetKeyVal(#1,'cd')(&GetKeyVal(#1,'cd'))(#module)' "
               .  "name='&GetKeyVal(#1,'name')'>"
               .  "#2"
-              ."</omdoc:term>",
+              .  "</omdoc:term>" : "<ltx:block class='omdoc_term' "
+              .  "?&GetKeyVal(#1,'cdbase')(stex:cdbase='&GetKeyVal(#1,'cdbase')')() "
+             .  "stex:cd='?&GetKeyVal(#1,'cd')(&GetKeyVal(#1,'cd'))(#module)' "
+              .  "stex:name='&GetKeyVal(#1,'name')'>"
+              .  "#2"
+              .  "</ltx:block>" ),
               afterDigest=>sub{$_[1]->setProperty(module=>(LookupValue('modnl_signature') || LookupValue('current_module')))});
 
 RawTeX('

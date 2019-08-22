@@ -26,6 +26,9 @@ DeclareOption(undef, sub {PassOptions('statements','sty',ToString(Digest(T_CS('\
   PassOptions('dcm','sty',ToString(Digest(T_CS('\CurrentOption'))));
 });
 ProcessOptions();
+RegisterNamespace("stex","http://kwarc.info/ns/sTeX");
+RegisterNamespace("om","http://omdoc.org/ns");
+RegisterNamespace("omdoc","http://omdoc.org/ns");
 
 # =======================================================
 # 1. Requirements:                                      #
