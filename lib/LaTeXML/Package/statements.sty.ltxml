@@ -396,8 +396,6 @@ DefMacro('\termemph','\term');
 DefConstructor('\defemph {}',"<omdoc:definiendum>#1</omdoc:definiendum>");
 # not defining \stDMemph, since it should not be used on its own. 
 
-DefMacro('\termemph','\term');
-
 DefConstructor('\term[]{}',"<omdoc:term class='dangling-term-link' ?#1(cd='#1')()>#2</omdoc:term>");
 
 DefConstructor('\symref{}{}',
