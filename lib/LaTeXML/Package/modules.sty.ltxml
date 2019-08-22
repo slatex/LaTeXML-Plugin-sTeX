@@ -19,12 +19,15 @@ use LaTeXML::Global;
 use LaTeXML::Package;
 use LaTeXML::Core::Definition::Expandable;
 use LaTeXML::Util::Pathname;
+
 # DG: This binding is NOT generated via modules.dtx be very
 # careful not to erase it while running "make"!
 
 # =======================================================
 # -2. Options Handling:                                 #
 # =======================================================
+DeclareOption('omdocmode', sub {AssignValue ('@omdocmode' => 1);
+              PassOptions('presentation','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('mh', sub {AssignValue ('@modules' => 1);
 		         PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('showmods', '');
@@ -129,32 +132,48 @@ sub module_afterConstruct {
       Info("provides theory", undef, undef, $theory_uri); }
     # Only export uris once
     AssignValue("if_uris_exported" => 1, 'global'); }
-  return; }
+  return; 
+}
+
 DefEnvironment('{module} OptionalKeyVals:Module',
-         "?#excluded()(<omdoc:theory"
+         (LookupValue('@omdocmode') ? ("?#excluded()(<omdoc:theory"
          . "?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
          .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
          .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
          .   "?&defined(&GetKeyVal(#1,'state'))(<omdoc:meta property='smglom:state'>&GetKeyVal(#1,'state')</omdoc:meta>)()"
          .   "#body"
-         . "</omdoc:theory>)",
+         . "</omdoc:theory>)") : ("<ltx:block class='omdoc_module'"
+         ."?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
+         .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
+         .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
+         .   "?&defined(&GetKeyVal(#1,'state'))(<omdoc:meta property='smglom:state'>&GetKeyVal(#1,'state')</omdoc:meta>)()"
+         ."#body"
+         ."</ltx:block>")),
  afterDigestBegin=>\&module_afterDigestBegin,
  afterDigest =>\&module_afterDigest,
  afterConstruct => \&module_afterConstruct);
 
 DefConstructor('\usemodule OptionalKeyVals:importmodule Semiverbatim',
-   "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
+   LookupValue('@omdocmode') ? "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>" :
+    "<ltx:block class='omdoc_uses' stex:from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
    afterDigest=>\&importmoduleI);
+
 DefConstructor('\importmodule OptionalKeyVals:importmodule Semiverbatim',
-	       "<omdoc:imports "
-	       . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
-               . "?&defined(&GetKeyVal(#1,'conservative'))(load='&GetKeyVal(#1,'conservative')')()/>",
+	       (LookupValue('@omdocmode') ? ("<omdoc:imports "
+              . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
+              . "?&defined(&GetKeyVal(#1,'conservative'))(load='&GetKeyVal(#1,'conservative')')()/>" ) : 
+              ("<ltx:block class='omdoc_imports'"
+              . "stex:from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
+              . "?&defined(&GetKeyVal(#1,'conservative'))(stex:load='&GetKeyVal(#1,'conservative')')()/>" ) )
+	       ,
    afterDigest=> \&importmoduleI);
 
 DefConstructor('\importmoduleI OptionalKeyVals:importmodule Semiverbatim', '',
    afterDigest=> \&importmoduleI );
+
 DefConstructor('\importOMDocmodule OptionalSemiverbatim {} Semiverbatim',
-               "<omdoc:imports from='?#3(&canonical_omdoc_path(#3))###2'/>",
+               LookupValue('@omdocmode') ? "<omdoc:imports from='?#3(&canonical_omdoc_path(#3))###2'/>" :
+                "<ltx:block class='omdoc_imports' stex:from='?#3(&canonical_omdoc_path(#3))###2'/>",
   afterDigest=>sub{
     #Same as \importmodule, just switch second and third argument.
     my ($stomach,$whatsit) = @_;
@@ -167,18 +186,26 @@ DefConstructor('\importOMDocmodule OptionalSemiverbatim {} Semiverbatim',
   });
 
 DefConstructor('\metalanguage OptionalSemiverbatim {}',
-   "<omdoc:imports type='metalanguage' from='?#1(&canonical_omdoc_path(#1))###2'/>",
+   LookupValue('@omdocmode') ? "<omdoc:imports type='metalanguage' from='?#1(&canonical_omdoc_path(#1))###2'/>" :
+      "<ltx:block class='omdoc_imports' stex:type='metalanguage' stex:from='?#1(&canonical_omdoc_path(#1))###2'/>",
    afterDigest=> \&importmoduleI );
 
 DefConstructor('\conceptdef OptionalKeyVals:symboldec {}',
-       "<omdoc:symbol "
+       LookupValue('@omdocmode') ? ("<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "name='#1'>"
       .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
       .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
-      ."</omdoc:symbol>\n");
+      ."</omdoc:symbol>\n") : ("<ltx:block class='omdoc_symbol'"
+      .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
+      .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
+      .               "name='#1'>"
+      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+      .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
+      .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
+      ."</ltx:block>\n") );
 DefMacro('\DefMathOp OptionalKeyVals:symdef {}', sub {
   my($self,$keyval,$pres)=@_;
   my $name = GetKeyVal($keyval,'name') if $keyval;
@@ -370,8 +397,8 @@ DefConstructor('\@symdef@construct@presentation{}{}{}{}{} OptionalKeyVals:symdef
     map {$_->can('unlist') ? $_->unlist : $_} $bvars->getValues if defined $bvars;
   @bargs = grep {defined $_ && $_ } map {ToString($_)} 
     map {$_->can('unlist') ? $_->unlist : $_} $bargs->getValues if defined $bargs;
-  my $appElement = 'om:OMA';
-  $appElement = 'om:OMBIND' if (scalar(@bvars) || scalar(@bargs));
+  my $appElement = LookupValue('@omdocmode') ? ((scalar(@bvars) || scalar(@bargs)) ? 'om:OMBIND' : 'om:OMA') : 'ltx:block' ;
+  # $appElement = 'om:OMBIND' if (scalar(@bvars) || scalar(@bargs));
   my $root = $document->getDocument->documentElement;
   $name = ToString($name);
   my $id;
@@ -379,71 +406,159 @@ DefConstructor('\@symdef@construct@presentation{}{}{}{}{} OptionalKeyVals:symdef
   # There has to be a nicer API for doing this in LaTeXML::Core::Document...
   $root->setNamespace("http://omdoc.org/ns","omdoc",0);
   $root->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-  my ($pre_notation_symbol_element) = $root->findnodes(
-    ".//omdoc:notation[\@name='$name' and ".
-                   "preceding-sibling::omdoc:symbol[1]/\@name
-                                    = '$name']");
+  $root->setNamespace("http://dlmf.nist.gov/LaTeXML","ltx",0);
+
+
+  my ($pre_notation_symbol_element) = LookupValue('@omdocmode') ? 
+    $root-> findnodes(".//omdoc:notation[\@name='$name' and preceding-sibling::omdoc:symbol[1]/\@name = '$name']") : 
+    $root-> findnodes(".//ltx:block[\@name='$name' and \@class='omdoc_notation' and preceding-sibling::ltx:block[1]/\@name"
+                                  ." = '$name' and preceding-sibling::ltx:block[1]/\@class='omdoc_symbol']");
   # If no <symbol> has been generated for this definition, generate one:
   if (!$pre_notation_symbol_element) {
     my $is_primary = $keys && (exists $$keys{hash}{'primary'});
-    $document->openElement("omdoc:symbol",(name=>$name,"xml:id"=>$id,
-      $is_primary ? (role=>'primary'): ()));
+    if(LookupValue('@omdocmode')) {
+      $document->openElement("omdoc:symbol",(name=>$name,"xml:id"=>$id,
+        $is_primary ? (role=>'primary'): ()));
+    } else {
+      $document->openElement("ltx:block",(name=>$name,class=>'omdoc_symbol',"xml:id"=>$id,
+        $is_primary ? (role=>'primary'): ()));
+    }
     $document->insertElement("dc:title",ToString($keys->getValue("title"))) if ($keys && $keys->getValue("title"));
     $document->insertElement("dc:subject",ToString($keys->getValue("subject"))) if ($keys && $keys->getValue("subject"));
     $document->insertElement("dc:description",ToString($keys->getValue("description"))) if ($keys && $keys->getValue("description"));
-    $document->closeElement("omdoc:symbol");
+    if(LookupValue('@omdocmode')) {
+      $document->closeElement("omdoc:symbol");
+    } else {
+      $document->closeElement("ltx:block");
+    }
   }
   
   # Generate a notation:
-  $document->openElement("omdoc:notation",(name=>$name,cd=>$cd, "stex:macro_name"=>$cs,"stex:nargs"=>"$nargs"));
+  if(LookupValue('@omdocmode')) {
+    $document->openElement("omdoc:notation",(name=>$name,cd=>$cd, "stex:macro_name"=>$cs,"stex:nargs"=>"$nargs"));
+  } else {
+    $document->openElement("ltx:block",(name=>$name,class=>'omdoc_notation',cd=>$cd, "stex:macro_name"=>$cs,"stex:nargs"=>"$nargs"));
+  }
   #First, generate prototype:
-  $document->openElement('omdoc:prototype');
-  $document->openElement($appElement) if $nargs;
+  if (LookupValue('@omdocmode')) {
+    $document->openElement('omdoc:prototype');
+  } else {
+    $document->openElement('ltx:block',(class=>'omdoc_prototype'))
+  }
+  if ((scalar(@bvars) || scalar(@bargs)) && LookupValue('@omdocmode')) {
+    $document->openElement("om:OMBIND") if $nargs;
+  } elsif (LookupValue('@omdocmode')) {
+    $document->openElement("om:OMA") if $nargs;
+  } elsif (scalar(@bvars) || scalar(@bargs)) {
+    $document->openElement("ltx:block",(class=>'om_OMBIND')) if $nargs;
+  } else {
+    $document->openElement("ltx:block",(class=>'om_OMA')) if $nargs;
+  }
   my $cr="fun" if $nargs;
-  $document->openElement('om:OMA') if (scalar(@bargs));
-  $document->insertElement('om:OMS',undef,(cd=>$cd,name=>$name,cr=>$cr));
+  if (LookupValue('@omdocmode')) {
+    $document->openElement('om:OMA') if (scalar(@bargs));
+    $document->insertElement('om:OMS',undef,(cd=>$cd,name=>$name,cr=>$cr));
+  } else {
+    $document->openElement('ltx:block',(class=>'om_OMA')) if (scalar(@bargs));
+    $document->insertElement('ltx:block',undef,('stex:class'=>'om_OMS','stex:cd'=>$cd,'stex:name'=>$name,'stex:cr'=>$cr))
+  }
   if (scalar(@bargs)) {
     foreach my $barg(@bargs) {
-      $document->insertElement('omdoc:expr',undef,(name=>"arg$barg"));
+      if (LookupValue('@omdocmode')) {
+        $document->insertElement('omdoc:expr',undef,(name=>"arg$barg"));
+      } else {
+        $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"arg$barg"));
+      }
     }
-    $document->closeElement('om:OMA');
+    if (LookupValue('@omdocmode')) {
+      $document->closeElement('om:OMA');
+    } else {
+      $document->closeElement('ltx:block');
+    }
   }
   if (scalar(@bvars) || scalar(@bargs)) {
-    $document->openElement('om:OMBVAR');
+    if (LookupValue('@omdocmode')) {
+      $document->openElement('om:OMBVAR');
+    } else {
+      $document->openElement('ltx:block',(class=>'om_OMBVAR'));
+    }
     if (scalar(@bvars)>=1) {
       foreach my $bvar_i (@bvars) {
         if ($bvar_i == $assocarg) {
-          $document->openElement('omdoc:exprlist',(name=>"args"));
-          $document->insertElement('omdoc:expr',undef,(name=>"arg$bvar_i"));
-          $document->closeElement('omdoc:exprlist'); }
+          if (LookupValue('@omdocmode')) {
+            $document->openElement('omdoc:exprlist',(name=>"args"));
+            $document->insertElement('omdoc:expr',undef,(name=>"arg$bvar_i"));
+            $document->closeElement('omdoc:exprlist'); 
+          } else {
+            $document->openElement('ltx:block',(class=>'omdoc_exprlist','stex:name'=>"args"));
+            $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"arg$bvar_i"));
+            $document->closeElement('ltx:block'); 
+          }
+        }
         else {
-          $document->insertElement('omdoc:expr',undef,(name=>"arg$bvar_i")); }
+          if (LookupValue('@omdocmode')) {
+            $document->insertElement('omdoc:expr',undef,(name=>"arg$bvar_i")); 
+          } else {
+            $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"arg$bvar_i")); 
+          }
+        }
       }}
     else {
-      $document->openElement('omdoc:exprlist',(name=>"args"));
-      $document->insertElement('omdoc:expr',undef,(name=>"arg"));
-      $document->closeElement('omdoc:exprlist'); }
-    $document->closeElement('om:OMBVAR');
+      if (LookupValue('@omdocmode')) {
+        $document->openElement('omdoc:exprlist',(name=>"args"));
+        $document->insertElement('omdoc:expr',undef,(name=>"arg"));
+        $document->closeElement('omdoc:exprlist'); 
+      } else {
+        $document->openElement('ltx:block',(class=>'omdoc_exprlist','stex:name'=>"args"));
+        $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"arg"));
+        $document->closeElement('ltx:block'); 
+      }
+    }
+    if (LookupValue('@omdocmode')) {
+      $document->closeElement('om:OMBVAR');
+    } else {
+      $document->closeElement('ltx:block');
+    }
   }
   for my $id (1..$nargs) {
     next if (grep {$id==$_} (@bvars,@bargs));
     if ($id!=$assocarg) {
       my $argname="arg$id";
-      $document->insertElement('omdoc:expr',undef,(name=>"$argname"));
+      if (LookupValue('@omdocmode')) { 
+        $document->insertElement('omdoc:expr',undef,(name=>"$argname"));
+      } else {
+        $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"$argname"));
+      }
     } else {
-      $document->openElement('omdoc:exprlist',(name=>"args"));
-      $document->insertElement('omdoc:expr',undef,(name=>"arg"));
-      $document->closeElement('omdoc:exprlist');
+      if (LookupValue('@omdocmode')) {
+        $document->openElement('omdoc:exprlist',(name=>"args"));
+        $document->insertElement('omdoc:expr',undef,(name=>"arg"));
+        $document->closeElement('omdoc:exprlist');
+      } else {
+        $document->openElement('ltx:block',(class=>'omdoc_exprlist','stex:name'=>"args"));
+        $document->insertElement('ltx:block',undef,(class=>'omdoc_expr','stex:name'=>"arg"));
+        $document->closeElement('ltx:block');
+      }
     }
   }
   $document->closeElement($appElement) if $nargs;
-  $document->closeElement('omdoc:prototype');
+  if(LookupValue('@omdocmode')) {
+    $document->closeElement('omdoc:prototype');
+  } else {
+    $document->closeElement('ltx:block');
+  }
   #Next, absorb rendering:
-  $document->openElement("omdoc:rendering");
-  $document->absorb($presentation);
-  $document->closeElement("omdoc:rendering");
-  $document->closeElement("omdoc:notation");
-
+  if(LookupValue('@omdocmode')) {
+    $document->openElement("omdoc:rendering");
+    $document->absorb($presentation);
+    $document->closeElement("omdoc:rendering");
+    $document->closeElement("omdoc:notation");
+  } else {
+    $document->openElement("ltx:block",(class=>'omdoc_rendering'));
+    $document->absorb($presentation);
+    $document->closeElement("ltx:block",(class=>'omdoc_rendering'));
+    $document->closeElement("ltx:block");
+  }
 }, afterDigest=>sub {
   my ($stomach, $whatsit) = @_;
   my $keys = $whatsit->getArg(6);
@@ -494,18 +609,28 @@ DefMacro('\symvariant{}[]{}{}', sub {
   # Fix namespace (the LibXML XPath problems...)
   $root->setNamespace("http://omdoc.org/ns","omdoc",0);
   $root->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-  my ($notation) = $root->findnodes(
-    ".//omdoc:notation[\@name='$name' and \@stex:nargs='$nargs' and ".
-        "preceding-sibling::omdoc:symbol[1]/\@name='$name']");
+  $root->setNamespace("http://dlmf.nist.gov/LaTeXML","ltx",0);
+  my ($notation) = $root->findnodes( LookupValue('@omdocmode') ?
+    (".//omdoc:notation[\@name='$name' and \@stex:nargs='$nargs' and ".
+        "preceding-sibling::omdoc:symbol[1]/\@name='$name']") : 
+    (".//ltx:block[\@name='$name' and \@class='omdoc_notation' and \@stex:nargs='$nargs' and ".
+        "preceding-sibling::ltx:block[1]/\@name='$name' and \@class='omdoc_symbol']"));
+
   if (!$notation) {
     #No symdef found, raise error:
     Error("No \\symdef found for \\$cs! Please define symbol prior to introducing variants!");
     return;
   }
   $document->setNode($notation);
-  $document->openElement('omdoc:rendering',("ic"=>"variant:$icvariant"));
-  $document->absorb($localpres);
-  $document->closeElement('omdoc:rendering');
+  if (LookupValue('@omdocmode')) {
+    $document->openElement('omdoc:rendering',("ic"=>"variant:$icvariant"));
+    $document->absorb($localpres);
+    $document->closeElement('omdoc:rendering');
+  } else {
+    $document->openElement('ltx:block',(class=>'omdoc_rendering',"stex:ic"=>"variant:$icvariant"));
+    $document->absorb($localpres);
+    $document->closeElement('ltx:block');
+  }
   $document->setNode($cnode);
   return;
  },
@@ -537,16 +662,22 @@ DefMacro('\abbrtest OptionalKeyVals:symtest []{}{}','');
 # =======================================================
 # 2.5. Numbering and Source References
 # =======================================================
-Tag('omdoc:notation',afterOpen=>\&numberIt,afterClose=>\&locateIt);
+if (LookupValue('@omdocmode')) {
+  Tag('omdoc:notation',afterOpen=>\&numberIt,afterClose=>\&locateIt);
+} else {
+  Tag('ltx:block',afterOpen=>\&numberIt,afterClose=>\&locateIt);
+}
 
 # =======================================================
 # 2.6. Transclusions
 # =======================================================
 DefConstructor('\inputref[]{}',
-	       "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'"
+	       (LookupValue('@omdocmode') ? "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'" :
+            "<ltx:block href='&canonical_omdoc_path(#2)' class='omdoc_oref expandable'")
 	     . "?#1( name='#1')()/>");
 DefConstructor('\includeref[]{}',
-	       "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'"
+	       (LookupValue('@omdocmode') ? "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'" :
+            "<ltx:block stex:href='&canonical_omdoc_path(#2)' class='omdoc_oref expandable'")
 	     . "?#1( name='#1')()/>");
 
 # =======================================================
@@ -690,7 +821,8 @@ sub symdef_assemble_presentation {
 # =======================================================
 # this needs to be put into place, and maybe rethought. 
 DefConstructor('\sinputref[]{}',
-	       "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'"
+	       (LookupValue('@omdocmode') ? "<omdoc:oref href='&canonical_omdoc_path(#2)' class='expandable'" :
+            "<ltx:block stex:href='&canonical_omdoc_path(#2)' class='omdoc_oref expandable'")
 	     . "?#1( name='#1')()/>");
 
 #DefPrimitive('\sinput Semiverbatim', sub {
