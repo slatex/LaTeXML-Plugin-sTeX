@@ -183,7 +183,7 @@ Positionable.attributes =
   attribute height { Length.type }? &
 
   ## the desired depth of the box
-  attribute depth { Length.type }?,
+  attribute depth { Length.type }? & 
 
   ## horizontal shift the position of the box.
   attribute xoffset { Length.type }? &
