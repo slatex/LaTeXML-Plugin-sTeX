@@ -15,7 +15,7 @@ default namespace = "http://dlmf.nist.gov/LaTeXML"
 ## This module defines the following `logical' block elements.
 Para.class &= para*
     & theorem* & proof*
-    &  figure* & table* & float* & listing* & pagination*
+    &  figure* & table* & float* & pagination*
 # allow pagination here, to avoid unnecessary extra para!
 
 ## Additionally, it defines these miscellaneous elements that can appear
@@ -30,8 +30,9 @@ element para { para_attributes &  para_model }
 
 ## Attributes for \elementref{para}.
 para_attributes =
-  Common.attributes &
-  ID.attributes &
+  Common.attributes & 
+  ID.attributes & 
+  Positionable.attributes & 
   Backgroundable.attributes
 
 ## Content model for \elementref{para}.
@@ -68,7 +69,7 @@ theorem_attributes =
   Backgroundable.attributes
 
 ## Content model for \elementref{theorem}.
-theorem_model = title? & Para.model
+theorem_model = tags? & title? & Para.model
 
 #======================================================================
 
@@ -79,14 +80,13 @@ element proof { proof_attributes &  proof_model }
 
 ## Attributes for \elementref{proof}.
 proof_attributes =
-  Common.attributes &
-  Labelled.attributes &
-  Backgroundable.attributes &
-  ## raw data related to the proof
-  attribute data { text }?
+  Common.attributes & 
+  Labelled.attributes & 
+  Backgroundable.attributes & 
+  Data.attributes
 
 ## Content model for \elementref{proof}.
-proof_model = title? & Para.model
+proof_model = tags? & title? & Para.model
 
 #======================================================================
 
@@ -107,17 +107,16 @@ figure_attributes =
   Common.attributes & 
   Labelled.attributes & 
   Positionable.attributes & 
-  Transformable.attributes &
-  Backgroundable.attributes &
-
+  Transformable.attributes & 
+  Backgroundable.attributes & 
+  Data.attributes & 
+  
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }? &
-  ## raw data related to the figure
-  attribute data { text }?
+  attribute placement { text }?
 
 ### MiKo: only allowing one caption, is this right? same for table, float, and listing below
 ## Content model for \elementref{figure}; allow nested figures, etc for "sub" floats.
-figure_model = figure* & table* & float* & Block.model & Caption.class
+figure_model = tags? & figure* & table* & float* & Block.model & Caption.class
 
 #======================================================================
 
@@ -132,20 +131,19 @@ table_attributes =
   Positionable.attributes & 
   Transformable.attributes &
   Backgroundable.attributes &
+  Data.attributes & 
 
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }? &
-  ## raw data related to the table; perhaps csv?
-  attribute data { text }?
+  attribute placement { text }?
 
 ## Content model for \elementref{table}.
-table_model = table* & figure* & float* & Block.model & Caption.class
+table_model = tags? & table* & figure* & float* & Block.model & Caption.class
 
 #======================================================================
 
 float =
-## A generic float, possibly captioned, something other than a table, figure or listing
-element float { float_attributes &  float_model }
+## A generic float, possibly captioned, something other than a table or figure
+element float { float_attributes & float_model }
 
 ## Attributes for \elementref{float}.
 float_attributes = 
@@ -154,34 +152,15 @@ float_attributes =
   Positionable.attributes & 
   Transformable.attributes &
   Backgroundable.attributes &
+  Data.attributes &
 
+  ## The kind of float; could be something like a listing, or some other thing
+  attribute role { text }?,
   ## the vertical floating placement parameter that determines where the object is displayed.
-  attribute placement { text }? &
-  ## raw data related to the float
-  attribute data { text }?
+  attribute placement { text }?
 
 ## Content model for \elementref{float}.
 float_model = float* & figure* & table* & Block.model & Caption.class
-
-#======================================================================
-
-listing =
-## A Listing, possibly captioned.
-element listing { listing_attributes &  listing_model }
-
-## Attributes for \elementref{listing}.
-listing_attributes = 
-  Common.attributes & 
-  Labelled.attributes & 
-  Positionable.attributes & 
-  Backgroundable.attributes &
-  ## the floating placement parameter that determines where the object is displayed.
-  attribute placement { text }? &
-  ## raw data related to the float; presumably the unformatted listing itself
-  attribute data { text }?
-
-## Content model for \elementref{listing}.
-listing_model = Block.model  &  Caption.class
 
 #======================================================================
 
@@ -212,5 +191,5 @@ toccaption_attributes = Common.attributes
 
 ### MiKo: here we allowed multiple tags, but now we can restrict, do we want that?
 ## Content model for \elementref{toccaption}.
-toccaption_model = text  &  Inline.class & Misc.class & Meta.class & tag*
+toccaption_model = tag* & text  &  Inline.class & Misc.class & Meta.class
 #======================================================================
