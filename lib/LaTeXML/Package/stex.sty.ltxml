@@ -27,7 +27,7 @@ DeclareOption(undef, sub {PassOptions('statements','sty',ToString(Digest(T_CS('\
 });
 ProcessOptions();
 RegisterNamespace("stex","http://kwarc.info/ns/sTeX");
-RegisterNamespace("om","http://omdoc.org/ns");
+RegisterNamespace("om","http://www.openmath.org/OpenMath");
 RegisterNamespace("omdoc","http://omdoc.org/ns");
 
 # =======================================================

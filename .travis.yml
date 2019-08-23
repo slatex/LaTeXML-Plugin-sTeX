@@ -1,5 +1,8 @@
-sudo: false
+sudo: true
 language: perl
+
+before_install:
+    - cpanm XML::LibXML # optional dependency
 
 addons:
   apt:

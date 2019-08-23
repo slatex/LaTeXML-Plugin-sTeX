@@ -32,8 +32,8 @@ WriteMakefile(
       resources => {
         repository => {
           type => 'git',
-          url => 'https://github.com/KWARC/LaTeXML-Plugin-sTeX.git',
-          web => 'https://github.com/KWARC/LaTeXML-Plugin-sTeX',
+          url => 'https://github.com/slatex/LaTeXML-Plugin-sTeX.git',
+          web => 'https://github.com/slatex/LaTeXML-Plugin-sTeX',
         }}})
   : ()),
 );

@@ -1,6 +1,6 @@
 ## A [LaTeXML](http://dlmf.nist.gov/LaTeXML/) plugin for [sTeX](http://github.com/KWARC/sTeX).
 
-[![Build Status](https://api.travis-ci.org/KWARC/LaTeXML-Plugin-sTeX.svg?branch=master)](https://travis-ci.org/KWARC/LaTeXML-Plugin-sTeX#) ![version](https://img.shields.io/badge/version-0.2.0-orange.svg)
+[![Build Status](https://api.travis-ci.org/slatex/LaTeXML-Plugin-sTeX.svg?branch=master)](https://travis-ci.org/slatex/LaTeXML-Plugin-sTeX#) ![version](https://img.shields.io/badge/version-0.2.0-orange.svg)
 
 
 ### Prerequisites
