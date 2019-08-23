@@ -1,6 +1,9 @@
 sudo: false
 language: perl
 
+before_install:
+    - cpanm XML::LibXML # optional dependency
+
 addons:
   apt:
     packages: 
