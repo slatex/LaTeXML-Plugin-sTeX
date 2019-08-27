@@ -333,7 +333,7 @@ XMArray_attributes =
   attribute meaning { text }? &
 
   ## The OpenMath CD for which \attr{meaning} is a symbol.
-  attribute omcd { text }?,
+  attribute omcd { text }? & 
 
   ## the spacing between rows
   attribute rowsep { Length.type}? & 
