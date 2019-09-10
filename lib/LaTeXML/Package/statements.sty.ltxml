@@ -502,7 +502,7 @@ sub declareFunctions{
     my $symb = UnTeX($_);
     $stomach->getGullet->unread(Tokenize('\lxDeclare[role=FUNCTION]{$'.$symb.'$}')->unlist);
   }
-  return; },
+  return; }
 
 sub defHelper{
   my ($stomach, $whatsit, $defOption) = @_;
