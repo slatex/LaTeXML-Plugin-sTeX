@@ -507,11 +507,12 @@ sub declareFunctions{
 sub defHelper{
   my ($stomach, $whatsit, $defOption) = @_;
   my $addr = LookupValue('defs');
-  my $name = $whatsit->getArg(1);
+  my $keys = $whatsit->getArg(1);
+  my $name = ToString(GetKeyVal($keys,'name')) if $keys;
   if (!$name) {
     my %choose_Option = (
                         definiendum => sub {$whatsit->getArg(2);},
-                        defi => sub {$whatsit->getArg(2);},
+                        defi => sub {$whatsit->getArg(2);},                    
                         adefi => sub {$whatsit->getArg(3);},
                         defii => sub {$whatsit->getArg(2)->toString.'-'.$whatsit->getArg(3)->toString;},
                         adefii => sub {$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString;},
