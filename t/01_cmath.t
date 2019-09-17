@@ -37,100 +37,100 @@ my $target_xml = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+<omdoc xmlns="http://omdoc.org/ns" xmlns:ltx="http://dlmf.nist.gov/LaTeXML" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
   <theory about="#mathapp" stex:srcref="anonymous_string#textrange(from=3;0,to=10;12)" xml:id="mathapp">
-    <omtext about="#mathapp.omtext1" stex:srcref="anonymous_string#textrange(from=4;1,to=9;12)" xml:id="mathapp.omtext1">
-      <CMP about="#mathapp.omtext1.CMP1" stex:srcref="anonymous_string#textrange(from=4;25,to=8;16)" xml:id="mathapp.omtext1.CMP1">
-        <equation xmlns="http://dlmf.nist.gov/LaTeXML" font="italic" xml:id="S0.Ex1">
-          <Math about="#S0.Ex1.m1" mode="display" stex:srcref="anonymous_string#textrange(from=4;25,to=8;16)" tex="\nappa{f}{a_{1},a_{2},a_{3}}\@napp@seq[]{f}{a_{1}}{a_{n}}\@napp@seq[]{f}{a_{1}%&#10;}{a_{n}}\@napp@seq[]{f}{a^{1}}{a^{n}}" text="f@(list@(a _ 1, a _ 2, a _ 3)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a ^ 1, sequencefromto, a ^ n))" xml:id="S0.Ex1.m1">
-            <XMath>
-              <XMApp>
-                <XMTok meaning="times" role="MULOP">⁢</XMTok>
-                <XMApp>
-                  <XMTok mode="math" role="UNKNOWN">f</XMTok>
-                  <XMDual>
-                    <XMApp>
-                      <XMTok meaning="list"/>
-                      <XMRef idref="S0.Ex1.m1.1"/>
-                      <XMRef idref="S0.Ex1.m1.2"/>
-                      <XMRef idref="S0.Ex1.m1.3"/>
-                    </XMApp>
-                    <XMWrap>
-                      <XMApp xml:id="S0.Ex1.m1.1">
-                        <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                        <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                        <XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</XMTok>
-                      </XMApp>
-                      <XMTok font="upright" mode="math" role="PUNCT">,</XMTok>
-                      <XMApp xml:id="S0.Ex1.m1.2">
-                        <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                        <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                        <XMTok font="upright" fontsize="70%" meaning="2" mode="math" role="NUMBER" rule="Subscript">2</XMTok>
-                      </XMApp>
-                      <XMTok font="upright" mode="math" role="PUNCT">,</XMTok>
-                      <XMApp xml:id="S0.Ex1.m1.3">
-                        <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                        <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                        <XMTok font="upright" fontsize="70%" meaning="3" mode="math" role="NUMBER" rule="Subscript">3</XMTok>
-                      </XMApp>
-                    </XMWrap>
-                  </XMDual>
-                </XMApp>
-                <XMApp>
-                  <XMTok mode="math" role="UNKNOWN">f</XMTok>
-                  <XMApp>
-                    <XMTok meaning="sequence"/>
-                    <XMApp>
-                      <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</XMTok>
-                    </XMApp>
-                    <XMTok meaning="sequencefromto"/>
-                    <XMApp>
-                      <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Subscript">n</XMTok>
-                    </XMApp>
-                  </XMApp>
-                </XMApp>
-                <XMApp>
-                  <XMTok mode="math" role="UNKNOWN">f</XMTok>
-                  <XMApp>
-                    <XMTok meaning="sequence"/>
-                    <XMApp>
-                      <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</XMTok>
-                    </XMApp>
-                    <XMTok meaning="sequencefromto"/>
-                    <XMApp>
-                      <XMTok role="SUBSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Subscript">n</XMTok>
-                    </XMApp>
-                  </XMApp>
-                </XMApp>
-                <XMApp>
-                  <XMTok mode="math" role="UNKNOWN">f</XMTok>
-                  <XMApp>
-                    <XMTok meaning="sequence"/>
-                    <XMApp>
-                      <XMTok role="SUPERSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Superscript">1</XMTok>
-                    </XMApp>
-                    <XMTok meaning="sequencefromto"/>
-                    <XMApp>
-                      <XMTok role="SUPERSCRIPTOP" scriptpos="post4"/>
-                      <XMTok mode="math" role="UNKNOWN">a</XMTok>
-                      <XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Superscript">n</XMTok>
-                    </XMApp>
-                  </XMApp>
-                </XMApp>
-              </XMApp>
-            </XMath>
-          </Math>
-        </equation>
+    <omtext about="#mathapp.omtext1" stex:srcref="anonymous_string#textrange(from=4;0,to=9;12)" xml:id="mathapp.omtext1">
+      <CMP about="#mathapp.omtext1.CMP1" stex:srcref="anonymous_string#textrange(from=5;2,to=8;16)" xml:id="mathapp.omtext1.CMP1">
+        <ltx:equation font="italic" xml:id="S0.Ex1">
+          <ltx:Math about="#S0.Ex1.m1" mode="display" stex:srcref="anonymous_string#textrange(from=5;2,to=8;16)" tex="\nappa{f}{a_{1},a_{2},a_{3}}\@napp@seq[]{f}{a_{1}}{a_{n}}\@napp@seq[]{f}{a_{1}%&#10;}{a_{n}}\@napp@seq[]{f}{a^{1}}{a^{n}}" text="f@(list@(a _ 1, a _ 2, a _ 3)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a _ 1, sequencefromto, a _ n)) * f@(sequence@(a ^ 1, sequencefromto, a ^ n))" xml:id="S0.Ex1.m1">
+            <ltx:XMath>
+              <ltx:XMApp>
+                <ltx:XMTok meaning="times" role="MULOP">⁢</ltx:XMTok>
+                <ltx:XMApp>
+                  <ltx:XMTok mode="math" role="UNKNOWN">f</ltx:XMTok>
+                  <ltx:XMDual>
+                    <ltx:XMApp>
+                      <ltx:XMTok meaning="list"/>
+                      <ltx:XMRef idref="S0.Ex1.m1.1"/>
+                      <ltx:XMRef idref="S0.Ex1.m1.2"/>
+                      <ltx:XMRef idref="S0.Ex1.m1.3"/>
+                    </ltx:XMApp>
+                    <ltx:XMWrap>
+                      <ltx:XMApp xml:id="S0.Ex1.m1.1">
+                        <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                        <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                        <ltx:XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</ltx:XMTok>
+                      </ltx:XMApp>
+                      <ltx:XMTok font="upright" mode="math" role="PUNCT">,</ltx:XMTok>
+                      <ltx:XMApp xml:id="S0.Ex1.m1.2">
+                        <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                        <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                        <ltx:XMTok font="upright" fontsize="70%" meaning="2" mode="math" role="NUMBER" rule="Subscript">2</ltx:XMTok>
+                      </ltx:XMApp>
+                      <ltx:XMTok font="upright" mode="math" role="PUNCT">,</ltx:XMTok>
+                      <ltx:XMApp xml:id="S0.Ex1.m1.3">
+                        <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                        <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                        <ltx:XMTok font="upright" fontsize="70%" meaning="3" mode="math" role="NUMBER" rule="Subscript">3</ltx:XMTok>
+                      </ltx:XMApp>
+                    </ltx:XMWrap>
+                  </ltx:XMDual>
+                </ltx:XMApp>
+                <ltx:XMApp>
+                  <ltx:XMTok mode="math" role="UNKNOWN">f</ltx:XMTok>
+                  <ltx:XMApp>
+                    <ltx:XMTok meaning="sequence"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</ltx:XMTok>
+                    </ltx:XMApp>
+                    <ltx:XMTok meaning="sequencefromto"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Subscript">n</ltx:XMTok>
+                    </ltx:XMApp>
+                  </ltx:XMApp>
+                </ltx:XMApp>
+                <ltx:XMApp>
+                  <ltx:XMTok mode="math" role="UNKNOWN">f</ltx:XMTok>
+                  <ltx:XMApp>
+                    <ltx:XMTok meaning="sequence"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Subscript">1</ltx:XMTok>
+                    </ltx:XMApp>
+                    <ltx:XMTok meaning="sequencefromto"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUBSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Subscript">n</ltx:XMTok>
+                    </ltx:XMApp>
+                  </ltx:XMApp>
+                </ltx:XMApp>
+                <ltx:XMApp>
+                  <ltx:XMTok mode="math" role="UNKNOWN">f</ltx:XMTok>
+                  <ltx:XMApp>
+                    <ltx:XMTok meaning="sequence"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUPERSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok font="upright" fontsize="70%" meaning="1" mode="math" role="NUMBER" rule="Superscript">1</ltx:XMTok>
+                    </ltx:XMApp>
+                    <ltx:XMTok meaning="sequencefromto"/>
+                    <ltx:XMApp>
+                      <ltx:XMTok role="SUPERSCRIPTOP" scriptpos="post1"/>
+                      <ltx:XMTok mode="math" role="UNKNOWN">a</ltx:XMTok>
+                      <ltx:XMTok fontsize="70%" mode="math" role="UNKNOWN" rule="Superscript">n</ltx:XMTok>
+                    </ltx:XMApp>
+                  </ltx:XMApp>
+                </ltx:XMApp>
+              </ltx:XMApp>
+            </ltx:XMath>
+          </ltx:Math>
+        </ltx:equation>
       </CMP>
     </omtext>
   </theory>
