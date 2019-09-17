@@ -22,12 +22,12 @@ my $tex_input = <<'EOQ';
 \begin{module}
 \symdef{foo}{\text{foo}}
   \begin{definition}[id=foo.def]
-    A \defi{foo} (we write $\foo$) is a false object offer. 
+    A \defi{foo} (we write $\foo$) is a false object offer.
   \end{definition}
 \end{module}
 \end{document}
 EOQ
-		  
+
 my $config = LaTeXML::Common::Config->new(local=>1, paths=>['./lib/LaTeXML/Package','./lib/LaTeXML/resources/RelaxNG','./lib/LaTeXML/resources/Profiles','./lib/LaTeXML/resources/XSLT']);
 my $converter = LaTeXML->get_converter($config);
 my $response = $converter->convert("literal:$tex_input");
@@ -35,12 +35,12 @@ my $target_xml = <<'EOQ';
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
-<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:om="http://www.openmath.org/OpenMath" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
-  <theory about="#omdoc1.theory1" stex:srcref="anonymous_string#textrange(from=3;1,to=8;12)" xml:id="omdoc1.theory1">
-    <metadata about="#omdoc1.theory1.metadata1" stex:srcref="anonymous_string#textrange(from=3;1,to=8;12)" xml:id="omdoc1.theory1.metadata1">
-      <dc:creator about="#omdoc1.theory1.metadata1.creator1" stex:srcref="anonymous_string#textrange(from=3;1,to=8;12)" xml:id="omdoc1.theory1.metadata1.creator1"/>
-      <dc:contributor about="#omdoc1.theory1.metadata1.contributor2" stex:srcref="anonymous_string#textrange(from=3;1,to=8;12)" xml:id="omdoc1.theory1.metadata1.contributor2"/>
-      <meta about="#omdoc1.theory1.metadata1.meta3" property="smglom:state" stex:srcref="anonymous_string#textrange(from=3;1,to=8;12)" xml:id="omdoc1.theory1.metadata1.meta3"/>
+<omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ltx="http://dlmf.nist.gov/LaTeXML" xmlns:om="http://www.openmath.org/OpenMath" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
+  <theory about="#omdoc1.theory1" stex:srcref="anonymous_string#textrange(from=3;0,to=8;12)" xml:id="omdoc1.theory1">
+    <metadata about="#omdoc1.theory1.metadata1" stex:srcref="anonymous_string#textrange(from=3;0,to=8;12)" xml:id="omdoc1.theory1.metadata1">
+      <dc:creator about="#omdoc1.theory1.metadata1.creator1" stex:srcref="anonymous_string#textrange(from=3;0,to=8;12)" xml:id="omdoc1.theory1.metadata1.creator1"/>
+      <dc:contributor about="#omdoc1.theory1.metadata1.contributor2" stex:srcref="anonymous_string#textrange(from=3;0,to=8;12)" xml:id="omdoc1.theory1.metadata1.contributor2"/>
+      <meta about="#omdoc1.theory1.metadata1.meta3" property="smglom:state" stex:srcref="anonymous_string#textrange(from=3;0,to=8;12)" xml:id="omdoc1.theory1.metadata1.meta3"/>
     </metadata>
     <symbol about="#omdoc1.theory1.symbol2" name="foo" stex:srcref="anonymous_string#textrange(from=4;0,to=4;24)" xml:id="omdoc1.theory1.symbol2"/>
     <notation about="#omdoc1.theory1.notation3" cd="theory1" name="foo" stex:macro_name="foo" stex:nargs="0" stex:srcref="anonymous_string#textrange(from=4;0,to=4;24)" xml:id="omdoc1.theory1.notation3">
@@ -48,17 +48,17 @@ my $target_xml = <<'EOQ';
         <om:OMS cd="theory1" name="foo"/>
       </prototype>
       <rendering>
-        <text xmlns="http://dlmf.nist.gov/LaTeXML" class="ltx_markedasmath">foo</text>
+        <ltx:text class="ltx_markedasmath">foo</ltx:text>
       </rendering>
     </notation>
     <symbol about="#foo.def.sym" name="foo" stex:srcref="anonymous_string#textrange(from=5;0,to=7;18)" xml:id="foo.def.sym"/>
     <definition about="#foo.def" for="foo" stex:srcref="anonymous_string#textrange(from=5;0,to=7;18)" xml:id="foo.def">
-      <CMP about="#foo.def.CMP1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;33)" xml:id="foo.def.CMP1">
-        <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#foo.def.CMP1.p1" stex:srcref="anonymous_string#textrange(from=5;54,to=6;33)" xml:id="foo.def.CMP1.p1">A <definiendum cd="theory1" name="foo">foo</definiendum> (we write <Math about="#foo.def.CMP1.p1.m1" font="italic" mode="inline" stex:srcref="anonymous_string#textrange(from=5;27,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
-            <XMath>
-              <XMTok meaning="foo" name="foo" omcd="theory1"/>
-            </XMath>
-          </Math>) is a false object offer.</p>
+      <CMP about="#foo.def.CMP1" stex:srcref="anonymous_string#textrange(from=6;5,to=6;33)" xml:id="foo.def.CMP1">
+        <ltx:p about="#foo.def.CMP1.p1" stex:srcref="anonymous_string#textrange(from=6;5,to=6;33)" xml:id="foo.def.CMP1.p1">A <definiendum cd="theory1" name="foo">foo</definiendum> (we write <ltx:Math about="#foo.def.CMP1.p1.m1" font="italic" mode="inline" stex:srcref="anonymous_string#textrange(from=6;32,to=6;33)" tex="\@foo@construct[default]" text="foo" xml:id="foo.def.CMP1.p1.m1">
+            <ltx:XMath>
+              <ltx:XMTok meaning="foo" name="foo" omcd="theory1"/>
+            </ltx:XMath>
+          </ltx:Math>) is a false object offer.</ltx:p>
       </CMP>
     </definition>
   </theory>
@@ -81,4 +81,3 @@ while (@got_lines) {
   my $expected_line = shift @expected_lines;
   is($got_line, $expected_line,"Compared line $index of XML output.");
 }
-
