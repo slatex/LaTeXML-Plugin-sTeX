@@ -20,16 +20,14 @@ my $tex_input = <<'EOQ';
 \documentclass{smglom}
 \begin{document}
 \begin{module}[id=foo]
-
 \end{module}
 
 \begin{module}[id=foo2]
-\importmodule{foo}
+  \importmodule{foo}
 \end{module}
 
 \begin{module}[id=foo3]
-\importmodule{foo2}
-
+  \importmodule{foo2}
 \end{module}
 \end{document}
 EOQ
