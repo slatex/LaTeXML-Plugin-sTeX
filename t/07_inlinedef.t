@@ -18,7 +18,7 @@ ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 my $tex_input = <<'EOQ';
 \documentclass{omdoc}
 \begin{document}
-\begin{module}
+\begin{module}[id=foo]
 
   \begin{omtext}
     \inlinedef{This is called \defi{this}}
@@ -28,11 +28,11 @@ my $tex_input = <<'EOQ';
     Here is some text \inlinedef{This is called \defi{this2}}
   \end{omtext}
 
-  \begin{assertion}
+  \begin{assertion}[type=theorem]
    \inlinedef{This is called \defi{second}}
   \end{assertion}
 
-  \begin{assertion}
+  \begin{assertion}[type=remark]
    Ni hall \inlinedef{This is called \defiii{second}{word}{word2}}
   \end{assertion}
 
