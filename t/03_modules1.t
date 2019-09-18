@@ -29,7 +29,7 @@ my $tex_input = <<'EOQ';
 
 \begin{module}[id=newMod]
 \importmodule{foo}
- Try somehting new $ \helloOp$.
+ Try something new $ \helloOp$.
 \end{module}
 
 \begin{omtext}
