@@ -21,10 +21,10 @@ my $tex_input = <<'EOQ';
 \begin{document}
 \begin{module}[id=mathapp]
 \begin{omtext}
-$$ \nappa{f}{a_1, a_2, a_3}
-\nappe{f}{a_1}{a_n}
-\nappli{f}a1n
-\nappui{f}a1n $$
+  \[\nappa{f}{a_1, a_2, a_3}\]
+  \[\nappe{f}{a_1}{a_n}\]
+  \[\nappli{f}a1n\]
+  \[\nappui{f}a1n\]
 \end{omtext}
 \end{module}
 \end{document}

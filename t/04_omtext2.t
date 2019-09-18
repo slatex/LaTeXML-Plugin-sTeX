@@ -19,10 +19,6 @@ ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 my $tex_input = <<'EOQ';
 \documentclass{smglom}
 \begin{document}
-\begin{omtext}[title=newTitle, type=abstract]
- Ni hao me.
-\end{omtext}
-
 \begin{omtext}[type=introduction]
  \nlex{If \coreft{hello}1 owns \corefs{he}2.}
 \end{omtext}
@@ -37,14 +33,6 @@ my $target_xml = <<'EOQ';
 <?latexml class="smglom"?>
 <?latexml RelaxNGSchema="omdoc+ltxml"?>
 <omdoc xmlns="http://omdoc.org/ns" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:stex="http://kwarc.info/ns/sTeX" about="#omdoc1" stex:srcref="anonymous_string#textrange(from=2;0,to=0;0)" xml:id="omdoc1">
-  <omtext about="#omdoc1.omtext1" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" type="abstract" xml:id="omdoc1.omtext1">
-    <metadata about="#omdoc1.omtext1.metadata1" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" xml:id="omdoc1.omtext1.metadata1">
-      <dc:title about="#omdoc1.omtext1.metadata1.title1" stex:srcref="anonymous_string#textrange(from=3;0,to=5;12)" xml:id="omdoc1.omtext1.metadata1.title1">newTitle</dc:title>
-    </metadata>
-    <CMP about="#omdoc1.omtext1.CMP2" stex:srcref="anonymous_string#textrange(from=3;9,to=4;2)" xml:id="omdoc1.omtext1.CMP2">
-      <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.omtext1.CMP2.p1" stex:srcref="anonymous_string#textrange(from=3;9,to=4;2)" xml:id="omdoc1.omtext1.CMP2.p1">Ni hao me.</p>
-    </CMP>
-  </omtext>
   <omtext about="#omdoc1.omtext2" stex:srcref="anonymous_string#textrange(from=7;0,to=9;12)" type="introduction" xml:id="omdoc1.omtext2">
     <CMP about="#omdoc1.omtext2.CMP1" stex:srcref="anonymous_string#textrange(from=8;0,to=8;45)" xml:id="omdoc1.omtext2.CMP1">
       <p xmlns="http://dlmf.nist.gov/LaTeXML" about="#omdoc1.omtext2.CMP1.p1" stex:srcref="anonymous_string#textrange(from=8;0,to=8;45)" xml:id="omdoc1.omtext2.CMP1.p1"><text class="nlex">If <text class="coref-target" stex:index="1">hello</text> owns <text class="coref-source" stex:index="2">he</text>.</text></p>
