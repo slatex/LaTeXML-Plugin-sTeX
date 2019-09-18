@@ -1,4 +1,5 @@
 #default=http://omdoc.org/ns
+ltx=http://dlmf.nist.gov/LaTeXML
 omdoc=http://omdoc.org/ns
 xml=http://www.w3.org/XML/1998/namespace
 BackMatter:=(ltx:ERROR,ltx:TOC,ltx:acknowledgements,ltx:appendix,ltx:bibliography,ltx:description,ltx:enumerate,ltx:figure,ltx:float,ltx:glossary,ltx:glossarydefinition,ltx:index,ltx:indexmark,ltx:itemize,ltx:listing,ltx:navigation,ltx:note,ltx:pagination,ltx:para,ltx:proof,ltx:rdf,ltx:resource,ltx:table,ltx:theorem,omdoc:adt,omdoc:alternative,omdoc:assertion,omdoc:axiom,omdoc:chapter,omdoc:code,omdoc:definition,omdoc:example,omdoc:exercise,omdoc:hint,omdoc:ignore,omdoc:mc,omdoc:notation,omdoc:omgroup,omdoc:omtext,omdoc:oref,omdoc:paragraph,omdoc:private,omdoc:proof,omdoc:proofobject,omdoc:ref,omdoc:section,omdoc:solution,omdoc:subparagraph,omdoc:subsection,omdoc:subsubsection,omdoc:symbol,omdoc:tableofcontents,omdoc:theory,omdoc:type,omdoc:verbalization,omdoc:view,xhtml:dl,xhtml:ol,xhtml:ul)

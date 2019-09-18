@@ -1,13 +1,11 @@
-sudo: true
+sudo: false
 language: perl
-
-before_install:
-    - cpanm XML::LibXML # optional dependency
-    - sudo apt-get install -y latexml
+perl:
+  - "5.28"
 
 addons:
   apt:
-    packages: 
+    packages:
       - libxml2-dev
       - libdb-dev
       - libxslt1-dev
