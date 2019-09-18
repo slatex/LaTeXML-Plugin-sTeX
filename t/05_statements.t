@@ -17,7 +17,7 @@ my $eval_return = eval {
 ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 
 my $tex_input = <<'EOQ';
-\documentclass{smglom}
+\documentclass{omdoc}
 \begin{document}
 \begin{assertion}[id=hello, type=lemma]
   $ Waohwer asd_x $
@@ -31,13 +31,27 @@ my $tex_input = <<'EOQ';
  \defi{concept} is this
  \defii{new}{concerpt}
  \defiii{old}{new}{concerpt}
+ \defiv{quasi}{old}{new}{concerpt}
 \end{definition}
 
-\begin{definition}
+\begin{omtext}
  \trefi{concept}
  \trefii{new}{concerpt}
- \trefiii{old}{new}{concerpt}
+ \trefiiv{old}{new}{concerpt}
+\end{omtext}
+
+\begin{definition}[id=test.two]
+ \defi[name=one]{concept} is this
+ \defii[name=two]{new}{concerpt}
+ \defiii[name=three]{old}{new}{concerpt}
+ \defiv[name=four]{quasi}{old}{new}{concerpt}
 \end{definition}
+
+\begin{omtext}
+ \trefi{concept}
+ \trefii{new}{concerpt}
+ \trefiiv{old}{new}{concerpt}
+\end{omtext}
 \end{document}
 EOQ
 		  
