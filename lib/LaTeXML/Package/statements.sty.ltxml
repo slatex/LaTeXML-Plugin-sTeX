@@ -265,21 +265,21 @@ DefConstructor('\definiendum OptionalKeyVals:DEF {}',
      . "</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_, 'definiendum'); });
 
-DefConstructor('\defi[]{} OptionalKeyVals:DEF',
+DefConstructor('\defiOptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
  .   "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
  afterDigest => sub { defHelper(@_, 'defi'); },
  alias=>'\defi');
 
-DefConstructor('\defis[]{} OptionalKeyVals:DEF',
+DefConstructor('\defis OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
  .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2s</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
  afterDigest => sub { defHelper(@_, 'defi'); },
  alias=>'\defi');
 
-DefConstructor('\adefi[]{}{} OptionalKeyVals:DEF',
+DefConstructor('\adefi OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
        .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#3') cd='#theory'>"
        .       "<omdoc:meta property='smglom:lemma'>#3</omdoc:meta>"
@@ -289,7 +289,7 @@ DefConstructor('\adefi[]{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'adefi'); },
        alias=>'\adefi');
 
-DefConstructor('\defii[]{}{} OptionalKeyVals:DEF',
+DefConstructor('\defii OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
  .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
  .      "#2 #3"
@@ -298,7 +298,7 @@ DefConstructor('\defii[]{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'defii'); },
        alias=>'\defii');
 
-DefConstructor('\defiis[]{}{} OptionalKeyVals:DEF',
+DefConstructor('\defiis OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
  .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
  .      "#2 #3s"
@@ -307,7 +307,7 @@ DefConstructor('\defiis[]{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'defii'); },
        alias=>'\defii');
 
-DefConstructor('\adefii[]{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\adefii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4)') cd='#theory'>"
          .       "<omdoc:meta property='smglom:lemma'>#3 #4</omdoc:meta>"
@@ -317,21 +317,21 @@ DefConstructor('\adefii[]{}{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'adefii'); },
        alias=>'\adefii');
 
-DefConstructor('\defiii[]{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\defiii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiii'); },
        alias=>'\defiii');
 
-DefConstructor('\defiiis[]{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\defiiis OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4s</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiii'); },
        alias=>'\defiii');
 
-DefConstructor('\adefiii[]{}{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\adefiii OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',
       "?#defindex(<omdoc:idx><omdoc:idt>)"
        . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4,#5)')>"
        .  "#2"
@@ -340,21 +340,21 @@ DefConstructor('\adefiii[]{}{}{}{} OptionalKeyVals:DEF',
        afterDigest => sub { defHelper(@_, 'adefiii')},
        alias=>'\adefiii');
 
-DefConstructor('\defiv[]{}{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\defiv OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiv'); },
        alias=>'\defiv');
 
-DefConstructor('\defivs[]{}{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\defivs OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
          . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
        afterDigest => sub { defHelper(@_, 'defiv'); },
        alias=>'\defiv');
 
-DefConstructor('\adefiv[]{}{}{}{}{} OptionalKeyVals:DEF',
+DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',
       "?#defindex(<omdoc:idx><omdoc:idt>)"
        . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4,#5,#6)')>"
        .  "#2"
