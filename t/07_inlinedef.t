@@ -16,7 +16,7 @@ my $eval_return = eval {
 ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 
 my $tex_input = <<'EOQ';
-\documentclass{smglom}
+\documentclass{omdoc}
 \begin{document}
 \begin{module}
 

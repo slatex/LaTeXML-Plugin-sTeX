@@ -17,7 +17,7 @@ my $eval_return = eval {
 ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 
 my $tex_input = <<'EOQ';
-\documentclass{smglom}
+\documentclass{omdoc}
 \begin{document}
 \begin{omtext}[type=introduction]
  \nlex{If \coreft{hello}1 owns \corefs{he}2.}
