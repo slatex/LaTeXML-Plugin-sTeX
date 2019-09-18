@@ -3,6 +3,7 @@ language: perl
 
 before_install:
     - cpanm XML::LibXML # optional dependency
+    - sudo apt-get install -y latexml
 
 addons:
   apt:
