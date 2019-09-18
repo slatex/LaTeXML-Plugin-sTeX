@@ -19,8 +19,8 @@ ok($eval_return && !$@, 'LaTeXML modules loaded successfully.');
 my $tex_input = <<'EOQ';
 \documentclass{smglom}
 \begin{document}
-\begin{module}
-\symdef{foo}{\text{foo}}
+\begin{module}[id=FOO]
+  \symdef{foo}{\text{foo}}
   \begin{definition}[id=foo.def]
     A \defi{foo} (we write $\foo$) is a false object offer.
   \end{definition}
