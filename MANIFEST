@@ -34,6 +34,7 @@ lib/LaTeXML/Package/structview.sty.ltxml
 lib/LaTeXML/Package/tikzinput-mh.sty.ltxml
 lib/LaTeXML/Package/tikzinput.sty.ltxml
 lib/LaTeXML/Package/workaddress.sty.ltxml
+lib/LaTeXML/Util/STeXTest.pm
 lib/LaTeXML/resources/Profiles/README.md
 lib/LaTeXML/resources/Profiles/stex-migration.opt
 lib/LaTeXML/resources/Profiles/stex-module.opt
@@ -174,13 +175,5 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 README.md
-t/00_cds.t
-t/01_cmath.t
-t/02_mikoslides.t
-t/03_modules1.t
-t/03_modules2.t
-t/04_omtext.t
-t/05_statements.t
-t/06_smglom.t
-t/07_inlinedef.t
+t/00_omdoc.t
 t/README
