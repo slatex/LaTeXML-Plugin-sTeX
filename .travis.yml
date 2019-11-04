@@ -1,13 +1,52 @@
-sudo: false
-language: perl
-perl:
-  - "5.28"
+language: generic
+sudo: required
+dist: trusty
 
-addons:
-  apt:
-    packages:
-      - libxml2-dev
-      - libdb-dev
-      - libxslt1-dev
-      - texlive-latex-base
-      - trang
+services:
+  - docker
+
+## NOTE: Since we're using a docker image for testing,
+## we can ONLY use those PERL & TEX combinations which are pre-built!
+## [And use env PERL=5.xx, NOT perl:5.xx ]
+env:
+  ## Testing without texlive  -- perl 5.28, 5.26.2, 5.24.4
+  - PERL=5.28.0 TEX=none
+  - PERL=5.26.2 TEX=none
+  - PERL=5.24.4 TEX=none
+  - PERL=5.20.3 TEX=none
+  - PERL=5.14.4 TEX=none
+  ## Testing with texlive 2018 -- perl 5.28
+  - PERL=5.28.0 TEX=texlive-2018
+  ## Testing with texlive 2016 -- perl 5.26
+  - PERL=5.26.2 TEX=texlive-2016
+  ## Testing with texlive 2015 -- perl 5.22
+  - PERL=5.22.4 TEX=texlive-2015
+
+matrix:
+  # We allow failures for all the TeXLives excepts the 2016 ones
+  allow_failures:
+    - env: PERL=5.28.0 TEX=texlive-2018
+    - env: PERL=5.22.4 TEX=texlive-2015
+  # don't wait for the allow_failures to finish
+  # just mark the results as done. 
+  fast_finish: true
+
+# Pull the given docker image
+before_install:
+  - docker pull kwarc/latexml-stex-test-runtime:${PERL}_$TEX
+  - docker run -d --env "CI=true" --rm --name redshirt -v $(pwd):/root/latexml kwarc/latexml-stex-test-runtime:${PERL}_$TEX sleep infinity
+
+install:
+# install LaTeXML from master
+  - docker exec redshirt cpanm --notest git://github.com/brucemiller/LaTeXML.git
+# TODO: Install STeX from master
+  - true
+
+# Create the main file and run the tests
+script:
+  - docker exec redshirt perl Makefile.PL
+  - docker exec redshirt make test
+
+# stop the testing container
+after_script:
+  - docker stop redshirt
