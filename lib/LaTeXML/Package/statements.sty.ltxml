@@ -265,7 +265,7 @@ DefConstructor('\definiendum OptionalKeyVals:DEF {}',
      . "</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_, 'definiendum'); });
 
-DefConstructor('\defiOptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
+DefConstructor('\defi OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
  "?#defindex(<omdoc:idx><omdoc:idt>)"
  .   "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2</omdoc:definiendum>"
  ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
