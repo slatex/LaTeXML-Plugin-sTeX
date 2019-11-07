@@ -124,7 +124,7 @@ post = element post {id.attribs & inline.model}
 fallback = element fallback {id.attribs & inline.model}
 
 # what can go into a mathematical text
-op.class = \term* & mobj* & note*  & idx*  & citation*  & oref* & 
+op.class = \term* & mobj* & note*  & idx*  & citation*  & oref* & uses* & 
                  declaration* & definiendum*
 inline.class &=op.class
 omdoc.class &= oref*
