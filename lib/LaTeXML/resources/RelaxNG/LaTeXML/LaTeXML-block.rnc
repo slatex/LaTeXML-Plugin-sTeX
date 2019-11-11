@@ -243,7 +243,7 @@ item_attributes =
   attribute itemsep { Length.type}?
 
 ## Content model for \elementref{item}.
-item_model =   tag? & Para.model
+item_model =   tags? & Para.model
 
 #======================================================================
 
