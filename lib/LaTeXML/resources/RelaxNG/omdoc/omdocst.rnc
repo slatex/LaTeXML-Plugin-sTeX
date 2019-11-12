@@ -132,5 +132,6 @@ imports = element imports {tref|(imports.attribs & imports.model)}
 
 intheory.class = imports* 
 
+# allow symbols in inline.class/model via op.class
 op.class &= symbol*
 
