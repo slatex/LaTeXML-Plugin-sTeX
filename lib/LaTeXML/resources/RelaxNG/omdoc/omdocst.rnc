@@ -132,4 +132,5 @@ imports = element imports {tref|(imports.attribs & imports.model)}
 
 intheory.class = imports* 
 
+op.class &= symbol*
 
