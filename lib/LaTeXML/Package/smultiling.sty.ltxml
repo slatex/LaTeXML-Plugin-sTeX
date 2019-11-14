@@ -49,11 +49,13 @@ RawTeX('
 # =======================================================
 # 2.2 Multilingual Modules:                             #
 # =======================================================
-DefConstructor('\symi[]{}',
+DefKeyVal('symi','gfc','Semiverbatim','');
+DefKeyVal('symi','align','Semiverbatim','');
+DefConstructor('\symi OptionalKeyVals:symi {}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2'/>");
-DefConstructor('\symii[]{}{}',
+DefConstructor('\symii OptionalKeyVals:symi {}{}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3'/>");
-DefConstructor('\symiii[]{}{}{}',
+DefConstructor('\symiii OptionalKeyVals:symi {}{}{}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3-#4'/>");
 DefKeyVal('modnl','title','Semiverbatim');
 DefKeyVal('modnl','load','Semiverbatim');
