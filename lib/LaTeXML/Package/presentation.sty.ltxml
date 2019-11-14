@@ -40,7 +40,7 @@ DefKeyVal('mii','pi','Semiverbatim');
 DefKeyVal('mii','pii','Semiverbatim');
 DefKeyVal('mii','cd','Semiverbatim');
 DefKeyVal('mii','name','Semiverbatim');
-DefKeyVal('mii','nobrackets','Semiverbatim');
+DefKeyVal('mii','nobrackets','Semiverbatim','true');
 DefKeyVal('miii','lbrack','Semiverbatim');
 DefKeyVal('miii','rbrack','Semiverbatim');
 DefKeyVal('miii','p','Semiverbatim');
@@ -49,7 +49,7 @@ DefKeyVal('miii','pii','Semiverbatim');
 DefKeyVal('miii','piii','Semiverbatim');
 DefKeyVal('miii','cd','Semiverbatim');
 DefKeyVal('miii','name','Semiverbatim');
-DefKeyVal('miii','nobrackets','Semiverbatim');
+DefKeyVal('miii','nobrackets','Semiverbatim','true');
 
 # =======================================================
 # 1. TeX API methods:                                   #
