@@ -1,0 +1,14 @@
+theory semigroup : http://kwarc.info/example?FOL = 
+  include ?arithmetics
+
+theory monoid : http://kwarc.info/example?FOL = 
+  include ?arithmetics
+  include ?semigroup
+  # :mixref1 example
+neut : G # e 
+eunit : ded (forall [x] x + e = x + e = e)
+  #
+  mixref2 = G
+  mixref3 = +
+  mixref4 = G
+
