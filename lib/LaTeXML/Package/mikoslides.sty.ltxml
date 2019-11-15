@@ -35,7 +35,7 @@ RawTeX('\newif\ifproblems\problemsfalse');
 # =======================================================
 # 1. Requirements:                                      #
 # =======================================================
-if(LookupValue('@mikoslides')) {RequirePackage('mikoslides-mh');}
+if(LookupValue('@mh')) {RequirePackage('mikoslides-mh');}
 RequirePackage('stex');
 RequirePackage('smglom');
 RequirePackage('tikzinput', options => ['image']);
