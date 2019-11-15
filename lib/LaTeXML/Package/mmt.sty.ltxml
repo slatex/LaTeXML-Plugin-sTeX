@@ -1,0 +1,75 @@
+# -*- mode: Perl -*-
+# /=====================================================================\ #
+# | sTeX implementation for LaTeXML (mmt.sty)                           | #
+# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# |=====================================================================| #
+# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  This work may be distributed and/or modified under the conditions  | #
+# |  of the LaTeX Project Public License, either version 1.3 of this    | #
+# |  license or later; see http://www.latex-project.org/lppl.txt        | # 
+# |---------------------------------------------------------------------| #
+# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
+# | http://github.com/KWARC/sTeX                               (o o)    | #
+# \=========================================================ooo==U==ooo=/ #
+package LaTeXML::Package::Pool;
+use strict;
+use LaTeXML::Package;
+use Data::Dumper;
+use Cwd qw(abs_path);
+
+# Make | the delimiter to escape into \mmt
+RawTeX('
+\catcode`\|=13
+\def|#1|{\ensuremath{\mmt{#1}}}');
+
+DefKeyVal('mmt@env', 'name', 'Semiverbatim');
+DefKeyVal('mmt@ref', 'path', 'Semiverbatim');
+
+NewCounter('mmt');
+SetCounter('mmt', Number(1));
+
+DefConstructor('\mmtr []{}',
+ "<omdoc:oref href='#1@#2' about='#1'/>");      
+DefConstructor('\mmt OptionalKeyVals {}',
+	       "<ltx:ref href='&ToString(&CounterValue('mmt'))' "
+	       . "class='mmtRef' show='mmtRef' content='#2'/> ",
+	       mode=>'text',
+	       afterConstruct => sub{
+		    my($stomach, $whatsit)=@_;
+		    StepCounter('mmt');
+		    return; } );
+#DefConstructor('\mmt OptionalKeyVals {}',
+#                 "<ltx:text />");
+DefConstructor('\mmtref []{}[]',
+	       "<om:OMOBJ> "
+	       . "<om:OMV name='#1@#2@#3'/>".
+	       "</om:OMOBJ>");
+	    #   "<omdoc:oref href='#2@#3' />");
+
+sub mmt_afterDigest{
+	my($stomach, $whatsit)=@_;
+	my $location = $whatsit->getProperty('locator');
+	my ($fileName) = ($location =~ m!^.*\/(.*?)\.tex!);
+	AssignValue('fileName' => $fileName, 'global');
+	# Set the mmt counter
+        my $mmtNum = CounterValue('mmt')->valueOf;
+	StepCounter('mmt');
+	my $mmtRef = 'mixref'.$mmtNum . ' ' . $fileName;
+	AssignValue('mmtRef' => $mmtRef, 'global');
+	return;
+}
+sub mmt_beforeDigest{
+       my($stomach, $whatsit)=@_;
+       AssignCatcode('#', CC_OTHER);
+       AssignCatcode('^', CC_OTHER);
+       return;
+}
+DefEnvironment('{MMT} OptionalKeyVals:mmt@env',
+	'<omdoc:oref  '
+         . "?&LookupValue('mmtRef')(href='&LookupValue('mmtRef')') about='#body' />" ,	       	       
+	beforeDigest=> \&mmt_beforeDigest,
+	afterDigest=> \&mmt_afterDigest);
+
+
+	
+1;
