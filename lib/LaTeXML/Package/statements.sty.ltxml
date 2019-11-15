@@ -190,11 +190,14 @@ sub definitionBody {
     if ($props{theory}) {
       my @symbols = @{$props{defs} || []};
       my $signature = $props{signature};
+      my @dones = ();
       foreach my $symb(@symbols) {
         next if $for_attr{$symb};
         my $qualified_symbol = $signature ? "$signature?$symb" : $symb;
         $for_attr{$qualified_symbol}=1;
-        if (!$props{multiling}) {
+        my %donesmap = map { $_ => 1} @dones;
+        if (!$props{multiling} && !exists($donesmap{$symb})) {
+          push @dones, $symb;
           if (LookupValue('@omdocmode')) {
             $doc->insertElement('omdoc:symbol', undef, (name=>$symb, "xml:id"=>makeNCName("$symb.def.sym"))); 
           } else {
@@ -368,12 +371,19 @@ DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',
 # =======================================================
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
+DefEnvironment('{inlineExample} OptionalKeyVals:omtext',
+	       "<ltx:inline-para class='example'>\n #body\n</ltx:inline-para>");
 
 DefConstructor('\inlineass OptionalKeyVals:omtext {}',
               "<ltx:text "
             .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
             .    "#2"
             . "</ltx:text>");
+DefEnvironment('{inlineAssertion} OptionalKeyVals:omtext',
+	       "<ltx:inline-para "
+            .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
+            .    "#body"
+            . "</ltx:inline-para>");
 
 # =======================================================
 # 2.5 Symbols II:                                       #

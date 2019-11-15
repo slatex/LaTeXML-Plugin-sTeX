@@ -57,6 +57,7 @@ DefKeyVal('symdef','bargs','CommaList');
 DefKeyVal('symdef','id','Semiverbatim');
 DefKeyVal('symdef','cd','Semiverbatim');
 DefKeyVal('symdef','assocarg','Semiverbatim');
+DefKeyVal('symdef','align','Semiverbatim','');
 DefKeyVal('importmodule','id','Semiverbatim');
 DefKeyVal('importmodule','load','Semiverbatim');
 DefKeyVal('importmodule','ext','Semiverbatim');

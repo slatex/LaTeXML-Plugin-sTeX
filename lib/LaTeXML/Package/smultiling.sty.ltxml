@@ -49,12 +49,19 @@ RawTeX('
 # =======================================================
 # 2.2 Multilingual Modules:                             #
 # =======================================================
-DefConstructor('\symi[]{}',
+DefKeyVal('symi','gfc','Semiverbatim','');
+DefKeyVal('symi','align','Semiverbatim','');
+DefKeyVal('symi','noalign','Semiverbatim','true');
+DefKeyVal('symi','noverb','Semiverbatim','true');
+DefKeyVal('symi','specializes','Semiverbatim','');
+DefConstructor('\symi OptionalKeyVals:symi {}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2'/>");
-DefConstructor('\symii[]{}{}',
+DefConstructor('\symii OptionalKeyVals:symi {}{}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3'/>");
-DefConstructor('\symiii[]{}{}{}',
+DefConstructor('\symiii OptionalKeyVals:symi {}{}{}',
      "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3-#4'/>");
+DefConstructor('\symiv OptionalKeyVals:symi {}{}{}{}',
+     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3-#4-#5'/>");
 DefKeyVal('modnl','title','Semiverbatim');
 DefKeyVal('modnl','load','Semiverbatim');
 DefKeyVal('modnl','creators','Semiverbatim');
