@@ -33,6 +33,7 @@ DeclareOption('mh', sub {AssignValue ('@modules' => 1);
 DeclareOption('showmods', '');
 DeclareOption('noauxreq', '');
 DeclareOption('qualifiedimports', '');
+DeclareOption('mmt', sub {AssignValue ('@mmt' => 1); });
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 
@@ -40,6 +41,7 @@ ProcessOptions();
 # -1. Requirements:                                     #
 # =======================================================
 if(LookupValue('@modules')) {RequirePackage('modules-mh');}		
+if(LookupValue('@mmt')) {RequirePackage('mmt');}		
 RequirePackage('presentation'); # for \@use
 RequirePackage('sref'); # for being synchronous with LaTeX
 RequirePackage('pathsuris'); # for path handling
