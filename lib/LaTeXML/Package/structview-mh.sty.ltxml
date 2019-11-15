@@ -1,15 +1,15 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (structview-mh.sty)                 | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
@@ -19,7 +19,6 @@ use LaTeXML::Util::Pathname;
 # =======================================================
 # -1. Requirements:                                     #
 # =======================================================
-
 
 RequirePackage('mathhub');
 
@@ -78,25 +77,12 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   );
 });
 DefMacroI('\end{mhview}',undef,'\end{viewenv}');
-DefMacroI(T_CS('\begin{mhviewsketch}'),'OptionalKeyVals:mhview {}{}', sub {
-  my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
-  my $from = ToString(Digest($from_arg));
-  my $to = ToString(Digest($to_arg));
-  my $from_repos = ToString(GetKeyVal($keyvals,'fromrepos'));
-  my $to_repos = ToString(GetKeyVal($keyvals,'torepos'));
-  my $repos = LookupValue('current_repos');
-  my $from_path = ToString(GetKeyVal($keyvals,'frompath'));
-  my $to_path = ToString(GetKeyVal($keyvals,'topath'));
-  my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
-  $ext = 'sms' unless $ext;
-  my $current_repos = LookupValue('current_repos');
-  if (!$from_repos) { $from_repos = $current_repos; }
-  if (!$to_repos) { $to_repos = $current_repos; }
-  return (
-    Tokenize("\\importMHmoduleI[repos=$from_repos,path=$from_path,ext=$ext]{$from}")->unlist,
-    Tokenize("\\importMHmoduleI[repos=$to_repos,path=$to_path,ext=$ext]{$to}")->unlist,
-    Invocation(T_CS('\begin{viewsketchenv}'),$keyvals,$from_arg,$to_arg)->unlist
-  );
-});
-DefMacroI('\end{mhviewsketch}',undef,'\end{viewsketchenv}');
+RawTeX('
+\newenvironment{mhviewsketch}[3][]%
+{\PackageError{structview}%
+  {The {mhviewsketch} environment is deprecated}{use the {mhview} instead!}%
+  \begin{mhview}[#1]{#2}{#3}}
+{\end{mhview}}
+');
+
 1;

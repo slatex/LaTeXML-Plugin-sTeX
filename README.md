@@ -1,7 +1,7 @@
-# LaTeXML-Plugin-sTeX
+## A [LaTeXML](http://dlmf.nist.gov/LaTeXML/) plugin for [sTeX](http://github.com/KWARC/sTeX).
 
-This is a [LaTeXML](http://dlmf.nist.gov/LaTeXML/) plugin for
-[sTeX](http://github.com/KWARC/sTeX).
+[![Build Status](https://api.travis-ci.org/slatex/LaTeXML-Plugin-sTeX.svg?branch=master)](https://travis-ci.org/slatex/LaTeXML-Plugin-sTeX#) ![version](https://img.shields.io/badge/version-0.2.0-orange.svg)
+
 
 ### Prerequisites
 #### LaTeXML
@@ -15,8 +15,9 @@ This plug in will also need
 transforming the schema. 
 ##### MAC OS 
 ```
-brew install trang
+brew install jing-trang
 ```
+This may prompt you to cask-install `Java8`, for which you will need `sudo` rights. 
 ##### Linux
 ```
 sudo apt-get install trang
@@ -106,7 +107,7 @@ this plugin is well documented. The documentation has two components:
   to change the behaviors of the bindings.
 
 ### Copyright
-Copyright (c) 2016 Michael Kohlhase
+Copyright (c) 2019 Michael Kohlhase
 The package is distributed under the terms of the LaTeX Project Public License (LPPL)
 
 

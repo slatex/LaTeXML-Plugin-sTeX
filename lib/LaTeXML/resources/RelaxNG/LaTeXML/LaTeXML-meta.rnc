@@ -14,7 +14,7 @@ default namespace = "http://dlmf.nist.gov/LaTeXML"
 
 ## Meta elements are generally hidden;
 ## they can appear in both inline and block contexts.
-Meta.class    &= note* & indexmark* & glossaryphrase* & rdf* & ERROR* & resource* & navigation*
+Meta.class    &= note* & indexmark* & glossarydefinition* & rdf* & ERROR* & resource* & navigation*
 
 #======================================================================
 
@@ -35,7 +35,7 @@ note_attributes =
   attribute role { "footnote" | text }?
 
 ## Content model for \elementref{note}.
-note_model = Flow.model
+note_model = tags? & Flow.model
 
 # should mark be more like label/refnum ?
 
@@ -49,7 +49,8 @@ element indexmark { indexmark_attributes & indexmark_model }
 
 ## Attributes for \elementref{indexmark}.
 indexmark_attributes =
-  Common.attributes &
+  Common.attributes & 
+  Listable.attributes & 
   ## a flattened form (like \attr{key}) of another \elementref{indexmark},
   ## used to crossreference.
   attribute see_also { text }? &
@@ -95,10 +96,27 @@ indexsee_attributes =
 ## Content model for \elementref{indexsee}.
 indexsee_model = Inline.model
 
+#======================================================================
+
+glossarydefinition =
+## A definition within an \elementref{glossaryentry}
+element glossarydefinition { glossarydefinition_attributes &  glossarydefinition_model }
+
+## Attributes for \elementref{glossarydefinition}.
+glossarydefinition_attributes =
+  Common.attributes & 
+  Listable.attributes & 
+
+  ## a flattened form of the definition for generating an \attr{ID}.
+  attribute key { text }?
+
+## Content model for \elementref{glossarydefinition}.
+glossarydefinition_model = glossaryphrase*
+
 #----------------------------------------------------------------------
 
 glossaryphrase =
-## A phrase being clarified within an \elementref{glossarymark} or \elementref{glossaryentry}
+## A phrase being clarified within an \elementref{glossaryentry}
 element glossaryphrase { glossaryphrase_attributes & glossaryphrase_model }
 
 ## Attributes for \elementref{glossaryphrase}.
@@ -106,31 +124,13 @@ glossaryphrase_attributes =
   Common.attributes &
   IDREF.attributes &
   
-  ## The kind of \elementref{glossary} this mark belongs to.
-  attribute role { text }? &
   ## a flattened form of the phrase for generating an \attr{ID}.
   attribute key { text }? &
   ## a keyword naming the format of this phrase (to match \attr{show} in \elementref{glossaryref}).
-  attribute show { text }?
+  attribute role { text }?
 
 ## Content model for \elementref{glossaryphrase}.
 glossaryphrase_model = Inline.model
-
-#----------------------------------------------------------------------
-
-glossarydefinition =
-## A definition within an \elementref{glossarymark} or \elementref{glossaryentry}
-element glossarydefinition { glossarydefinition_attributes & glossarydefinition_model }
-
-## Attributes for \elementref{glossarydefinition}.
-glossarydefinition_attributes =
-  Common.attributes &
-
-  ## a flattened form of the definition for generating an \attr{ID}.
-  attribute key { text }?
-
-## Content model for \elementref{glossarydefinition}.
-glossarydefinition_model = Inline.model
 
 #======================================================================
 

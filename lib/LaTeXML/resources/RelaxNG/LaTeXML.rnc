@@ -14,6 +14,9 @@
 default namespace = "http://dlmf.nist.gov/LaTeXML"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
+namespace stex = "http://kwarc.info/ns/sTeX"
+namespace om = "http://www.openmath.org/OpenMath"
+namespace omdoc = "http://omdoc.org/ns"
 
 include "LaTeXML/LaTeXML-common.rnc"
 include "LaTeXML/LaTeXML-inline.rnc"
