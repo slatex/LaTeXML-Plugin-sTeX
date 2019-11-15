@@ -10,10 +10,7 @@ default namespace omdoc = "http://omdoc.org/ns"
 include "omdoc/omdoc.rnc" {docstruct.class = omgroup* & lechapter*}
 
 ## we extend the Math Objects by the ones introduced by LaTeXML
-mobj |= grammar {
-    include "LaTeXML/LaTeXML-common.rnc"
-    include "LaTeXML/LaTeXML-math.rnc" 
-    start = Math}
+mobj |= grammar {include "LaTeXML.rnc" {start = Math}}
 
 ## we extend the metadata with the LaTeXML frontmatter
 frontmatter &= grammar {include "LaTeXML.rnc" {start=FrontMatter.class & SectionalFrontMatter.class}}
@@ -48,10 +45,9 @@ plike.class  &=  grammar {
 	  Block.class = parent plike.class
 #	  Flow.class = parent flow.class
 	  text_model = parent inline.model
-	  listingblock_model = parent plike.class
 	  start = p* & tabular* & quote* & 
 	            equation* & equationgroup* & 
-		    figure* & graphics* & verbatim* & listingblock* & listing* & 
+		    figure* & graphics* & verbatim* & listing* & 
 		    itemize* & enumerate* & description*}}
 
 
@@ -66,7 +62,6 @@ omdoc.class &=  grammar {include "LaTeXML.rnc" {
 	    Para.class = parent omdoc.class 
 #	    Flow.class = parent flow.class
 	    text_model = parent inline.model
-	    listingblock_model = parent plike.class
 	    start= para* & figure* & table* & listing* &
                        itemize* & enumerate* & description*}}
 
@@ -77,7 +72,6 @@ backmatter &= grammar {include "LaTeXML.rnc" {
 	    Para.class = parent omdoc.class 
 #	    Flow.class = parent flow.class
 	    text_model = parent inline.model
-	    listingblock_model = parent plike.class
 	    start= bibliography*}}
 
 
@@ -93,32 +87,26 @@ lechapter =            chapter* & lesection
 theory.chapter = element theory {theory.attribs & 
 	                                            metadata.class & 
 						    omdoc.class  & 
-						    constitutive.class & 
 						    lesection}
 theory.section = element theory {theory.attribs & 
 	                                            metadata.class & 
 						    omdoc.class &  
-						    constitutive.class & 
 						    lesubsection}
 theory.subsection = element theory {theory.attribs & 
                                                           metadata.class &
 							  omdoc.class  & 
-							  constitutive.class & 
 							  lesubsubsection}
 theory.subsubsection = element theory {theory.attribs & 
 		                                                metadata.class &  
 								omdoc.class & 
-								constitutive.class & 
 								leparagraph}
 theory.paragraph = element theory {theory.attribs & 
 		                                        metadata.class &  
 							omdoc.class & 
-							constitutive.class & 
 							lesubparagraph}
 theory.subparagraph = element theory {theory.attribs & 
 		                                              metadata.class &
-							      omdoc.class &
-							      constitutive.class}
+							      omdoc.class}
 
 sectional.attribs = id.attribs
 

@@ -40,13 +40,14 @@ part =
 element part { part_attributes &  part_model }
 
 ## The content allowable as the main body of a part.
-part.body.class = Para.model & chapter* & slide* & sidebar*
+part.body.class = Para.model &  subparagraph* & paragraph* &
+    subsubsection* &  subsection* & section* &  chapter* &  slide* & sidebar*
 
 ## Attributes for \elementref{part}.
 part_attributes = Sectional.attributes
 
 ## Content model for \elementref{part}.
-part_model = SectionalFrontMatter.class, part.body.class
+part_model = SectionalFrontMatter.class*, (part.body.class | BackMatter.class)*
 
 #----------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ chapter.body.class = Para.model & subparagraph* & paragraph*
 chapter_attributes = Sectional.attributes
 
 ## Content model for \elementref{chapter}.
-chapter_model = SectionalFrontMatter.class, chapter.body.class
+chapter_model = SectionalFrontMatter.class*, (chapter.body.class | BackMatter.class)*
 
 #----------------------------------------------------------------------
 
@@ -78,7 +79,7 @@ section.body.class = Para.model & subparagraph* & paragraph*
 section_attributes = Sectional.attributes
 
 ## Content model for \elementref{section}.
-section_model = SectionalFrontMatter.class, section.body.class
+section_model = SectionalFrontMatter.class*, (section.body.class | BackMatter.class)*
 
 #----------------------------------------------------------------------
 
@@ -93,7 +94,7 @@ subsection.body.class = Para.model & subparagraph* & paragraph* & subsubsection*
 subsection_attributes = Sectional.attributes
 
 ## Content model for \elementref{subsection}.
-subsection_model = SectionalFrontMatter.class, subsection.body.class
+subsection_model = SectionalFrontMatter.class*, (subsection.body.class | BackMatter.class)*
 
 #----------------------------------------------------------------------
 
@@ -108,7 +109,7 @@ subsubsection.body.class = Para.model & subparagraph* & paragraph* & slide* & si
 subsubsection_attributes = Sectional.attributes
 
 ## Content model for \elementref{subsubsection}.
-subsubsection_model = SectionalFrontMatter.class, subsubsection.body.class
+subsubsection_model = SectionalFrontMatter.class*, (subsubsection.body.class | BackMatter.class)*
 
 #----------------------------------------------------------------------
 
@@ -124,7 +125,7 @@ paragraph.body.class = Para.model & subparagraph* & slide* & sidebar*
 paragraph_attributes = Sectional.attributes
 
 ## Content model for \elementref{paragraph}.
-paragraph_model = SectionalFrontMatter.class, paragraph.body.class
+paragraph_model = SectionalFrontMatter.class*, (paragraph.body.class | BackMatter.class)*
 
 
 #----------------------------------------------------------------------
@@ -140,7 +141,7 @@ subparagraph.body.class = Para.model & slide* & sidebar*
 subparagraph_attributes = Sectional.attributes
 
 ## Content model for \elementref{subparagraph}.
-subparagraph_model = SectionalFrontMatter.class*, subparagraph.body.class*
+subparagraph_model = SectionalFrontMatter.class*, (subparagraph.body.class | BackMatter.class)*
 
 #======================================================================
 
@@ -158,7 +159,8 @@ slide.body.class = Para.model
 slide_attributes = Sectional.attributes
 
 ## Content model for \elementref{slide}.
-slide_model = SectionalFrontMatter.class & slide.body.class
+slide_model = SectionalFrontMatter.class*, (slide.body.class | BackMatter.class)*
+
 #======================================================================
 
 sidebar =
@@ -172,7 +174,7 @@ sidebar.body.class = Para.model
 sidebar_attributes = Sectional.attributes
 
 ## Content model for \elementref{sidebar}.
-sidebar_model = (FrontMatter.class & SectionalFrontMatter.class), sidebar.body.class
+sidebar_model = (FrontMatter.class | SectionalFrontMatter.class)*, (sidebar.body.class | BackMatter.class)*
 
 #======================================================================
 
@@ -201,7 +203,8 @@ bibliography.body.class = Para.model & biblist
 
 ## Attributes for \elementref{bibliography}.
 bibliography_attributes = 
-  Sectional.attributes &
+  Sectional.attributes & 
+  Listing.attributes & 
 
   ## the list of bib files used to create the bibliography.
   attribute files { text }? &
@@ -230,9 +233,10 @@ index.body.class = Para.model  & indexlist*
 
 ## Attributes for \elementref{index}.
 index_attributes = 
-  Sectional.attributes &
+  Sectional.attributes & 
+  Listing.attributes & 
 
-  ## The kind of index
+  ## The kind of index (obsolete?)
   attribute role { text }?
 
 ## Content model for \elementref{index}.
@@ -291,7 +295,8 @@ glossary.body.class = Para.model & glossarylist*
 
 ## Attributes for \elementref{glossary}.
 glossary_attributes = 
-  Sectional.attributes &
+  Sectional.attributes & 
+  Listing.attributes & 
 
   ## The kind of glossary
   attribute role { text }?
@@ -319,7 +324,7 @@ glossarylist_model = glossaryentry*
 
 glossaryentry =
 ## An entry in an \elementref{glossarylist} consisting of a phrase,
-## possibly definitions (one or more, presumably in increasing detail?),
+## (one or more, presumably in increasing detail?), possibly a definition,
 ## and references to points in the document where the phrase was found.
 element glossaryentry { glossaryentry_attributes & glossaryentry_model }
 
@@ -331,7 +336,7 @@ glossaryentry_attributes = Common.attributes & ID.attributes &
   attribute key { text }?
 
 ## Content model for \elementref{glossaryentry}.
-glossaryentry_model = glossaryphrase & glossarydefinition* & indexrefs?
+glossaryentry_model = glossaryphrase* &  indexrefs?
 
 #======================================================================
 
@@ -360,7 +365,7 @@ element toctitle { toctitle_attributes &  toctitle_model }
 toctitle_attributes = Common.attributes
 
 ## Content model for \elementref{toctitle}.
-toctitle_model = text & Inline.class & Misc.class & Meta.class & tag*
+toctitle_model = tag* & text & Inline.class & Misc.class & Meta.class
 
 #----------------------------------------------------------------------
 
@@ -540,8 +545,8 @@ TOC_attributes =
    Common.attributes & 
    FrontMatter.attributes & 
 
-   ## indicates the kind of list
-   attribute role { ("contents" | "figures" | "tables" | text) }? &
+   ## indicates the kind of lists; space separated names of lists like "toc","lof", etc.
+   attribute lists { text }? & 
 
    ## indicates what kind of document elements to list, in the form of
    ## one or more tags such as \texttt{ltx:chapter} separated by \texttt{|}
@@ -554,11 +559,14 @@ TOC_attributes =
    ## otherwise an xml:id
    attribute scope { ("current" | "global" | text) }? & 
 
+   ## indicates what things to show in each entry
+   attribute show { text }? & 
+   
    ## indicates how to format the listing
    attribute format { ("normal" | "short" | "veryshort" | text) }?
 
 ## Content model for \elementref{TOC}.
-TOC_model = toclist?
+TOC_model = title? &  toclist?
 
 toclist =
 ## The actual table of contents list, filled in.
@@ -601,7 +609,7 @@ FrontMatter.attributes =
 
 ## The content allowed for the front matter of each sectional unit,
 ## and the document.
-SectionalFrontMatter.class = title* & toctitle* & creator*
+SectionalFrontMatter.class = tags? & title* & toctitle* & creator*
 
 ## The content allowed (in addition to \patternref{SectionalFrontMatter.class})
 ## for the front matter of a document.

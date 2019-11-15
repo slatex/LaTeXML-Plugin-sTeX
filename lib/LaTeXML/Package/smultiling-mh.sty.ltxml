@@ -1,15 +1,15 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (smultiling-mh.sty)                 | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
@@ -73,19 +73,9 @@ RawTeX(<<'EoTeX');
 \begin{mhview}[id=#2,#1,fromext=tex,toext=tex]{#3}{#4}\fi%
 }
 {\end{mhview}}
-\addmetakey{mhview}{sigpath}
-\addmetakey{mhview}{sigrepos}
-\newenvironment{mhviewnl}[3][]{\def\@test{#1}%
-  \metasetkeys{mhview}{#1}%
-    \ifx\mhview@sigrepos\@empty%
-    \requiremodules{\MathHub{\mh@currentrepos/source/\mhview@sigpath.tex}}\else%
-    \requiremodules{\MathHub{\mhview@sigrepos/source/\mhview@sigpath.tex}}\fi%
-   if@langfiles
-  \ifx\@test\@empty%
-  \begin{mhview}[id=#2.#3,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\else%
-  \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\fi%
-  }
+\newenvironment{mhviewnl}[5][]{\def\@test{#1}\ifx\@test\@empty%
+\begin{mhview}[id=#2.#3,ext=tex]{#4}{#5}\else%
+\begin{mhview}[id=#2.#3,#1,ext=tex]{#4}{#5}\fi}
 {\end{mhview}}
-EoTeX
-    
+');
 1;

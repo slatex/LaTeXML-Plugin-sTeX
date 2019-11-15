@@ -86,3 +86,6 @@ render = element render {tref|(render.attribs & render.model)}
 separator.attribs = empty
 separator.model = renderexp*
 separator = element separator {tref|(separator.attribs & separator.model)}
+
+# allow symbols in inline.class/model via op.class
+op.class &= notation*
