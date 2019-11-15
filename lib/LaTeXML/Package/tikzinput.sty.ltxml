@@ -1,36 +1,54 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (tikzinput.sty)                     | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use Unicode::Normalize;
+
+# The general idea of the tikzinput package is that we never use tikz
+# at the LaTeXML side but use the SVG image always (and make sure 
+# by other means that it is there. In particular, we do not look at 
+# the image option and always assume it set. Keeping the else cases of 
+# the conditionals for the future. 
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('mh', sub {  AssignValue ('@tikzinput' => 1,'global');
 PassOptions('tikz','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption('image', sub { AssignValue('tikzinput@image' => 1); });
 DeclareOption(undef,sub {PassOptions('tikz','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@tikzinput')) {RequirePackage('tikzinput-mh');}
-if (LookupValue('tikzinput@image')) {
+#if (LookupValue('tikzinput@image')) {
 RequirePackage('graphicx');
 RequirePackage('xcolor');
-RawTeX(' \providecommand\usetikzlibrary[1]{}'); }
-else {
-RequirePackage('tikz');
-RequirePackage('standalone');}
-if (LookupValue('tikzinput@image')) {
-DefMacro('\tikzinput[] {}','\includegraphics[#1]{#2}');}
-else {DefMacro('\tikzinput[] {}','\input{#2}');}
+RawTeX(' \providecommand\usetikzlibrary[1]{}'); 
+#    } else {
+# RequirePackage('tikz');
+# RequirePackage('standalone');}
+
+# =======================================================
+# 2. Inputting Standalone TIKZ Pictures:                #
+# =======================================================
+# if (LookupValue('tikzinput@image')) {
+DefMacro('\tikzinput[] {}','\includegraphics[#1]{#2}');
+# } else {DefMacro('\tikzinput[] {}','\input{#2}');}
 RawTeX('
 \newcommand\ctikzinput[2][]{\begin{center}\tikzinput{#2}\end{center}}
 ');

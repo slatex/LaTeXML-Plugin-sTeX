@@ -1,26 +1,38 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (dcm.sty)                           | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Global;
 use LaTeXML::Package;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef,sub
      {PassOptions('rdfmeta','sty',ToString(Digest(T_CS('\CurrentOption'))));
       PassOptions('workaddress','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('rdfmeta');
 RequirePackage('workaddress');
+
+# =======================================================
+# 2. The DC metadata block:                             #
+# =======================================================
 sub FishOutMetadata {
   my ($document,$keyvals)=@_;
   foreach my $role(qw(creators contributors)) {
@@ -35,7 +47,7 @@ chop $prop_role if $prop_role;
       } else {print STDERR "Warning: no $role with 'id' $id !\n";}
     }
   }
-  return;}#$
+  return;}
 DefEnvironment('{DCmetadata}[]', "<omdoc:metadata>#body</omdoc:metadata>");
 DefConstructor('\DCMcreators{}',sub{
   my ($document,$args,%properties) = @_;
@@ -66,6 +78,10 @@ DefConstructor('\noncommercial',"<cc:noncommercial/>");
 DefConstructor('\sharealike',"<cc:sharealike/>");
 DefConstructor('\noderivativeworks',"<cc:noderivativeworks>");
 DefConstructor('\DCMabstract{}',"<dc:description>#1</dc:description>");
+
+# =======================================================
+# 3. The DCM block styles:                              #
+# =======================================================
 Tag('dc:description',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
 Tag('dc:date',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
 Tag('dc:creator',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
@@ -77,6 +93,10 @@ Tag('dc:type',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
 Tag('dc:identifier',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
 Tag('dc:language',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
 Tag('dc:rights',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1);
+
+# =======================================================
+# 4. Dealing with ISO dates:                            #
+# =======================================================
 RawTeX('
 \def\ISOtimestamp{\count1=\time\divide\count1 by 60 % hours
 \count2=\count1\multiply\count2 by 60% minutes in \count1 hours

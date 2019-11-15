@@ -1,26 +1,38 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (omdoc.sty)                         | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(abs_path);
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 RequirePackage('sref');
 RequirePackage('xspace');
 RequirePackage('pathsuris');
+
+# =======================================================
+# 1. Document structure                                 #
+# =======================================================
 DefMacro('\currentsectionlevel','\@currentsectionlevel\xspace');
 DefMacro('\Currentsectionlevel','\@Currentsectionlevel\xspace');
 DefConstructor('\@currentsectionlevel',
@@ -47,12 +59,19 @@ DefConstructor('\tableofcontents',
 Tag('omdoc:tableofcontents',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 DefConstructor('\bibliography{}',"<omdoc:bibliography files='#1'/>");
 Tag('omdoc:bibliography',afterOpen=>\&numberIt,afterClose=>\&locateIt);
+
+# =======================================================
+# 2. Ignoring inputs                                    #
+# =======================================================
 DefKeyVal('ignore','type','Semiverbatim');
 DefKeyVal('ignore','comment','Semiverbatim');
 DefEnvironment('{ignore} OptionalKeyVals:ignore',
                "<omdoc:ignore  %&GetKeyVals(#1)>#body</omdoc:ignore>");
 Tag('omdoc:ignore',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
+# =======================================================
+# 3. Structure sharing                                  #
+# =======================================================
 DefConstructor('\STRlabel{}{}', sub {
   my($document,$label,$object)=@_;
   $document->absorb($object);
@@ -64,16 +83,20 @@ DefConstructor('\STRsemantics[]{}{}', sub {
   $document->absorb($object);
   $document->addAttribute('xml:id'=>ToString($label)) if $label; });
 DefMacro('\STRlabeldef{}{}', "");
+
+# =======================================================
+# 4. Colors                                  #
+# =======================================================
 sub omdocColorMacro {
   my ($color, @args) = @_;
   my $tok_color = TokenizeInternal($color);
   (T_BEGIN, T_CS('\@omdoc@color'), T_BEGIN, $tok_color->unlist,
    T_END, T_CS('\@omdoc@color@content'), T_OTHER('['), $tok_color->unlist, T_OTHER(']'),
    T_BEGIN, $args[1]->unlist, T_END, T_END); }
-DefMacro('\@omdoc@color{}', sub { MergeFont(color=>$_[1]->toString); return; });#$
+DefMacro('\@omdoc@color{}', sub { MergeFont(color=>$_[1]->toString); return; });
 DefConstructor('\@omdoc@color@content[]{}',
   "?#isMath(#2)(<ltx:text ?#1(style='color:#1')()>#2</ltx:text>)");
 foreach my $color(qw(black gray blue red green cyan magenta brown yellow orange)) {
-  DefMacro("\\".$color.'{}', sub { omdocColorMacro($color, @_); }); }#$
+  DefMacro("\\".$color.'{}', sub { omdocColorMacro($color, @_); }); }
 DefConstructor('\newpage','');
 1;

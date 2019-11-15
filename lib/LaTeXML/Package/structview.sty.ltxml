@@ -1,25 +1,40 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
 # | sTeX implementation for LaTeXML (structview.sty)                    | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
+
+# =======================================================
+# -2. Options Handling:                                 #
+# =======================================================
+
 DeclareOption('mh', sub {AssignValue ('@structview' => 1,'global');
 PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 DeclareOption(undef,sub {PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# -1. Requirements:                                     #
+# =======================================================
+
 if(LookupValue('@structview')) {RequirePackage('structview-mh');}
 RequirePackage('modules');
+
+# =======================================================
+# 0. Introduce parameters:                              #
+# =======================================================
+
 DefKeyVal('view','id','Semiverbatim');
 DefKeyVal('view','from','Semiverbatim');
 DefKeyVal('view','to','Semiverbatim');
@@ -29,6 +44,47 @@ DefKeyVal('view','creators','Semiverbatim');
 DefKeyVal('view','contributors','Semiverbatim');
 DefKeyVal('view','display','Semiverbatim');
 DefKeyVal('view','ext','Semiverbatim');
+
+# =======================================================
+# 1. Structures
+# =======================================================
+
+### we need a way to make a question mark that is not escaped,
+### but see https://github.com/brucemiller/LaTeXML/issues/733
+sub qmark { "?" };
+
+DefMacro('\sstructure [] Semiverbatim Semiverbatim',
+         '\endgroup\importmoduleI[#1]{#3}\begin{structurenv}[#1]{#2}{#3}');
+DefMacroI('\end{sstructure}',undef,'\end{structurenv}');
+
+DefEnvironment('{structurenv} OptionalKeyVals:importmodule Semiverbatim Semiverbatim',
+   '<omdoc:structure name="#2" from="?&GetKeyVal(#1,"load")(&canonical_omdoc_path(&GetKeyVal(#1,"load")))()&qmark()#3">'
+  .  "#body"
+  ."</omdoc:structure>");
+
+DefConstructor('\vassign{}{}',
+    "<omdoc:definition for='#from&qmark()#1' type='simple'>"
+   .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+     $whatsit->setProperty('to',LookupValue("to_module"));
+   });
+DefConstructor('\tassign{}{}',
+    "<omdoc:definition for='#from&qmark()#1' type='simple'>"
+   .  "<om:OMOBJ><om:OMS cd='#to' name='#2'/></om:OMOBJ>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+     $whatsit->setProperty('to',LookupValue("to_module"));
+   });
+
+# =======================================================
+# 2. Views
+# =======================================================
+
 DefMacroI(T_CS('\begin{view}'),'OptionalKeyVals:view {}{}', sub {
   my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
   my $from = ToString(Digest($from_arg));
@@ -45,31 +101,20 @@ DefMacroI(T_CS('\begin{view}'),'OptionalKeyVals:view {}{}', sub {
 });
 DefMacroI('\end{view}',undef,'\end{viewenv}');
 DefEnvironment('{viewenv} OptionalKeyVals:view {}{}',
-   "<omdoc:theory-inclusion from='#2' to='#3'"
+   "<omdoc:view from='#2' to='#3'"
   .      " ?&defined(&GetKeyVal(#1,'type'))(type='&GetKeyVal(#1,'type')')()"
   .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
-  .  "<omdoc:morphism>#body</omdoc:morphism>"
-  ."</omdoc:theory-inclusion>");
-# do the same for viewsketch, pity we cannot share some code.
-DefMacroI(T_CS('\begin{viewsketch}'),'OptionalKeyVals:view {}{}', sub {
-  my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
-  my $from = ToString(Digest($from_arg));
-  my $to = ToString(Digest($to_arg));
-  my $from_file = ToString(GetKeyVal($keyvals,'from'));
-  my $to_file = ToString(GetKeyVal($keyvals,'to'));
-  my $ext = ToString(GetKeyVal($keyvals,'ext')) if $keyvals;
-  $ext = 'sms' unless $ext;
-  return (
-    Tokenize("\\importmoduleI[load=$from_file]{$from}")->unlist,
-    Tokenize("\\importmoduleI[load=$to_file]{$to}")->unlist,
-    Invocation(T_CS('\begin{viewsketchenv}'),$keyvals,$from_arg,$to_arg)->unlist
-  );
-});
-DefMacroI('\end{viewsketch}',undef,'\end{viewsketchenv}');
-DefEnvironment('{viewsketchenv} OptionalKeyVals:view {}{}',
-   "<omdoc:theory-inclusion from='#2' to='#3'"
-  .      " ?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')()>"
   .  "#body"
-  ."</omdoc:theory-inclusion>");
+  ."</omdoc:view>");
+# do the same for viewsketch, pity we cannot share some code.
+RawTeX('
+\newenvironment{viewsketch}[3][]%
+{\PackageError{structview}%
+  {The {viewsketch} environment is deprecated}{use the {view} instead!}%
+  \begin{view}[#1]{#2}{#3}}
+{\end{view}}
+');
+
 DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' assertion='#3'/>");
+
 1;

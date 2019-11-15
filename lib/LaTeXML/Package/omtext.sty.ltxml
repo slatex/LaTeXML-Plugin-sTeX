@@ -1,32 +1,45 @@
 # -*- mode: Perl -*-
 # /=====================================================================\ #
+
 # | sTeX implementation for LaTeXML (omtext.sty)                        | #
-# | http://github.com/KWARC/LaTeXML-Plugin-sTeX/                        | #
+# | http://github.com/sLaTeX/LaTeXML-Plugin-sTeX/                       | #
 # |=====================================================================| #
-# |  Copyright (c) Michael Kohlhase 2015.                               | #
+# |  Copyright (c) Michael Kohlhase 2019.                               | #
 # |  This work may be distributed and/or modified under the conditions  | #
 # |  of the LaTeX Project Public License, either version 1.3 of this    | #
 # |  license or later; see http://www.latex-project.org/lppl.txt        | # 
 # |---------------------------------------------------------------------| #
-# | Michael Kohlhase <m.kohlhase@jacobs-university.de>          #_#     | #
-# | http://github.com/KWARC/sTeX                               (o o)    | #
+# | Michael Kohlhase <michael.kohlhase@fau.de>                  #_#     | #
+# | http://github.com/sLaTeX/sTeX                              (o o)    | #
 # \=========================================================ooo==U==ooo=/ #
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
+
+# =======================================================
+# 0. Options handling:                                  #
+# =======================================================
 DeclareOption('mh', sub { AssignValue ('@omtext' => 1,'global');
 PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 DeclareOption('noindex','');
 DeclareOption(undef,sub {PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
+
+# =======================================================
+# 1. Requirements:                                      #
+# =======================================================
 if(LookupValue('@omtext')) {RequirePackage('omtext-mh');}
 RequirePackage('xspace');
 RequirePackage('modules');
 RequirePackage('lxRDFa');
 RequirePackage('latexsym');
+
+# =======================================================
+# 2. Mathematical Text:                                 #
+# =======================================================
 Tag('omdoc:metadata',afterOpen=>\&numberIt,afterClose=>\&locateIt,autoClose=>1,autoOpen=>1);
-Tag('omdoc:CMP', afterOpen => sub {AssignValue('_LastSeenCMP', $_[1], 'global');return;});#$
+Tag('omdoc:CMP', afterOpen => sub {AssignValue('_LastSeenCMP', $_[1], 'global');return;});
 DefParameterType('IfBeginFollows', sub {
    my ($gullet) = @_;
    $gullet->skipSpaces;
@@ -48,6 +61,10 @@ DefKeyVal('omtext','start','Plain'); #Math mode in start phrases
 DefKeyVal('omtext','theory','Semiverbatim');
 DefKeyVal('omtext','continues','Semiverbatim');
 DefKeyVal('omtext','verbalizes','Semiverbatim');
+
+# =======================================================
+# 2. Core omtext:                                       #
+# =======================================================
 DefEnvironment('{omtext} OptionalKeyVals:omtext',
   "<omdoc:omtext "
      . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
@@ -58,6 +75,10 @@ DefEnvironment('{omtext} OptionalKeyVals:omtext',
   .     "?&GetKeyVal(#1,'start')(<ltx:text class='startemph'>&GetKeyVal(#1,'start')</ltx:text>)()"
                   .     "#body"
                  ."</omdoc:omtext>",  afterDigestBegin=>\&declareFunctions,);
+
+# =======================================================
+# 3. Phrase-Level Markup:                               #
+# =======================================================
 DefKeyVal('phrase','id','Semiverbatim');
 DefKeyVal('phrase','style','Semiverbatim');
 DefKeyVal('phrase','class','Semiverbatim');
@@ -79,6 +100,10 @@ DefConstructor('\sinlinequote [] {}',
                . "?#1(<dc:source>#1</dc:source>\n)()"
                . "#2"
             . "</ltx:quote>");
+
+# =======================================================
+# 3. Block-Level Markup:                                #
+# =======================================================
 DefEnvironment('{sblockquote} []',
   "<ltx:quote>?#1(<ltx:note role='source'>#1</ltx:note>)()#body</ltx:quote>");
 DefEnvironment('{sboxquote} []',
@@ -91,6 +116,10 @@ RawTeX('
 \newcommand\mybgraphics[2][]{\fbox{\mygraphics[#1]{#2}}}
 \newcommand\mycbgraphics[2][]{\begin{center}\fbox{\mygraphics[#1]{#2}}\end{center}}
 ');
+
+# =======================================================
+# 4. Index Markup:                                      #
+# =======================================================
 DefConstructor('\indexalt[]{}{}',
        "<omdoc:idx>"
       .  "<omdoc:idt>#2</omdoc:idt>"
@@ -181,9 +210,15 @@ sub numberIt {
   my $about = $node -> getAttribute('about');
   $node->setAttribute('about'=>'#'.$node->getAttribute('xml:id')) unless $about;
   #Also, provide locators:
-  my $locator = $whatsit && $whatsit->getProperty('locator');
-  #Need to inherit locators if missing:
-  $locator = (@parents ? $parents[$#parents]->getAttribute('stex:srcref') : '') unless $locator;
+  my $locator;
+  if ($whatsit) {
+    if (my $locator_prop = $whatsit->getProperty('locator')) {
+      $locator = $locator_prop->toAttribute; } }
+  # Bootstrap: inherit locators, if none provided explicitly
+  if (!$locator) {
+    $locator = (@parents ? $parents[$#parents]->getAttribute('stex:srcref') : ''); }
+
+  # If we managed to obtain a locator, serialize it on the document  
   if ($locator) {
     # There is a BUG with namespace declarations (or am I using the API wrongly??) which
     # does not recognize the stex namespace. Hence, I need to redeclare it...
@@ -192,8 +227,8 @@ sub numberIt {
       { # namespace not already declared?
         $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
       }
-    $node->setAttribute('stex:srcref'=>$locator);
-  }return;}
+    $node->setAttribute('stex:srcref'=>$locator); }
+  return; }
 
 sub locateIt {
   my($document,$node,$whatsit)=@_;
@@ -201,25 +236,43 @@ sub locateIt {
   my $locator = $node->getAttribute('stex:srcref');
   return unless $locator; # Nothing to do here...
   my $trailer = $whatsit && $whatsit->getProperty('trailer');
-  $trailer = $trailer->getLocator if $trailer;
-  $trailer = $locator unless $trailer; # bootstrap
+  if ($trailer) {
+    if (my $locator = $trailer->getLocator) {
+      $trailer = $locator->toAttribute; } }
+  # No explicit trailer, can we use the locator of the last child box?
+  # ... not quite, as it is not precise enough, text nodes don't record their whatsits for instance
+  # so instead, focus on the srcref attribute
+  if (!$trailer) { 
+    my $last_node = $node->lastChild;
+    my $last_locator = (ref $last_node eq 'XML::LibXML::Element') && $last_node->getAttribute('stex:srcref');
+    while ($last_node && !$last_locator) {
+      $last_node = $last_node->previousNonBlankSibling; 
+      $last_locator = (ref $last_node eq 'XML::LibXML::Element') && $last_node->getAttribute('stex:srcref'); }
+    if ($last_locator) {
+      $trailer = $last_locator; } }
+  # if no trailer after all, just use the locator as a fallback, could be atomic
+  if (!$trailer) {
+    $trailer = $locator; }
+  
   # TODO: Both should be local, or both remote, any mixture or undefinedness will produce garbage
   my $file_path = LookupValue('SOURCEFILE');
   my $baselocal = LookupValue('BASELOCAL');
   # Hmm, we only care about relative paths, so let's just do a URL->pathname map
   $file_path=~s/^\w+\:\/// if $file_path;
   $baselocal=~s/^\w+\:\/// if $baselocal;
+
   if ($file_path && $baselocal && ($locator =~ s/^([^\#]+)\#/\#/)) {
     my $relative_path = pathname_relative($file_path,$baselocal);
-    $locator = $relative_path.$locator;
-  }
+    $locator = $relative_path.$locator; }
+  
   if ($locator =~ /^(.+from=\d+;\d+)/) {
     my $from = $1;
     if ($trailer =~ /(,to=\d+;\d+.+)$/) {
       my $to = $1;
-      $locator = $from.$to;
-    } else { Error("stex","locator",undef, "Trailer is garbled, expect nonsense in stex:srcref ..."); }
-  } else { Error("stex","locator",undef, "Locator \"$locator\" is garbled, expect nonsense in stex:srcref ..."); }
+      $locator = $from.$to; }
+    else { Error("stex","locator",undef, "Trailer is garbled, expect nonsense in stex:srcref ..."); } }
+  else { Error("stex","locator",undef, "Locator \"$locator\" is garbled, expect nonsense in stex:srcref ..."); }
+
   my $parent = $document->getNode;
   if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
     { # namespace not already declared?
@@ -228,6 +281,10 @@ sub locateIt {
   $node->setAttribute('stex:srcref' => $locator);
   return;
 }
+
+# =======================================================
+# 5. Miscellaneous:                                     #
+# =======================================================
 DefMacro('\hateq','\@hateq\xspace');
 DefConstructor('\@hateq',"\x{2259}");
 DefMacro('\hatequiv','\@hatequiv\xspace');
@@ -237,8 +294,15 @@ DefConstructor('\@ergo',"\x{219D}");
 DefMacro('\ogre','\@ogre\xspace');
 DefConstructor('\@ogre',"\x{2B3F}");
 
-# experimental
-DefConstructor('\vdec {}',"<omdoc:declaration>#1</omdoc:declaration>");
-DefConstructor('\vids []{}',"<omdoc:identifiers refs='#1'>#2</omdoc:identifiers>");
-DefConstructor('\vrest [] {}',"<omdoc:restriction for='#1'>#2</omdoc:restriction>");
+# experimental: Declarations 
+DefConstructor('\vdec [] {}',
+     "<omdoc:declaration ?#1(for='#1')()>#2</omdoc:declaration>");
+DefConstructor('\vcond []{}',
+	       "<omdoc:identifiers ?#1(for='#1')()>#2</omdoc:identifiers>");
+DefConstructor('\vrest [] {}',
+	       "<omdoc:restriction ?#1(for='#1')()>#2</omdoc:restriction>");
+DefConstructor('\strucdec [] {}',
+   "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
+DefConstructor('\impdec {}',
+   "<omdoc:declaration role='imports'>#1</omdoc:declaration>");  
 1;

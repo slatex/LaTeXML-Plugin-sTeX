@@ -5,13 +5,12 @@
 
 default namespace omdoc = "http://omdoc.org/ns"
 
-omdoc.class &= symbol* &  axiom* &  definition* & imports* & assertion* &  type* & alternative* & example*  & theory*
+omdoc.class &= symbol* &  axiom* &  definition* & assertion* &  type* & alternative* & example*  & theory*
 
 constitutive.attribs = id.attribs &  attribute generated-from {omdocref}?
 sym.role.attrib = attribute role {"type" | "sort" | "object" |
 		                  "binder" | "attribution" | "application" | "constant" |
 		                  "semantic-attribution" | "error"}
-theory-unique  = xsd:NCName 
 scope.attrib = attribute scope {"global" | "local"}?
 symbol.attribs = scope.attrib & 
                          name.attrib & 
@@ -52,7 +51,7 @@ def.inductive = def.inductive.attribs & def.inductive.model
 def.eq = def.pattern | def.simple
 
 #all definition forms, add more by extending this.
-defs.all = def.informal | def.eq | def.inductive | def.implicit 
+defs.all = def.informal | def.inductive | def.implicit | def.eq 
 
 # Definitions contain CMPs,  FMPs and concept specifications. 
 # The latter define the set of concepts defined in this element. 
@@ -124,11 +123,15 @@ theory.attribs = id.attribs &
 			 attribute cdversion {xsd:nonNegativeInteger}? & 
 			 attribute cdrevision {xsd:nonNegativeInteger}? & 
 			 attribute cdstatus {"official" | "experimental" |"private" |  "obsolete"}?
-theory.model = metadata.class & omdoc.class 
+theory.model = metadata.class & omdoc.class & intheory.class
 theory = element theory {tref|(theory.attribs & theory.model)}
 
 imports.attribs = id.attribs & from.attrib & attribute conservative {"true" | "false"}?
 imports.model = metadata.class
 imports = element imports {tref|(imports.attribs & imports.model)}
 
+intheory.class = imports* 
+
+# allow symbols in inline.class/model via op.class
+op.class &= symbol*
 
