@@ -26,10 +26,11 @@ ProcessOptions();
 # =======================================================
 # 1. Requirements:                                      #
 # =======================================================
+RequirePackage('stex-base'); # for setup
 RequirePackage('metakeys');
 
 # =======================================================
-# 1. Cross-Referencing:                                 #
+# 2. Cross-Referencing:                                 #
 # =======================================================
 DefKeyVal('sref','linktext','Semiverbatim');
 DefKeyVal('sref','fallback','Semiverbatim');
@@ -51,7 +52,7 @@ DefConstructor('\spageref{}',
     "<omdoc:oref href='&withhash()#1'/>");
 
 # =======================================================
-# 2. Inter-Document Crossreferencing:                   #
+# 3. Inter-Document Crossreferencing:                   #
 # =======================================================
 DefConstructor('\makeextrefs{}','');
 DefConstructor('\extref[]{}{}',

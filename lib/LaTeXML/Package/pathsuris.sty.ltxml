@@ -16,10 +16,19 @@ use strict;
 use LaTeXML::Package;
 use LaTeXML::Util::Pathname;
 use Cwd qw(abs_path);
+
+# =======================================================
+# 0. Options                                            #
+# =======================================================
 ProcessOptions();
 
 # =======================================================
-# 1. Base URIs:                                         #
+# 1. Requirements:                                      #
+# =======================================================
+RequirePackage('stex-base'); # for setup
+
+# =======================================================
+# 2. Base URIs:                                         #
 # =======================================================
 DefMacro('\baseURI []Semiverbatim', sub {
    my $baselocal = ToString(Digest($_[1]));
@@ -29,7 +38,7 @@ DefMacro('\baseURI []Semiverbatim', sub {
  });
 
 # =======================================================
-# 2. Using Absolute Paths:                              #
+# 3. Using Absolute Paths:                              #
 # =======================================================
 DefMacro('\defpath[]{}{}', sub {
    my ($gullet,$arg1,$arg2,$arg3)=@_;
