@@ -458,6 +458,8 @@ DefConstructor('\termref OptionalKeyVals:termref {}',(LookupValue('@omdocmode') 
               afterDigest=>sub{$_[1]->setProperty(module=>(LookupValue('modnl_signature') || LookupValue('current_module')))});
 
 RawTeX('
+\def\@capitalize#1{\uppercase{#1}}%
+\newrobustcmd\capitalize[1]{\expandafter\@capitalize #1}%
 \newcommand\@@atrefi[3][]{\def\@test{#1}%
   \ifx\@test\@empty\termref[name=#3]{#2}\else\termref[cd=#1,name=#3]{#2}\fi}
 \newcommand\@atrefi[3][]{\termemph{\@@atrefi[#1]{#2}{#3}}}
