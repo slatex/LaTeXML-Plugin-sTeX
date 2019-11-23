@@ -50,6 +50,7 @@ RawTeX('
 # 2.2 Multilingual Modules:                             #
 # =======================================================
 DefKeyVal('symi','gfc','Semiverbatim','');
+DefKeyVal('symi','ns','Semiverbatim','');
 DefKeyVal('symi','align','Semiverbatim','');
 DefKeyVal('symi','noalign','Semiverbatim','true');
 DefKeyVal('symi','noverb','Semiverbatim','true');
