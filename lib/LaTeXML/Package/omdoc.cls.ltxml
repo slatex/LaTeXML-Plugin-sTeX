@@ -56,6 +56,8 @@ RelaxNGSchema('omdoc+ltxml',
         'cc'=>"http://creativecommons.org/ns",
         'stex'=>"http://kwarc.info/ns/sTeX",
        'ltx'=>"http://dlmf.nist.gov/LaTeXML");
+
+RequirePackage('stex-base');
 if(! LookupValue('@minimal')) { RequirePackage('omdoc') };
 if(! LookupValue('@minimal')) { RequirePackage('stex') };
 # =======================================================
