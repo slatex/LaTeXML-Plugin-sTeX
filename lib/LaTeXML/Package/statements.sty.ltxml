@@ -190,11 +190,14 @@ sub definitionBody {
     if ($props{theory}) {
       my @symbols = @{$props{defs} || []};
       my $signature = $props{signature};
+      my @dones = ();
       foreach my $symb(@symbols) {
         next if $for_attr{$symb};
         my $qualified_symbol = $signature ? "$signature?$symb" : $symb;
         $for_attr{$qualified_symbol}=1;
-        if (!$props{multiling}) {
+        my %donesmap = map { $_ => 1} @dones;
+        if (!$props{multiling} && !exists($donesmap{$symb})) {
+          push @dones, $symb;
           if (LookupValue('@omdocmode')) {
             $doc->insertElement('omdoc:symbol', undef, (name=>$symb, "xml:id"=>makeNCName("$symb.def.sym"))); 
           } else {
@@ -368,12 +371,19 @@ DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',
 # =======================================================
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
+DefEnvironment('{inlineExample} OptionalKeyVals:omtext',
+	       "<ltx:inline-para class='example'>\n #body\n</ltx:inline-para>");
 
 DefConstructor('\inlineass OptionalKeyVals:omtext {}',
               "<ltx:text "
             .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
             .    "#2"
             . "</ltx:text>");
+DefEnvironment('{inlineAssertion} OptionalKeyVals:omtext',
+	       "<ltx:inline-para "
+            .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
+            .    "#body"
+            . "</ltx:inline-para>");
 
 # =======================================================
 # 2.5 Symbols II:                                       #
@@ -448,16 +458,40 @@ DefConstructor('\termref OptionalKeyVals:termref {}',(LookupValue('@omdocmode') 
               afterDigest=>sub{$_[1]->setProperty(module=>(LookupValue('modnl_signature') || LookupValue('current_module')))});
 
 RawTeX('
-\newcommand\atrefi[3][]{\def\@test{#1}%
-\ifx\@test\@empty\termref[name=#3]{#2}\else\termref[cd=#1,name=#3]{#2}\fi}
-\newcommand\atrefii[4][]{\atrefi[#1]{#2}{#3-#4}}
-\newcommand\atrefiii[5][]{\atrefi[#1]{#2}{#3-#4-#5}}
-\newcommand\trefi[2][]{\atrefi[#1]{#2}{#2}}
-\newcommand\trefii[3][]{\atrefi[#1]{#2 #3}{#2-#3}}
-\newcommand\trefiii[4][]{\atrefi[#1]{#2 #3 #4}{#2-#3-#4}}
-\newcommand\trefis[2][]{\atrefi[#1]{#2s}{#2}}
-\newcommand\trefiis[3][]{\atrefi[#1]{#2 #3s}{#2-#3}}
-\newcommand\trefiiis[4][]{\atrefi[#1]{#2 #3 #4s}{#2-#3-#4}}
+\def\@capitalize#1{\uppercase{#1}}%
+\newrobustcmd\capitalize[1]{\expandafter\@capitalize #1}%
+\newcommand\@@atrefi[3][]{\def\@test{#1}%
+  \ifx\@test\@empty\termref[name=#3]{#2}\else\termref[cd=#1,name=#3]{#2}\fi}
+\newcommand\@atrefi[3][]{\termemph{\@@atrefi[#1]{#2}{#3}}}
+\newcommand\trefi[2][]{\@atrefi[#1]{#2}{#2}}
+\newcommand\trefii[3][]{\@atrefi[#1]{#2 #3}{#2-#3}}
+\newcommand\trefiii[4][]{\@atrefi[#1]{#2 #3 #4}{#2-#3-#4}}
+\newcommand\trefiv[5][]{\@atrefi[#1]{#2 #3 #4 #5}{#2-#3-#4-#5}}
+\newcommand\trefis[2][]{\@atrefi[#1]{#2s}{#2}}
+\newcommand\trefiis[3][]{\@atrefi[#1]{#2 #3s}{#2-#3}}
+\newcommand\trefiiis[4][]{\@atrefi[#1]{#2 #3 #4s}{#2-#3-#4}}
+\newcommand\trefivs[5][]{\@atrefi[#1]{#2 #3 #4 #5s}{#2-#3-#4-#5}}
+\newcommand\Trefi[2][]{\@atrefi[#1]{\capitalize{#2}}{#2}}
+\newcommand\Trefii[3][]{\@atrefi[#1]{\capitalize{#2 #3}}{#2-#3}}
+\newcommand\Trefiii[4][]{\@atrefi[#1]{\capitalize{#2 #3 #4}}{#2-#3-#4}}
+\newcommand\Trefiv[5][]{\@atrefi[#1]{\capitalize{#2 #3 #4 #5}}{#2-#3-#4-#5}}
+\newcommand\Trefis[2][]{\@atrefi[#1]{\capitalize{#2s}}{#2}}
+\newcommand\Trefiis[3][]{\@atrefi[#1]{\capitalize{#2 #3s}}{#2-#3}}
+\newcommand\Trefiiis[4][]{\@atrefi[#1]{\capitalize{#2 #3 #4s}}{#2-#3-#4}}
+\newcommand\Trefivs[5][]{\@atrefi[#1]{\capitalize{#2 #3 #4 #5s}}{#2-#3-#4-#5}}
+\def\@instring#1#2{TT\fi\begingroup\edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\newcommand\@@mtref[3]{\def\@@cd{#1}\def\@@name{#2}%
+\ifx\@@cd\@empty%
+\ifx\@@name\@empty\termref[]{#3}\else\termref[name=\@@name]{#3}\fi%
+\else%
+\ifx\@@name\@empty\termref[cd=\@@cd]{#3}\else\termref[cd=\@@cd,name=\@@name]{#3}\fi%
+\fi}
+\def\@mtref#1?#2\relax{\@@mtref{#1}{#2}}
+\newcommand\mtref[2][]{\if\@instring{?}{#1}\@mtref #1\relax{#2}\else\termref[cd=#1]{#2}\fi}
+\newcommand\mtrefi[2][]{\termemph{\mtref[#1]{#2}}}
+\newcommand\mtrefii[3][]{\mtrefi[#1]{#2 #3}}
+\newcommand\mtrefiii[4][]{\mtrefi[#1]{#2 #3 #4}}
+\newcommand\mtrefiv[5][]{\mtrefi[#1]{#2 #3 #4 #5}}
        ');
 
 # this should not be used on its own, but if it is, we use it as a substitute for \term 

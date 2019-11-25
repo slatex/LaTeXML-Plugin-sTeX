@@ -110,12 +110,6 @@ DefEnvironment('{sboxquote} []',
   "<ltx:quote class='boxed'>?#1(<ltx:note role='source'>#1</ltx:note>)()#body</ltx:quote>");
 DefConstructor('\lec{}',
    "\n<omdoc:note type='line-end-comment'>#1</omdoc:note>");
-RawTeX('
-\newcommand\mygraphics[2][]{\includegraphics[#1]{#2}}
-\newcommand\mycgraphics[2][]{\begin{center}\mygraphics[#1]{#2}\end{center}}
-\newcommand\mybgraphics[2][]{\fbox{\mygraphics[#1]{#2}}}
-\newcommand\mycbgraphics[2][]{\begin{center}\fbox{\mygraphics[#1]{#2}}\end{center}}
-');
 
 # =======================================================
 # 4. Index Markup:                                      #

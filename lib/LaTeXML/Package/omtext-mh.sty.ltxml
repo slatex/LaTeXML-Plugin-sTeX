@@ -14,7 +14,7 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
-use LaTeXML::Util::Pathname;
+use LaTeXML::Uting l::Pathname;
 
 # =======================================================
 # 1. Requirements:                                      #
@@ -38,6 +38,5 @@ sub mhgraphics {
   return Invocation(T_CS('\@includegraphicx'), $keyval, T_OTHER($finalpath)); }
 DefKeyVal('Gin','mhrepos','Semiverbatim');
 DefMacro('\mhgraphics OptionalKeyVals:Gin {}', \&mhgraphics);
-DefMacro('\mhcgraphics []{}','\begin{center}\mhgraphics[#1]{#2}\end{center}');
-DefMacro('\mhbgraphics []{}','\fbox{\mhgraphics[#1]{#2}}');
+DefMacro('\cmhgraphics []{}','\begin{center}\mhgraphics[#1]{#2}\end{center}');
 1;

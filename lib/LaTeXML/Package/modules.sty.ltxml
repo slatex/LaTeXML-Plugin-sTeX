@@ -33,6 +33,7 @@ DeclareOption('mh', sub {AssignValue ('@modules' => 1);
 DeclareOption('showmods', '');
 DeclareOption('noauxreq', '');
 DeclareOption('qualifiedimports', '');
+DeclareOption('mmt', sub {AssignValue ('@mmt' => 1); });
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 
@@ -40,6 +41,7 @@ ProcessOptions();
 # -1. Requirements:                                     #
 # =======================================================
 if(LookupValue('@modules')) {RequirePackage('modules-mh');}		
+if(LookupValue('@mmt')) {RequirePackage('mmt');}		
 RequirePackage('presentation'); # for \@use
 RequirePackage('sref'); # for being synchronous with LaTeX
 RequirePackage('pathsuris'); # for path handling
@@ -55,8 +57,11 @@ DefKeyVal('Module','state','Semiverbatim');
 DefKeyVal('symdef','bvars','CommaList');
 DefKeyVal('symdef','bargs','CommaList');
 DefKeyVal('symdef','id','Semiverbatim');
-DefKeyVal('symdef','cd','Semiverbatim');
+DefKeyVal('symdef','cd','Semiverbatim'); # deprecated; so something
 DefKeyVal('symdef','assocarg','Semiverbatim');
+DefKeyVal('symdef','align','Semiverbatim','');
+DefKeyVal('symdef','noalign','Semiverbatim','');
+DefKeyVal('symdef','ns','Semiverbatim','');
 DefKeyVal('importmodule','id','Semiverbatim');
 DefKeyVal('importmodule','load','Semiverbatim');
 DefKeyVal('importmodule','ext','Semiverbatim');
@@ -817,7 +822,12 @@ sub symdef_assemble_presentation {
   $presentation;}
 
 # =======================================================
-# 4. Deprecated Stuff                                    #
+# 4. Namespaces
+# =======================================================
+DefConstructor('\namespace[]{}',"<omdoc:namespace ?#1( name='#1')() url='#2'/>");
+
+# =======================================================
+# 5. Deprecated Stuff                                    #
 # =======================================================
 # this needs to be put into place, and maybe rethought. 
 DefConstructor('\sinputref[]{}',

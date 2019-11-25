@@ -114,7 +114,6 @@ DefConstructor('\MSC{}',"");
 # 3. Authoring states, etc:                             #
 # =======================================================
 
-DefConstructor('\namespace{}','');
 DefKeyVal('modnl','state','Semiverbatim');
 DefConstructor('\shadow{}{}','');
 DefConstructor('\MathHubPath{}','');

@@ -14,15 +14,6 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
-
-# =======================================================
-# 1. Requirements:                                      #
-# =======================================================
-RequirePackage('stex-base'); # for setup
-
-# =======================================================
-# 1. Macros:                                            #
-# =======================================================
-DefConstructor('\stex',"<ltx:text>sTeX</ltx:text>");
-DefMacro('\sTeX','\stex');
+# we are running LaTeXML. 
+RawTeX('\newif\if@latexml\@latexmltrue');
 1;
