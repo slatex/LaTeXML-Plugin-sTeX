@@ -27,6 +27,7 @@ ProcessOptions();
 # =======================================================
 # 1. Requirements:                                      #
 # =======================================================
+RequirePackage('etoolbox');
 RequirePackage('omtext');
 RequirePackage('latexml');## we should not use this, but only \lxDeclare 
 
