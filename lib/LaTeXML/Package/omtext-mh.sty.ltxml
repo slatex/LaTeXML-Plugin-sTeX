@@ -14,7 +14,7 @@
 package LaTeXML::Package::Pool;
 use strict;
 use LaTeXML::Package;
-use LaTeXML::Uting l::Pathname;
+use LaTeXML::Util::Pathname;
 
 # =======================================================
 # 1. Requirements:                                      #
