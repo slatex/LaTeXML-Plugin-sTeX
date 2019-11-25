@@ -33,6 +33,7 @@ DeclareOption(undef, sub  {PassOptions('omdoc@cls','cls',ToString(Digest(T_CS('\
   PassOptions('omdoc','sty',ToString(Digest(T_CS('\CurrentOption'))));
   PassOptions('stex','sty',ToString(Digest(T_CS('\CurrentOption'))));});
 ProcessOptions();
+DeclareOption('minimal',AssignValue('@minimal' => 1));
 
 # =======================================================
 # 1. Requirements:                                      #
@@ -55,8 +56,8 @@ RelaxNGSchema('omdoc+ltxml',
         'cc'=>"http://creativecommons.org/ns",
         'stex'=>"http://kwarc.info/ns/sTeX",
        'ltx'=>"http://dlmf.nist.gov/LaTeXML");
-RequirePackage('omdoc');
-RequirePackage('stex');
+if(! LookupValue('@minimal')) { RequirePackage('omdoc') };
+if(! LookupValue('@minimal')) { RequirePackage('stex') };
 # =======================================================
 # 2. Document structure                                 #
 # =======================================================
