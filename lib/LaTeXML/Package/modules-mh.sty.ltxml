@@ -27,6 +27,7 @@ RequirePackage('mathhub');
 DefKeyVal('importmhmodule','id','Semiverbatim');
 DefKeyVal('importmhmodule','repos','Semiverbatim');
 DefKeyVal('importmhmodule','path','Semiverbatim');
+DefKeyVal('importmhmodule','dir','Semiverbatim');
 DefKeyVal('importmhmodule','ext','Semiverbatim');
 DefKeyVal('importmhmodule','conservative','Semiverbatim');
 
@@ -46,10 +47,12 @@ sub importMHmoduleI {
   if ($keyval) {
     my $repos = ToString($keyval->getValue('repos'));
     my $path = ToString($keyval->getValue('path'));
+    my $diratt = ToString($keyval->getValue('dir'));
     my $current_repos = LookupValue('current_repos');
     if (!$repos) { # Use the implicit current repository
       $repos = $current_repos; }
     my $defpaths = LookupValue('defpath');
+    if ($dir) {$path = $diratt.'/'$id}  
     my $load_path = ($$defpaths{MathHub}).$repos.'/source/'.$path;
     $keyval->setValue('load',$load_path);
     AssignValue('current_repos' => $repos, 'global');
