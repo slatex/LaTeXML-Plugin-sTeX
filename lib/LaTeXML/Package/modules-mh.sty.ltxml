@@ -52,7 +52,7 @@ sub importMHmoduleI {
     if (!$repos) { # Use the implicit current repository
       $repos = $current_repos; }
     my $defpaths = LookupValue('defpath');
-    if ($dir) {$path = $diratt.'/'$id};
+    if ($diratt) {$path = $diratt . '/' . $id};
     my $load_path = ($$defpaths{MathHub}).$repos.'/source/'.$path;
     $keyval->setValue('load',$load_path);
     AssignValue('current_repos' => $repos, 'global');
