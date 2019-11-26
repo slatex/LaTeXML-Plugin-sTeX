@@ -64,6 +64,7 @@ DefKeyVal('symdef','noalign','Semiverbatim','');
 DefKeyVal('symdef','ns','Semiverbatim','');
 DefKeyVal('importmodule','id','Semiverbatim');
 DefKeyVal('importmodule','load','Semiverbatim');
+DefKeyVal('importmodule','dir','Semiverbatim');
 DefKeyVal('importmodule','ext','Semiverbatim');
 DefKeyVal('importmodule','conservative','Semiverbatim');
 
@@ -159,17 +160,17 @@ DefEnvironment('{module} OptionalKeyVals:Module',
  afterConstruct => \&module_afterConstruct);
 
 DefConstructor('\usemodule OptionalKeyVals:importmodule Semiverbatim',
-   LookupValue('@omdocmode') ? "<omdoc:uses from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>" :
-    "<ltx:block class='omdoc_uses' stex:from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'/>",
+   LookupValue('@omdocmode') ? "<omdoc:uses from='&canonical_omdoc_path(#file)###2'/>" :
+    "<ltx:block class='omdoc_uses' stex:from='&canonical_omdoc_path(#file)###2'/>",
    afterDigest=>\&importmoduleI);
 
 DefConstructor('\importmodule OptionalKeyVals:importmodule Semiverbatim',
 	       (LookupValue('@omdocmode') ? ("<omdoc:imports "
-              . "from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
-              . "?&defined(&GetKeyVal(#1,'conservative'))(load='&GetKeyVal(#1,'conservative')')()/>" ) : 
+              . "from='&canonical_omdoc_path(#file)###2'"
+              . "?&defined(&GetKeyVal(#1,'conservative'))(conservative='&GetKeyVal(#1,'conservative')')()/>" ) : 
               ("<ltx:block class='omdoc_imports'"
-              . "stex:from='?&GetKeyVal(#1,'load')(&canonical_omdoc_path(&GetKeyVal(#1,'load')))()###2'"
-              . "?&defined(&GetKeyVal(#1,'conservative'))(stex:load='&GetKeyVal(#1,'conservative')')()/>" ) )
+              . "stex:from='&canonical_omdoc_path(#file)###2'"
+              . "?&defined(&GetKeyVal(#1,'conservative'))(stex:conservative='&GetKeyVal(#1,'conservative')')()/>" ) )
 	       ,
    afterDigest=> \&importmoduleI);
 
@@ -742,11 +743,16 @@ sub canonical_omdoc_path {
 sub importmoduleI {
    my($stomach,$whatsit)=@_;
    my $keyval = $whatsit->getArg(1);
-   my $file;
-   $file = ToString(GetKeyVal($keyval,'load')) if $keyval;
+   my $loadatt;
+   $loadatt = ToString(GetKeyVal($keyval,'load')) if $keyval;
+   my $diratt;
+   $diratt = ToString(GetKeyVal($keyval,'dir')) if $keyval;
    my $ext = ToString(GetKeyVal($keyval,'ext')) if $keyval;
    $ext = 'sms' unless $ext;
    my $module = ToString($whatsit->getArg(2));
+   my $file;
+   if ($diratt) {$file = $diratt . '/' . $module} else {$file = $loadatt};
+   $whatsit->setProperty(file=>$file);
    my $containing_module = LookupValue('current_module');
    my $repos = LookupValue('current_repos');
    # 1. Bookkeeping
