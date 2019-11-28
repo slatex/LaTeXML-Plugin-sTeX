@@ -368,7 +368,7 @@ DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',
        alias=>'\adefiv');
 
 # =======================================================
-# 2.5 Examples:                                         #
+# 2.5 Inline Statements:                                #
 # =======================================================
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
