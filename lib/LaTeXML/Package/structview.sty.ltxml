@@ -122,33 +122,32 @@ DefConstructor('\obligation [] {} {}',"<omdoc:obligation induced-by='#2' asserti
 # =======================================================
 
 DefKeyVal('view','id','Semiverbatim');
-DefKeyVal('view','from','Semiverbatim');
-DefKeyVal('view','to','Semiverbatim');
 DefKeyVal('view','title','Semiverbatim');
-DefKeyVal('view','type','Semiverbatim');
+DefKeyVal('view','display','Semiverbatim');
+DefKeyVal('view','loadfrom','Semiverbatim');
+DefKeyVal('view','loadto','Semiverbatim');
 DefKeyVal('view','creators','Semiverbatim');
 DefKeyVal('view','contributors','Semiverbatim');
-DefKeyVal('view','display','Semiverbatim');
+DefKeyVal('view','srccite','Semiverbatim');
+DefKeyVal('view','type','Semiverbatim');
 DefKeyVal('view','ext','Semiverbatim');
 
-DefConstructor('\inlineview OptionalKeyVals:omtext {}',
+DefConstructor('\inlineview OptionalKeyVals:omtext {} {}',
               "<ltx:text class='view' "
             .    "?&GetKeyVal(#1,'id')(id='&GetKeyVal(#1,'id')')() "
-            .    "?&GetKeyVal(#1,'from')(stex:from='&GetKeyVal(#1,'from')')() "
-            .    "?&GetKeyVal(#1,'to')(stex:to='&GetKeyVal(#1,'to')')() "
+            .    "?&GetKeyVal(#1,'loadfrom')(stex:from='&GetKeyVal(#2,'loadfrom')?#cd')() "
             .    "?&GetKeyVal(#1,'type')(stex:type='&GetKeyVal(#1,'type')')() "
             .    "?&GetKeyVal(#1,'creators')(dc:creators='&GetKeyVal(#1,'creators')')() "
             .    "?&GetKeyVal(#1,'contributors')(dc:contributors='&GetKeyVal(#1,'contributors')')() "
             .    "?&GetKeyVal(#1,'display')(style='display:&GetKeyVal(#1,'display')')() "
 	    .    ">"
-            .    "#2"
+            .    "#3"
             . "</ltx:text>");
 
 DefEnvironment('{inlineView} OptionalKeyVals:omtext',
 	       "<ltx:inline-para class='view' "
             .    "?&GetKeyVal(#1,'id')(id='&GetKeyVal(#1,'id')')() "
-            .    "?&GetKeyVal(#1,'from')(stex:from='&GetKeyVal(#1,'from')')() "
-            .    "?&GetKeyVal(#1,'to')(stex:to='&GetKeyVal(#1,'to')')() "
+            .    "?&GetKeyVal(#1,'loadfrom')(stex:from='&GetKeyVal(#1,'loadfrom')?#cd')() "
             .    "?&GetKeyVal(#1,'type')(stex:type='&GetKeyVal(#1,'type')')() "
             .    "?&GetKeyVal(#1,'creators')(dc:creators='&GetKeyVal(#1,'creators')')() "
             .    "?&GetKeyVal(#1,'contributors')(dc:contributors='&GetKeyVal(#1,'contributors')')() "
