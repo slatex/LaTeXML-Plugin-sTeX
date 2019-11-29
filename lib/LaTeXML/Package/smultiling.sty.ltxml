@@ -55,14 +55,14 @@ DefKeyVal('symi','align','Semiverbatim','');
 DefKeyVal('symi','noalign','Semiverbatim','true');
 DefKeyVal('symi','noverb','Semiverbatim','true');
 DefKeyVal('symi','specializes','Semiverbatim','');
-DefConstructor('\symi OptionalKeyVals:symi {}',
-     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2'/>");
-DefConstructor('\symii OptionalKeyVals:symi {}{}',
-     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3'/>");
-DefConstructor('\symiii OptionalKeyVals:symi {}{}{}',
-     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3-#4'/>");
-DefConstructor('\symiv OptionalKeyVals:symi {}{}{}{}',
-     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#2-#3-#4-#5'/>");
+DefConstructor('\symi OptionalMatch:* OptionalKeyVals:symi {}',
+     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#3'/>");
+DefConstructor('\symii OptionalMatch:* OptionalKeyVals:symi {}{}',
+     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#3-#4'/>");
+DefConstructor('\symiii OptionalMatch:* OptionalKeyVals:symi {}{}{}',
+     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#3-#4-#5'/>");
+DefConstructor('\symiv OptionalMatch:* OptionalKeyVals:symi {}{}{}{}',
+     "<omdoc:symbol ?#1(role='primary')(role='secondary') name='#3-#4-#5-#6'/>");
 DefKeyVal('modnl','title','Semiverbatim');
 DefKeyVal('modnl','load','Semiverbatim');
 DefKeyVal('modnl','creators','Semiverbatim');
