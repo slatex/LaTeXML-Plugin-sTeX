@@ -208,9 +208,9 @@ DefConstructor('\conceptdef OptionalKeyVals:symboldec {}',
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "stex:name='#1'>"
-      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
-      .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
-      .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
+#      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+#      .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
+#      .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
       ."</ltx:inline-block>\n") );
 DefMacro('\DefMathOp OptionalKeyVals:symdef {}', sub {
   my($self,$keyval,$pres)=@_;

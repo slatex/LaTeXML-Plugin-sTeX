@@ -18,9 +18,9 @@ use LaTeXML::Package;
 # =======================================================
 # 0. Options handling:                                  #
 # =======================================================
-DefConditional('\if@defindex');
+DefConditional('\ifdef@index');
 DeclareOption('omdocmode', sub {AssignValue ('@omdocmode' => 1)});
-DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
+DeclareOption('defindex', sub{Digest(T_CS('\def@indextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 
@@ -92,7 +92,7 @@ DefStatement('{assertion} OptionalKeyVals:omtext', LookupValue('@omdocmode') ?
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
   .   "?&GetKeyVal(#1,'theory')(stex:theory='&GetKeyVal(#1,'theory')')() "
   .   "stex:type='&lowcase(&GetKeyVal(#1,'type'))'>"
-  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+#  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "#body"
   ."</ltx:inline-block>\n"));
 
@@ -105,7 +105,7 @@ DefStatement('{example} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
      . "</omdoc:example>\n") : ("<ltx:inline-block class='omdoc_example'"
        . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
        . "?&GetKeyVal(#1,'for')(stex:for='&hash_wrapper(&GetKeyVal(#1,'for'))')()>"
-       . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+#       . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       . "#body"
      . "</ltx:inline-block>\n"));
 
@@ -116,13 +116,22 @@ DefStatement('{axiom} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
  . "#body"
   . "</omdoc:axiom>\n") : ("<ltx:inline-block class='omdoc_axiom'"
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')()>"
-  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+#  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  . "#body"
   . "</ltx:inline-block>\n"));
 
 # =======================================================
 # 2.2 Symbols I:                                        #
 # =======================================================
+
+DefKeyVal('symboldec','id','Semiverbatim');
+DefKeyVal('symboldec','functions','Semiverbatim');
+DefKeyVal('symboldec','role','Semiverbatim');
+DefKeyVal('symboldec','title','Semiverbatim');
+DefKeyVal('symboldec','name','Semiverbatim');
+DefKeyVal('symboldec','subject','Semiverbatim');
+DefKeyVal('symboldec','display','Semiverbatim');
+
 DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
        ("<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
@@ -134,13 +143,18 @@ DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "stex:name='&GetKeyVal(#1,'name')'>"
-      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+#      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       .  "<dc:description>#body"
       ."</ltx:inline-block>\n"));
 
 # =======================================================
 # 2.3 Types:                                            #
 # =======================================================
+
+DefKeyVal('symtype','id','Semiverbatim');
+DefKeyVal('symtype','system','Semiverbatim');
+DefKeyVal('symtype','for','Semiverbatim');
+
 DefConstructor('\symtype OptionalKeyVals:omtext {}{}',LookupValue('@omdocmode') ?
   ("<omdoc:type for='#2'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
@@ -175,7 +189,7 @@ DefStatement('{typedec} OptionalKeyVals:omtext {}',LookupValue('@omdocmode') ?
  ."</omdoc:type>") : ("<ltx:inline-block class='omdoc_type' stex:for='&GetKeyVal(#1,'for')'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
- .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+# .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
  .  "#body"
  ."</ltx:inline-block>"));
@@ -192,7 +206,8 @@ sub definitionBody {
       my @symbols = @{$props{defs} || []};
       my $signature = $props{signature};
       my @dones = ();
-      foreach my $symb(@symbols) {
+      foreach my $psymb(@symbols) {
+        my $symb = ToString($psymb);
         next if $for_attr{$symb};
         my $qualified_symbol = $signature ? "$signature?$symb" : $symb;
         $for_attr{$qualified_symbol}=1;
@@ -273,114 +288,6 @@ DefEnvironment('{definition} OptionalKeyVals:omtext', \&definitionBody,
     return; },
   afterDigest => sub { AssignValue('defs', undef); return; });
 
-# Just to get things to compile -------------------------------------------------------------
-
-DefConstructor('\Defi OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .   "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .   "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='#2') stex:cd='#theory'>#2</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
- afterDigest => sub { defHelper(@_, 'defi'); },
- alias=>'\defi');
-
-DefConstructor('\Defis OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)" : 
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .     "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='#2') stex:cd='#theory'>#2s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class ='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
- afterDigest => sub { defHelper(@_, 'defi'); },
- alias=>'\defi');
-
-DefConstructor('\Defii OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
- .      "#2 #3"
- .    "</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .    "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3)') stex:cd='#theory'>"
- .      "#2 #3"
- .    "</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defii'); },
-       alias=>'\defii');
-
-DefConstructor('\Defiis OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
- .      "#2 #3s"
- .    "</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .    "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3)') stex:cd='#theory'>"
- .      "#2 #3s"
- .    "</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defii'); },
-       alias=>'\defii');
-
-DefConstructor('\Defiii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4)')>#2 #3 #4</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiii'); },
-       alias=>'\defiii');
-
-DefConstructor('\Defiiis OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4)')>#2 #3 #4s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
-),
-       afterDigest => sub { defHelper(@_, 'defiii'); },
-       alias=>'\defiii');
-
-DefConstructor('\Defiv OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp>"
- ."<omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiv'); },
-       alias=>'\defiv');
-
-DefConstructor('\Defivs OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp>"
- ."<omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)" : 
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiv'); },
-       alias=>'\defiv');
-
-# -------------------------------------------------------------------------------------------
-
 DefStatement('{notation} OptionalKeyVals:omtext',(LookupValue('@omdocmode') ?
   "<omdoc:definition "
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
@@ -390,194 +297,69 @@ DefStatement('{notation} OptionalKeyVals:omtext',(LookupValue('@omdocmode') ?
   . "</omdoc:definition>\n" : "<ltx:inline-block class='omdoc_definition' "
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'for')(stex:for='&simple_wrapper(&GetKeyVal(#1,'for'))')()>"
- . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+# . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  . "#body"
   . "</ltx:inline-block>\n"));
 
 DefConstructor('\notatiendum OptionalKeyVals:notation {}',
               "<ltx:text class='notatiendum'>#2</ltx:text>");
 
-DefConstructor('\definiendum OptionalKeyVals:DEF {}',(LookupValue('@omdocmode') ?
+DefKeyVal('definiendum','name','Semiverbatim');
+DefKeyVal('definiendum','lemma','Semiverbatim');
+DefKeyVal('definiendum','recaps','Semiverbatim');
+DefConstructor('\@definiendum OptionalKeyVals:definiendum {}{}{}',(LookupValue('@omdocmode') ?
        "<omdoc:definiendum name='#name' cd='#theory'>"
-     .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()/>"
+     .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()"
+     .   "?&GetKeyVal(#1,'recaps')(<omdoc:meta property='stex:recaps'>&GetKeyVal(#1,'recaps')</omdoc:meta>)()"
      .   "#2"
      . "</omdoc:definiendum>" :
-       "<ltx:inline-block class='omdoc_definiendum' stex:name='#name' stex:cd='#theory'>"
-     .   "?&GetKeyVal(#1,'lemma')(<ltx:inline-block class='omdoc_meta' stex:property='smglom:lemma'>&GetKeyVal(#1,'lemma')</ltx:inline-block>)()/>"
+     "<ltx:inline-block class='omdoc_definiendum' stex:name='#name' stex:cd='#theory'>"
+     .   "?&GetKeyVal(#1,'lemma')(<ltx:inline-block class='omdoc_meta' stex:property='smglom:lemma'>&GetKeyVal(#1,'lemma')/>)()"
+     .   "?&GetKeyVal(#1,'recaps')(<ltx:inline-block class='omdoc_meta' stex:property='stex:recaps'>&GetKeyVal(#1,'recaps')/>)()"
      .   "#2"
-     . "</ltx:inline-block>" 
-     ),
-       afterDigest => sub { defHelper(@_, 'definiendum'); });
+     . "</ltx:inline-block>"),
+       afterDigest => sub { defHelper(@_); });
 
-DefConstructor('\defi OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .   "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)" : 
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .   "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='#2') stex:cd='#theory'>#2</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
- afterDigest => sub { defHelper(@_, 'defi'); },
- alias=>'\defi');
-
-DefConstructor('\defis OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .     "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='#2') stex:cd='#theory'>#2s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- 
- ),
- afterDigest => sub { defHelper(@_, 'defi'); },
- alias=>'\defi');
-
-DefConstructor('\adefi OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-       .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#3') cd='#theory'>"
-       .       "<omdoc:meta property='smglom:lemma'>#3</omdoc:meta>"
-       .       "#2"
-       .     "</omdoc:definiendum>"
-       ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)" : 
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-       .     "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='#3') stex:cd='#theory'>"
-       .       "<ltx:inline-block class='omdoc_meta' property='smglom:lemma'>#3</ltx:inline-block>"
-       .       "#2"
-       .     "</ltx:inline-block>"
-       ."?#defindex(</ltx:inline-block><ltx block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
-       ),
-       afterDigest => sub { defHelper(@_, 'adefi'); },
-       alias=>'\adefi');
-
-DefConstructor('\defii OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
- .      "#2 #3"
- .    "</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .    "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3)') stex:cd='#theory'>"
- .      "#2 #3"
- .    "</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defii'); },
-       alias=>'\defii');
-
-DefConstructor('\defiis OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
- .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
- .      "#2 #3s"
- .    "</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
- .    "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3)') stex:cd='#theory'>"
- .      "#2 #3s"
- .    "</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defii'); },
-       alias=>'\defii');
-
-DefConstructor('\adefii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4)') cd='#theory'>"
-         .       "<omdoc:meta property='smglom:lemma'>#3 #4</omdoc:meta>"
-         .       "#2"
-         .    "</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         .    "<ltx:inline-block class='omdoc_definiendum' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#3,#4)') stex:cd='#theory'>"
-         .       "<ltx:inline-block class='omdoc_meta' property='smglom:lemma'>#3 #4</ltx:inline-block>"
-         .       "#2"
-         .    "</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'adefii'); },
-       alias=>'\adefii');
-
-DefConstructor('\defiii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4)')>#2 #3 #4</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiii'); },
-       alias=>'\defiii');
-
-DefConstructor('\defiiis OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4)')>#2 #3 #4s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiii'); },
-       alias=>'\defiii');
-
-DefConstructor('\adefiii OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
-      "?#defindex(<omdoc:idx><omdoc:idt>)"
-       . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4,#5)')>"
-       .  "#2"
-       . "</omdoc:definiendum>"
-       ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)" :
-      "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-       . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#3,#4,#5)')>"
-       .  "#2"
-       . "</ltx:inline-block>"
-       ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block>"
-       ."<ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
-       ),
-       afterDigest => sub { defHelper(@_, 'adefiii')},
-       alias=>'\adefiii');
-
-DefConstructor('\defiv OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiv'); },
-       alias=>'\defiv');
-
-DefConstructor('\defivs OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
- "?#defindex(<omdoc:idx><omdoc:idt>)"
-         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</omdoc:definiendum>"
- ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)" :
- "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-         . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</ltx:inline-block>"
- ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#2</ltx:inline-block>"
- ."<ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
- ),
-       afterDigest => sub { defHelper(@_, 'defiv'); },
-       alias=>'\defiv');
-
-DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',(LookupValue('@omdocmode') ?
-      "?#defindex(<omdoc:idx><omdoc:idt>)"
-       . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#3,#4,#5,#6)')>"
-       .  "#2"
-       . "</omdoc:definiendum>"
-       ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp><omdoc:idp>#6</omdoc:idp></omdoc:ide></omdoc:idx>)" :
-      "?#defindex(<ltx:inline-block class='omdoc_idx'><ltx:inline-block class='omdoc_idt'>)"
-       . "<ltx:inline-block class='omdoc_definiendum' stex:cd='#theory' ?&GetKeyVal(#1,'name')(stex:name='&GetKeyVal(#1,'name')')(stex:name='&dashed(#3,#4,#5,#6)')>"
-       .  "#2"
-       . "</ltx:inline-block>"
-       ."?#defindex(</ltx:inline-block><ltx:inline-block class='omdoc_ide' stex:index='default'><ltx:inline-block class='omdoc_idp'>#3</ltx:inline-block>"
-       ."<ltx:inline-block class='omdoc_idp'>#4</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#5</ltx:inline-block><ltx:inline-block class='omdoc_idp'>#6</ltx:inline-block></ltx:inline-block></ltx:inline-block>)"
-       ),
-       afterDigest => sub { defHelper(@_, 'adefiv')},
-       alias=>'\adefiv');
+# This is directly lifted from statements.sty from the sTeX distribution. 
+RawTeX('
+\newcommand\definiendum[2][]{\@definiendum[#1]{#2}{}{}}
+\newcommand\adefi[3][]{\def\@verb{#2}\@definiendum[#1]{#2}{#3}{#3}\@adefi}
+\newcommand\adef@at{%
+\edef\@@at{\ifx\definiendum@name\@empty%
+\ifx\definienum@lemma\@empty\@verb\else\definiendum@lemma\fi%
+\else\definiendum@name\fi}}
+\newcommand\@adefi[1][]{\ifdef@index\adef@at\omdoc@indexi[at=\@@at,#1]{\@verb}\fi\xspace}
+\newcommand\defi[2][]{\adefi[#1]{#2}{#2}}
+\newcommand\defis[2][]{\adefi[#1]{#2s}{#2}}
+\newcommand\Defi[2][]{\adefi[#1]{\capitalize{#2}}{#2}}
+\newcommand\Defis[2][]{\adefi[#1]{\capitalize{#2s}}{#2}}
+\newcommand\adefii[4][]{\def\@pone{#3}\def\@ptwo{#4}%
+\def\@name{#3-#4}\def\@verb{#3 #4}%
+\@definiendum[#1]{#2}{\@name}{\@verb}\@adefii}
+\newcommand\@adefii[1][]{\ifdef@index\adef@at\omdoc@indexii[at=\@@at,#1]{\@pone}{\@ptwo}\fi\xspace}
+\newcommand\defii[3][]{\adefii[#1]{#2 #3}{#2}{#3}}
+\newcommand\defiis[3][]{\adefii[#1]{#2 #3s}{#2}{#3}}
+\newcommand\Defii[3][]{\adefii[#1]{\capitalize{#2 #3}}{#2}{#3}}
+\newcommand\Defiis[3][]{\adefii[#1]{\capitalize{#2 #3s}}{#2}{#3}}
+\newcommand\adefiii[5][]{\def\@pone{#3}\def\@ptwo{#4}\def\@pthree{#5}%
+\def\@verb{#3 #4 #5}\def\@name{#3-#4-#5}%
+\@definiendum[#1]{#2}{\@name}{\@verb}\@adefiii}
+\newcommand\@adefiii[1][]{\ifdef@index\adef@at\omdoc@indexiii[at=\@@at,#1]{\@pone}{\@ptwo}{\@pthree}\fi\xspace}
+\newcommand\defiii[4][]{\adefiii[#1]{#2 #3 #4}{#2}{#3}{#4}}
+\newcommand\defiiis[4][]{\adefiii[#1]{#2 #3 #4s}{#2}{#3}{#4}}
+\newcommand\Defiii[4][]{\adefiii[#1]{\capitalize{#2 #3 #4}}{#2}{#3}{#4}}
+\newcommand\Defiiis[4][]{\adefiii[#1]{\capitalize{#2 #3 #4s}}{#2}{#3}{#4}}
+\newcommand\adefiv[6][]{\def\@pone{#3}\def\@ptwo{#4}\def\@pthree{#5}\def\@pfour{#6}%
+\def\@name{#3-#4-#5-#6}\def\@verb{#3 #4 #5 #6}%
+\@definiendum[#1]{#2}{\@name}{\@verb}\@adefiv}
+\newcommand\@adefiv[1][]{\ifdef@index\adef@at\omdoc@indexiv[at=\@@at,#1]{\@pone}{\@ptwo}{\@pthree}{\@pfour}\fi\xspace}
+\newcommand\defiv[5][]{\adefiv[#1]{#2 #3 #4 #5}{#2}{#3}{#4}{#5}}
+\newcommand\defivs[5][]{\adefiv[#1]{#2 #3 #4 #5s}{#2}{#3}{#4}{#5}}
+\newcommand\Defiv[5][]{\adefiv[#1]{\capitalize{#2 #3 #4 #5}}{#2}{#3}{#4}{#5}}
+\newcommand\Defivs[5][]{\adefiv[#1]{\capitalize{#2 #3 #4 #5s}}{#2}{#3}{#4}{#5}}
+\newcommand\inlineex[2][]{\metasetkeys{omtext}{#1}%
+\sref@target\sref@label@id{here}#2}
+       ');
 
 # =======================================================
 # 2.5 Inline Statements:                                #
@@ -585,7 +367,7 @@ DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',(L
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
 DefEnvironment('{inlineExample} OptionalKeyVals:omtext',
-	       "<ltx:para class='example'>\n #body\n</ltx:para>");
+	       "<ltx:inline-para class='example'>\n #body\n</ltx:inline-para>");
 
 DefConstructor('\inlineass OptionalKeyVals:omtext {}',
               "<ltx:text "
@@ -593,10 +375,10 @@ DefConstructor('\inlineass OptionalKeyVals:omtext {}',
             .    "#2"
             . "</ltx:text>");
 DefEnvironment('{inlineAssertion} OptionalKeyVals:omtext',
-	       "<ltx:p "
+	       "<ltx:inline-para "
             .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
             .    "#body"
-            . "</ltx:p>");
+            . "</ltx:inline-para>");
 
 # =======================================================
 # 2.5 Symbols II:                                       #
@@ -616,7 +398,8 @@ DefConstructor('\inlinedef OptionalKeyVals:omtext {}', sub {
                   ancestor-or-self::omdoc:assertion[1] | 
                   ancestor-or-self::omdoc:axiom[1] |
                   ancestor-or-self::omdoc:example[1]', $original_node);
-  foreach my $symb(@symbols) {
+  foreach my $psymb(@symbols) {
+    my $symb = ToString($psymb);
     next if $for_attr{$symb};
     $for_attr{$symb}=1;
     my $symbolnode = XML::LibXML::Element->new('symbol');
@@ -656,6 +439,12 @@ return; });
 # =======================================================
 # 3. Cross-Referencing Symbols and Concepts:            #
 # =======================================================
+
+DefKeyVal('termref','cd','Semiverbatim');
+DefKeyVal('termref','cdbase','Semiverbatim');
+DefKeyVal('termref','name','Semiverbatim');
+DefKeyVal('termref','role','Semiverbatim');
+
 DefConstructor('\termref OptionalKeyVals:termref {}',(LookupValue('@omdocmode') ?
                 "<omdoc:term "
               .  "?&GetKeyVal(#1,'cdbase')(cdbase='&GetKeyVal(#1,'cdbase')')() "
@@ -707,9 +496,39 @@ RawTeX('
 \newcommand\mtrefiv[5][]{\mtrefi[#1]{#2 #3 #4 #5}}
        ');
 
-# this should not be used on its own, but if it is, we use it as a substitute for \term 
-DefMacro('\termemph','\term');
-DefConstructor('\defemph {}',"<omdoc:definiendum>#1</omdoc:definiendum>");
+# =======================================================
+# 4. Term Redefinitions and Recaps:                     #
+# =======================================================
+
+RawTeX('
+\newcommand\mdref[3][]{\def\@test{#1}%
+\if\@instring{?}{#1}%
+\ifx\@test\@empty\definiendum[name=#3]{#2}\else\definiendum[recaps=#1,name=#3]{#2}\fi%
+\else%
+\ifx\@test\@empty\definiendum[name=#3]{#2}\else\definiendum[recaps=#1?#3,name=#3]{#2}\fi%
+\fi}
+\newcommand\drefi[2][]{\defemph{\mdref[#1]{#2}{#2}}}
+\newcommand\drefii[3][]{\defemph{\mdref[#1]{#2 #3}{#2-#3}}}
+\newcommand\drefiii[4][]{\defemph{\mdref[#1]{#2 #3 #4}{#2-#3-#4}}}
+\newcommand\drefiv[5][]{\defemph{\mdref[#1]{#2 #3 #4 #5}{#2-#3-#4-#5}}}
+\newcommand\drefis[2][]{\defemph{\mdref[#1]{#2s}{#2}}}
+\newcommand\drefiis[3][]{\defemph{\mdref[#1]{#2 #3s}{#2-#3}}}
+\newcommand\drefiiis[4][]{\defemph{\mdref[#1]{#2 #3 #4s}{#2-#3-#4}}}
+\newcommand\drefivs[5][]{\defemph{\mdref[#1]{#2 #3 #4 #5s}{#2-#3-#4-#5}}}
+\newcommand\Mdref[3][]{\if\@instring{?}{#1}\@mtref #1\relax\capitalize{#3}\else\termref[cd=#1,name=#3]{\capitalize{#2}}\fi}
+\newcommand\Drefi[2][]{\defemph{\Mdref[#1]{#2}{#2}}}
+\newcommand\Drefii[3][]{\defemph{\Mdref[#1]{#2 #3}{#2-#3}}}
+\newcommand\Drefiii[4][]{\defemph{\Mdref[#1]{#2 #3 #4}{#2-#3-#4}}}
+\newcommand\Drefiv[5][]{\defemph{\Mdref[#1]{#2 #3 #4 #5}{#2-#3-#4-#5}}}
+\newcommand\Drefis[2][]{\defemph{\Mdref[#1]{#2s}{#2}}}
+\newcommand\Drefiis[3][]{\defemph{\Mdref[#1]{#2 #3s}{#2-#3}}}
+\newcommand\Drefiiis[4][]{\defemph{\Mdref[#1]{#2 #3 #4s}{#2-#3-#4}}}
+\newcommand\Drefivs[5][]{\defemph{\Mdref[#1]{#2 #3 #4 #5s}{#2-#3-#4-#5}}}
+       ');
+
+# these two are purely presentational, so let them do nothing.   
+DefMacro('\termemph {}','#1');
+DefMacro('\defemph {}','#1');
 # not defining \stDMemph, since it should not be used on its own. 
 
 DefConstructor('\term[]{}',(LookupValue('@omdocmode') ? "<omdoc:term class='dangling-term-link' ?#1(cd='#1')()>#2</omdoc:term>" :
@@ -732,7 +551,7 @@ Tag('omdoc:type',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:term',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
 # =======================================================
-# 4. Auxiliary Functions:                               #
+# 5. Auxiliary Functions:                               #
 # =======================================================
 
 sub DefStatement {
@@ -755,32 +574,26 @@ sub declareFunctions{
   return; }
 
 sub defHelper{
-  my ($stomach, $whatsit, $defOption) = @_;
+  my ($stomach, $whatsit) = @_;
   my $addr = LookupValue('defs');
   my $keys = $whatsit->getArg(1);
   my $name = ToString(GetKeyVal($keys,'name')) if $keys;
-  if (!$name) {
-    my %choose_Option = (
-                        definiendum => sub {$whatsit->getArg(2);},
-                        defi => sub {$whatsit->getArg(2);},                    
-                        adefi => sub {$whatsit->getArg(3);},
-                        defii => sub {$whatsit->getArg(2)->toString.'-'.$whatsit->getArg(3)->toString;},
-                        adefii => sub {$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString;},
-                        defiii => sub {$whatsit->getArg(2)->toString.'-'.$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString;},
-                        adefiii => sub {$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString.'-'.$whatsit->getArg(5)->toString;},
-                        defiv => sub {$whatsit->getArg(2)->toString.'-'.$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString.'-'.$whatsit->getArg(5)->toString;},
-                        adefiv => sub {$whatsit->getArg(3)->toString.'-'.$whatsit->getArg(4)->toString.'-'.$whatsit->getArg(5)->toString.'-'.$whatsit->getArg(6)->toString;}
-                        );
-    $name = $choose_Option{$defOption}->();
-  }
-  $name = ToString($name) || "";
+  my $lemma = ToString(GetKeyVal($keys,'lemma')) if $keys;
+  my $defaultname = $whatsit->getArg(3);
+  my $defaultlemma = $whatsit->getArg(4);
+  $name = $defaultname unless ($name);
   $whatsit->setProperty(name=>$name) if $name;
+  $lemma = $lemma? $lemma : ($name? $name : $defaultlemma); 
+  $whatsit->setProperty(lemma=>$lemma) if $lemma;
   push(@$addr, $name) if ($addr and $name);
-  $whatsit->setProperty('defindex', IfCondition(T_CS('\if@defindex')));
+  $whatsit->setProperty('defindex', IfCondition(T_CS('\ifdef@index')));
   $whatsit->setProperty(theory=>(LookupValue('modnl_signature') || LookupValue('current_module')));
  return; }
 
-####### Deprecated functionality:
+# =======================================================
+# 6. Deprecated Functionality:                          #
+# =======================================================
+
 RawTeX('
 \newcommand\defin[2][]{\defi[#1]{#2}%
 \PackageWarning{statements}{\protect\defin\space is deprecated, use \protect\defi\space instead}}
@@ -798,5 +611,13 @@ RawTeX('
 \PackageWarning{statements}{\protect\twinref\space is deprecated, use \protect\trefii\space instead}}
 \newcommand\atwinref[4][]{\atrefiii[#1]{#2}{#3}{#4}%
 \PackageWarning{statements}{\protect\atwindef\space is deprecated, use \protect\trefiii\space instead}}
+\newcommand\atrefi[3][]{\@atrefi[#1]{#2}{#3}%
+\PackageWarning{statements}{\protect\atrefi\space is deprecated, use \protect\mtrefi\space instead}}
+\newcommand\atrefii[4][]{\@atrefi[#1]{#2}{#3-#4}%
+\PackageWarning{statements}{\protect\atrefii\space is deprecated, use \protect\mtrefi\space instead}}
+\newcommand\atrefiii[5][]{\@atrefi[#1]{#2}{#3-#4-#5}%
+\PackageWarning{statements}{\protect\atrefiii\space is deprecated, use \protect\mtrefi\space instead}}
+\newcommand\atrefiv[6][]{\@atrefi[#1]{#2}{#3-#4-#5-#6}%
+\PackageWarning{statements}{\protect\atrefiv\space is deprecated, use \protect\mtrefi\space instead}}
 ');
 1;
