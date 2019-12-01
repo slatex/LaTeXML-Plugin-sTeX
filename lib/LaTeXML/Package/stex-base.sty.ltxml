@@ -46,12 +46,13 @@ sub numberIt {
   if ($locator) {
     # There is a BUG with namespace declarations (or am I using the API wrongly??) which
     # does not recognize the stex namespace. Hence, I need to redeclare it...
-#    my $parent=$document->getNode;
-#    if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
-#      { # namespace not already declared?
-#        $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-#      }
-    $node->setAttribute('stex:srcref'=>$locator); }
+    my $parent=$document->getNode;
+    if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
+      { # namespace not already declared?
+        $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
+      }
+    $node->setAttribute('stex:srcref'=>$locator);
+  }
   return; }
 
 sub locateIt {
@@ -97,11 +98,11 @@ sub locateIt {
     else { Error("stex","locator",undef, "Trailer is garbled, expect nonsense in stex:srcref ..."); } }
   else { Error("stex","locator",undef, "Locator \"$locator\" is garbled, expect nonsense in stex:srcref ..."); }
 
-#  my $parent = $document->getNode;
-#  if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
-#    { # namespace not already declared?
-#      $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-#    }
+  my $parent = $document->getNode;
+  if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
+    { # namespace not already declared?
+      $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
+    }
   $node->setAttribute('stex:srcref' => $locator);
   return;
 }
