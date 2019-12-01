@@ -94,7 +94,7 @@ DefConstructor('\mhinlineview OptionalKeyVals:omtext {} {}',
             .    "#3"
             . "</ltx:text>");
 
-DefEnvironment('{mhinlineView} OptionalKeyVals:omtext' {},
+DefEnvironment('{mhinlineView} OptionalKeyVals:omtext {}',
 	       "<ltx:inline-para class='view' "
             .    "?&GetKeyVal(#1,'id')(id='&GetKeyVal(#1,'id')')() "
             .    "?&GetKeyVal(#1,'frompath')(stex:from='?&GetKeyVal(#1,'fromrepos')(&GetKeyVal(#1,'fromrepos')/source/)()&GetKeyVal(#1,'frompath')?#1')() "
