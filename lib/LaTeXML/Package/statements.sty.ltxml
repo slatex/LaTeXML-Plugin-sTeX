@@ -209,7 +209,7 @@ sub definitionBody {
     }
     my %attrs = ();
     # use both the keyval for= information, as well as the theory-collected internals
-    $for .= join(" ",(sort keys %for_attr));
+    $for = join(" ",$for,(sort keys %for_attr));
     $attrs{'for'} = $for if $for;
     my $id = $keyvals->getValue('id') if $keyvals;
     $attrs{'xml:id'} = $id if $id;
