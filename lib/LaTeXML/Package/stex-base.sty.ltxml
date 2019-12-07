@@ -19,6 +19,8 @@ RawTeX('\newif\if@latexml\@latexmltrue');
 
 RegisterNamespace('stex',"http://kwarc.info/ns/sTeX");
 RegisterDocumentNamespace('stex',"http://kwarc.info/ns/sTeX");
+RegisterNamespace('dc',"http://purl.org/dc/elements/1.1/");
+RegisterDocumentNamespace('dc',"http://purl.org/dc/elements/1.1/");
 
 sub numberIt {
   my($document,$node,$whatsit)=@_;
