@@ -110,7 +110,8 @@ DefEnvironment('{sblockquote} []',
 DefEnvironment('{sboxquote} []',
   "<ltx:quote class='boxed'>?#1(<ltx:note role='source'>#1</ltx:note>)()#body</ltx:quote>");
 DefConstructor('\lec{}',
-   "\n<omdoc:note type='line-end-comment'>#1</omdoc:note>");
+   LookupValue('@omdocmode') ? "\n<omdoc:note type='line-end-comment'>#1</omdoc:note>" : 
+   "\n<ltx:inline-block class='omdoc_note' stex:type='line-end-comment'>#1</ltx:inline-block>");
 
 # =======================================================
 # 4. Index Markup:                                      #
@@ -167,10 +168,14 @@ Tag('omdoc:CMP', autoClose=>1, autoOpen=>1);
 Tag('omdoc:omtext', autoClose=>1, autoOpen=>1);
 Tag('ltx:p', autoClose=>1, autoOpen=>1);
 DefConstructor('\footnote[]{}',
-       "<omdoc:note type='foot' ?#1(mark='#1')>#2</omdoc:note>");
+       LookupValue('@omdocmode') ? "<omdoc:note type='foot' ?#1(mark='#1')>#2</omdoc:note>" :
+        "<ltx:inline-block class='omdoc_note' stex:type='foot' ?#1(mark='#1')>#2</ltx:inline-block>"
+       );
 DefConstructor('\footnotemark[]',"");
 DefConstructor('\footnotetext[]{}',
-       "<omdoc:note class='foot' ?#1(mark='#1')>#2</omdoc:note>");
+       LookupValue('@omdocmode') ? "<omdoc:note class='foot' ?#1(mark='#1')>#2</omdoc:note>" : 
+        "<ltx:inline-block class='omdoc_note foot' ?#1(mark='#1')>#2</ltx:inline-block>"
+       );
 Tag('omdoc:omtext',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:omgroup',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 Tag('omdoc:CMP',afterOpen=>\&numberIt,afterClose=>\&locateIt);
@@ -210,7 +215,7 @@ DefConstructor('\@ogre',"\x{2B3F}");
 # experimental: Declarations 
 DefConstructor('\vdec [] {}',
      LookupValue('@omdocmode') ? "<omdoc:declaration ?#1(for='#1')()>#2</omdoc:declaration>" :
-       "<ltx:block class='omdoc_declaration' ?#1(stex:for='#1')()>#2</ltx:block>"
+       "<ltx:inline-block class='omdoc_declaration' ?#1(stex:for='#1')()>#2</ltx:inline-block>"
      );
 DefConstructor('\vcond []{}',
 	       "<omdoc:identifiers ?#1(for='#1')()>#2</omdoc:identifiers>");
@@ -218,10 +223,10 @@ DefConstructor('\vrest [] {}',
 	       "<omdoc:restriction ?#1(for='#1')()>#2</omdoc:restriction>");
 DefConstructor('\strucdec [] {}',
    LookupValue('@omdocmode') ? "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>" :
-       "<ltx:block class='omdoc_declaration' stex:role='structure' stex:name='#1'>#2</ltx:block>"
+       "<ltx:inline-block class='omdoc_declaration' stex:role='structure' stex:name='#1'>#2</ltx:inline-block>"
    );  
 DefConstructor('\impdec {}',
    LookupValue('@omdocmode') ? "<omdoc:declaration role='imports'>#1</omdoc:declaration>" :
-       "<ltx:block class='omdoc_declaration' stex:role='imports'>#1</ltx:block>"
+       "<ltx:inline-block class='omdoc_declaration' stex:role='imports'>#1</ltx:inline-block>"
    );  
 1;

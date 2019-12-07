@@ -145,12 +145,12 @@ DefFormatter('\@mixfixa OptionalKeyVals:mi {}{}{}{}',LookupValue('@omdocmode') ?
        .     "?&defined(&GetKeyVal(#1,'pi'))(precedence='&GetKeyVal(#1,'pi')')/>"
        . "</omdoc:iterate>"
        . "#4") : ("#2"
-       . "<ltx:block class='omdoc_iterate' stex:name='args' "
+       . "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#5</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#5</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#4"));
 DefMacro('\mixfixii[]{}{}{}{}{}',
          '\@mixfixii[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}'
@@ -176,12 +176,12 @@ DefFormatter('\@mixfixia OptionalKeyVals:mii {}{}{}{}{}{}',LookupValue('@omdocmo
        .     "?&defined(&GetKeyVal(#1,'pi'))(precedence='&GetKeyVal(#1,'pi')')/>"
        . "</omdoc:iterate>"
        . "#6") : ("#2 #3 #4"
-       . "<ltx:block class='omdoc_iterate' stex:name='args' "
+       . "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#7</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#7</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#6"));
 DefMacro('\mixfixai[]{}{}{}{}{}{}',
          '\@mixfixai[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}'
@@ -197,12 +197,12 @@ DefFormatter('\@mixfixai OptionalKeyVals:mi {}{}{}{}{}{}',LookupValue('@omdocmod
        .      "?&defined(&GetKeyVal(#1,'pi'))(precedence='&GetKeyVal(#1,'pi')')/>"
        . "</omdoc:iterate>"
        . "#4 #5 #6") : ("#2"
-       . "<ltx:block class='omdoc_iterate' stex:name='args' "
+       . "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
        .   "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#7</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#7</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .      "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#4 #5 #6"));
 DefMacro('\mixfixiii[]{}{}{}{}{}{}{}',
          '\@mixfixiii[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}'
@@ -227,10 +227,10 @@ DefFormatter('\@mixfixaii OptionalKeyVals:mi {}{}{}{}{}{}{}{}',LookupValue('@omd
        . "#4 #5 #6 #7 #8") : ("#2"
        . "<cls:block class='omdoc_iterate' stex:name='args' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#9</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#9</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .      "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#4 #5 #6 #7 #8"));
 DefMacro('\mixfixiai[]{}{}{}{}{}{}{}{}',
          '\@mixfixiai[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}'
@@ -247,12 +247,12 @@ DefFormatter('\@mixfixiai OptionalKeyVals:mi {}{}{}{}{}{}{}{}',LookupValue('@omd
        .       "?&defined(&GetKeyVal(#1,'pi'))(precedence='&GetKeyVal(#1,'pi')')/>"
        . "</omdoc:iterate>"
        . "#6 #7 #8") : ("#2 #3 #4"
-       . "<ltx:block class='omdoc_iterate' stex:name='args' "
+       . "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
        .    "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#9</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#9</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .       "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#6 #7 #8"));
 DefMacro('\mixfixiia[]{}{}{}{}{}{}{}{}',
          '\@mixfixiia[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}'
@@ -269,12 +269,12 @@ DefFormatter('\@mixfixiia OptionalKeyVals:mi {}{}{}{}{}{}{}{}',LookupValue('@omd
        .       "?&defined(&GetKeyVal(#1,'pi'))(precedence='&GetKeyVal(#1,'pi')')/>"
        . "</omdoc:iterate>"
        . "#8") : ("#2 #3 #4 #5 #6"
-       . "<ltx:block class='omdoc_iterate' stex:name='args' "
+       . "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
        .     "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-       .   "<ltx:block class='omdoc_separator'>#9</ltx:block>"
-       .   "<ltx:block class='omdoc_render' stex:name='arg' "
+       .   "<ltx:inline-block class='omdoc_separator'>#9</ltx:inline-block>"
+       .   "<ltx:inline-block class='omdoc_render' stex:name='arg' "
        .       "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-       . "</ltx:block>"
+       . "</ltx:inline-block>"
        . "#8"));
 DefMacro('\prefixa[]{}{}{}','\@prefixa[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}{\ensuremath{\crossrefOp[fun]{#4 }}}');
 DefFormatter('\@prefixa OptionalKeyVals:mi {}{}{}',LookupValue('@omdocmode') ? 
@@ -291,12 +291,12 @@ DefFormatter('\@prefixa OptionalKeyVals:mi {}{}{}',LookupValue('@omdocmode') ?
                . "</m:mrow>") : ("#2"
                . "<m:mrow>"
                .   "<m:mo fence='true'>(</m:mo>"
-               .   "<ltx:block class='omdoc_iterate' stex:name='args' "
+               .   "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
                .       "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-               .     "<ltx:block class='omdoc_separator'>#4</ltx:block>"
+               .     "<ltx:inline-block class='omdoc_separator'>#4</ltx:inline-block>"
                .     "<ltc:block class='omdoc_render' stex:name='arg' "
                .         "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-               .   "</ltx:block>"
+               .   "</ltx:inline-block>"
               .   "<m:mo fence='true'>)</m:mo>"
                . "</m:mrow>"));
 DefMacro('\postfixa []{}{}{}','\@postfixa[#1]{\ensuremath{\crossrefOp[fun]{#2}}}{\ensuremath{#3 }}{\ensuremath{\crossrefOp[fun]{#4 }}}');
@@ -313,12 +313,12 @@ DefFormatter('\@postfixa OptionalKeyVals:mi {}{}{}',LookupValue('@omdocmode') ?
                . "</m:mrow>"
                . "#2") : ("<m:mrow>"
                .   "<m:mo fence='true'>(</m:mo>"
-               .   "<ltx:block class='omdoc_iterate' stex:name='args' "
+               .   "<ltx:inline-block class='omdoc_iterate' stex:name='args' "
                .       "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')>"
-               .     "<ltx:block class='omdoc_separator'>#4</ltx:block>"
-               .     "<ltx:block class='omdoc_render' stex:name='arg' "
+               .     "<ltx:inline-block class='omdoc_separator'>#4</ltx:inline-block>"
+               .     "<ltx:inline-block class='omdoc_render' stex:name='arg' "
                .       "?&defined(&GetKeyVal(#1,'pi'))(stex:precedence='&GetKeyVal(#1,'pi')')/>"
-               .   "</ltx:block>"
+               .   "</ltx:inline-block>"
                .  "<m:mo fence='true'>)</m:mo>"
                . "</m:mrow>"
                . "#2"));
