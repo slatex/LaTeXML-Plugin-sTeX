@@ -391,6 +391,12 @@ return; });
 # =======================================================
 # 3. Cross-Referencing Symbols and Concepts:            #
 # =======================================================
+
+DefKeyVal('termref','cd','Semiverbatim');
+DefKeyVal('termref','cdbase','Semiverbatim');
+DefKeyVal('termref','name','Semiverbatim');
+DefKeyVal('termref','role','Semiverbatim');
+
 DefConstructor('\termref OptionalKeyVals:termref {}',(LookupValue('@omdocmode') ?
                 "<omdoc:term "
               .  "?&GetKeyVal(#1,'cdbase')(cdbase='&GetKeyVal(#1,'cdbase')')() "
