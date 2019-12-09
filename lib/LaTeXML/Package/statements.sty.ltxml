@@ -18,9 +18,9 @@ use LaTeXML::Package;
 # =======================================================
 # 0. Options handling:                                  #
 # =======================================================
-DefConditional('\if@defindex');
+DefConditional('\ifdef@index');
 DeclareOption('omdocmode', sub {AssignValue ('@omdocmode' => 1)});
-DeclareOption('defindex', sub{Digest(T_CS('\@defindextrue')); });
+DeclareOption('defindex', sub{Digest(T_CS('\def@indextrue')); });
 DeclareOption(undef,sub{PassOptions('omtext','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 
@@ -497,7 +497,7 @@ sub defHelper{
   $lemma = if ($lemma) {$lemma} else {if ($name) {$name} else {$defaultlemma}}; 
   $whatsit->setProperty(lemma=>$lemma) if $lemma;
   push(@$addr, $name) if ($addr and $name);
-  $whatsit->setProperty('defindex', IfCondition(T_CS('\if@defindex')));
+  $whatsit->setProperty('defindex', IfCondition(T_CS('\ifdef@index')));
   $whatsit->setProperty(theory=>(LookupValue('modnl_signature') || LookupValue('current_module')));
  return; }
 
