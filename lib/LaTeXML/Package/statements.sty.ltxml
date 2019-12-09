@@ -131,6 +131,7 @@ DefKeyVal('symboldec','title','Semiverbatim');
 DefKeyVal('symboldec','name','Semiverbatim');
 DefKeyVal('symboldec','subject','Semiverbatim');
 DefKeyVal('symboldec','display','Semiverbatim');
+
 DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
        ("<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
@@ -149,6 +150,11 @@ DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
 # =======================================================
 # 2.3 Types:                                            #
 # =======================================================
+
+DefKeyVal('symtype','id','Semiverbatim');
+DefKeyVal('symtype','system','Semiverbatim');
+DefKeyVal('symtype','for','Semiverbatim');
+
 DefConstructor('\symtype OptionalKeyVals:omtext {}{}',LookupValue('@omdocmode') ?
   ("<omdoc:type for='#2'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
