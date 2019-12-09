@@ -472,9 +472,9 @@ RawTeX('
 \newcommand\Drefivs[5][]{\defemph{\Mdref[#1]{#2 #3 #4 #5s}{#2-#3-#4-#5}}}
        ');
 
-# this should not be used on its own, but if it is, we use it as a substitute for \term 
-DefMacro('\termemph','\term');
-DefConstructor('\defemph {}',"<omdoc:definiendum>#1</omdoc:definiendum>");
+# these two are purely presentational, so let them do nothing.   
+DefMacro('\termemph {}','#1');
+DefMacro('\defemph {}','#1');
 # not defining \stDMemph, since it should not be used on its own. 
 
 DefConstructor('\term[]{}',"<omdoc:term class='dangling-term-link' ?#1(cd='#1')()>#2</omdoc:term>");
