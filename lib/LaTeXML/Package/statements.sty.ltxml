@@ -123,6 +123,14 @@ DefStatement('{axiom} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
 # =======================================================
 # 2.2 Symbols I:                                        #
 # =======================================================
+
+DefKeyVal('symboldec','id','Semiverbatim');
+DefKeyVal('symboldec','functions','Semiverbatim');
+DefKeyVal('symboldec','role','Semiverbatim');
+DefKeyVal('symboldec','title','Semiverbatim');
+DefKeyVal('symboldec','name','Semiverbatim');
+DefKeyVal('symboldec','subject','Semiverbatim');
+DefKeyVal('symboldec','display','Semiverbatim');
 DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
        ("<omdoc:symbol "
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
@@ -267,8 +275,8 @@ DefKeyVal('definiendum','lemma','Semiverbatim');
 DefKeyVal('definiendum','recaps','Semiverbatim');
 DefConstructor('\@definiendum OptionalKeyVals:definiendum {}{}{}',
        "<omdoc:definiendum name='#name' cd='#theory'>"
-     .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()/>"
-     .   "?&GetKeyVal(#1,'recaps')(<omdoc:meta property='stex:recaps'>&GetKeyVal(#1,'recaps')</omdoc:meta>)()/>"
+     .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()"
+     .   "?&GetKeyVal(#1,'recaps')(<omdoc:meta property='stex:recaps'>&GetKeyVal(#1,'recaps')</omdoc:meta>)()"
      .   "#2"
      . "</omdoc:definiendum>",
        afterDigest => sub { defHelper(@_); });
