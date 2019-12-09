@@ -276,7 +276,6 @@ DefConstructor('\@definiendum OptionalKeyVals:definiendum {}{}{}',
 # This is directly lifted from statements.sty from the sTeX distribution. 
 RawTeX('
 \newcommand\definiendum[2][]{\@definiendum[#1]{#2}{}{}}
-\newcommand\notatiendum[2][]{\notemph{#2}}
 \newcommand\adefi[3][]{\def\@verb{#2}\@definiendum[#1]{#2}{#3}{#3}\@adefi}
 \newcommand\adef@at{%
 \edef\@@at{\ifx\definiendum@name\@empty%
