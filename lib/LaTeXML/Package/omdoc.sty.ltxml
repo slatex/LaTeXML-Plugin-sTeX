@@ -20,6 +20,7 @@ use Cwd qw(abs_path);
 # =======================================================
 # 0. Options handling:                                  #
 # =======================================================
+DeclareOption('mh', sub { AssignValue ('@omdoc' => 1,'global');
 DeclareOption(undef, sub {PassOptions('sref','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
 
@@ -29,9 +30,10 @@ ProcessOptions();
 RequirePackage('sref');
 RequirePackage('xspace');
 RequirePackage('pathsuris');
+if(LookupValue('@omdoc')) {RequirePackage('omdoc-mh');}
 
 # =======================================================
-# 1. Document structure                                 #
+# 2. Document structure                                 #
 # =======================================================
 DefMacro('\currentsectionlevel','\@currentsectionlevel\xspace');
 DefMacro('\Currentsectionlevel','\@Currentsectionlevel\xspace');
@@ -61,7 +63,7 @@ DefConstructor('\bibliography{}',"<omdoc:bibliography files='#1'/>");
 Tag('omdoc:bibliography',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
 # =======================================================
-# 2. Ignoring inputs                                    #
+# 3. Ignoring inputs                                    #
 # =======================================================
 DefKeyVal('ignore','type','Semiverbatim');
 DefKeyVal('ignore','comment','Semiverbatim');
@@ -70,7 +72,7 @@ DefEnvironment('{ignore} OptionalKeyVals:ignore',
 Tag('omdoc:ignore',afterOpen=>\&numberIt,afterClose=>\&locateIt);
 
 # =======================================================
-# 3. Structure sharing                                  #
+# 4. Structure sharing                                  #
 # =======================================================
 DefConstructor('\STRlabel{}{}', sub {
   my($document,$label,$object)=@_;
@@ -85,7 +87,7 @@ DefConstructor('\STRsemantics[]{}{}', sub {
 DefMacro('\STRlabeldef{}{}', "");
 
 # =======================================================
-# 4. Colors                                  #
+# 5. Colors                                  #
 # =======================================================
 sub omdocColorMacro {
   my ($color, @args) = @_;
