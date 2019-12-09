@@ -262,7 +262,10 @@ DefStatement('{notation} OptionalKeyVals:omtext',
 DefConstructor('\notatiendum OptionalKeyVals:notation {}',
               "<ltx:text class='notatiendum'>#2</ltx:text>");
 
-DefConstructor('\@definiendum OptionalKeyVals:DEF {}{}{}',
+DefKeyVal('definiendum','name','Semiverbatim');
+DefKeyVal('definiendum','lemma','Semiverbatim');
+DefKeyVal('definiendum','recaps','Semiverbatim');
+DefConstructor('\@definiendum OptionalKeyVals:definiendum {}{}{}',
        "<omdoc:definiendum name='#name' cd='#theory'>"
      .   "?&GetKeyVal(#1,'lemma')(<omdoc:meta property='smglom:lemma'>&GetKeyVal(#1,'lemma')</omdoc:meta>)()/>"
      .   "?&GetKeyVal(#1,'recaps')(<omdoc:meta property='stex:recaps'>&GetKeyVal(#1,'recaps')</omdoc:meta>)()/>"
