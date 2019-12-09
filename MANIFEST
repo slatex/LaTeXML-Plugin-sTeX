@@ -11,8 +11,9 @@ lib/LaTeXML/Package/mikoslides.cls.ltxml
 lib/LaTeXML/Package/mikoslides.sty.ltxml
 lib/LaTeXML/Package/modules-mh.sty.ltxml
 lib/LaTeXML/Package/modules.sty.ltxml
-lib/LaTeXML/Package/omdoc.cls.ltxml
-lib/LaTeXML/Package/omdoc.sty.ltxml
+lib/LaTeXML/Package/omdoc.cls.ltxml  
+lib/LaTeXML/Package/omdoc-mh.sty.ltxml  
+lib/LaTeXML/Package/omdoc.sty.ltxml  
 lib/LaTeXML/Package/omtext-mh.sty.ltxml
 lib/LaTeXML/Package/omtext.sty.ltxml
 lib/LaTeXML/Package/pathsuris.sty.ltxml

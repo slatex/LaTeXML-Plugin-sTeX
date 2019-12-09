@@ -24,7 +24,7 @@ InputDefinitions('mathhub', type => 'sty', noltxml => 1)
  || Warn(":missing:mathhub.sty Couldn't find mathhub.sty");
 
 # =======================================================
-# 2. redefine the ones we need to                       #
+# 2. redefine the macros we need to adapt               #
 # =======================================================
 
 DefMacro('\mhcurrentrepos{}','\@mhcurrentrepos{#1}');
