@@ -85,24 +85,24 @@ RawTeX('
 DefConstructor('\mhinlineview OptionalKeyVals:omtext {} {}',
               "<ltx:text class='view' "
             .    "?&GetKeyVal(#1,'id')(id='&GetKeyVal(#1,'id')')() "
-            .    "?&GetKeyVal(#1,'frompath')(stex:from='?&GetKeyVal(#1,'fromrepos')(&GetKeyVal(#1,'fromrepos')/source/)()&GetKeyVal(#1,'frompath')?#1')() "
+            .    "?&GetKeyVal(#1,'frompath')(stex:from='?&GetKeyVal(#1,'fromrepos')(&GetKeyVal(#1,'fromrepos')/source/)()&GetKeyVal(#1,'frompath')')() "
             .    "?&GetKeyVal(#1,'type')(stex:type='&GetKeyVal(#1,'type')')() "
             .    "?&GetKeyVal(#1,'creators')(dc:creators='&GetKeyVal(#1,'creators')')() "
             .    "?&GetKeyVal(#1,'contributors')(dc:contributors='&GetKeyVal(#1,'contributors')')() "
             .    "?&GetKeyVal(#1,'display')(style='display:&GetKeyVal(#1,'display')')() "
-	    .    ">"
+	    .    "from='#2'>"
             .    "#3"
             . "</ltx:text>");
 
 DefEnvironment('{mhinlineView} OptionalKeyVals:omtext' {},
 	       "<ltx:inline-para class='view' "
             .    "?&GetKeyVal(#1,'id')(id='&GetKeyVal(#1,'id')')() "
-            .    "?&GetKeyVal(#1,'frompath')(stex:from='?&GetKeyVal(#1,'fromrepos')(&GetKeyVal(#1,'fromrepos')/source/)()&GetKeyVal(#1,'frompath')?#1')() "
+            .    "?&GetKeyVal(#1,'frompath')(stex:from='?&GetKeyVal(#1,'fromrepos')(&GetKeyVal(#1,'fromrepos')/source/)()&GetKeyVal(#1,'frompath')')() "
             .    "?&GetKeyVal(#1,'type')(stex:type='&GetKeyVal(#1,'type')')() "
             .    "?&GetKeyVal(#1,'creators')(dc:creators='&GetKeyVal(#1,'creators')')() "
             .    "?&GetKeyVal(#1,'contributors')(dc:contributors='&GetKeyVal(#1,'contributors')')() "
             .    "?&GetKeyVal(#1,'display')(style='display:&GetKeyVal(#1,'display')')() "
-	    .    ">"
+	    .    "from='#2'>"
             .    "#body"
             . "</ltx:inline-para>");
 
