@@ -494,7 +494,7 @@ sub defHelper{
   my $defaultlemma = $whatsit->getArg(4);
   $name = $defaultname unless ($name);
   $whatsit->setProperty(name=>$name) if $name;
-  $lemma = if ($lemma) {$lemma} else {if ($name) {$name} else {$defaultlemma}}; 
+  $lemma = $lemma? $lemma : ($name? $name : $defaultlemma); 
   $whatsit->setProperty(lemma=>$lemma) if $lemma;
   push(@$addr, $name) if ($addr and $name);
   $whatsit->setProperty('defindex', IfCondition(T_CS('\ifdef@index')));
