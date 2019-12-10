@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/slatex/sTeX-tests
 	branch = master
-	commit = 28d87831d06a780070a25d481a5f113d097f7bc7
-	parent = 8d8df1428cec8e605086c2f2354b57e0f29a1292
+	commit = 284bccd943451b5fa5735b470db8b1e304d7f1c1
+	parent = 5381589ff8f33f3e5133a543ee9b622e739b9dd5
 	method = merge
 	cmdver = 0.4.0
