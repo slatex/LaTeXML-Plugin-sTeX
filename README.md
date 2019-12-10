@@ -106,6 +106,22 @@ this plugin is well documented. The documentation has two components:
   beneficial and it is also important for you to understand how LaTeXML works if you want
   to change the behaviors of the bindings.
 
+### Testcases
+
+TODO: Document this some more
+
+To generate `.omdoc` or `.xml` for testcases, use e.g.
+
+```
+# to build only the '.xml' from the '.tex'
+./tools/maketest t/tests/omdoc/pathsuris/defpath.xml
+# to build the '.xml' and the '.omdoc' from the '.tex'
+./tools/maketest t/tests/omdoc/pathsuris/defpath.omdoc
+```
+
+The changed files should be committed upstream into the subrepo. 
+
+
 ### Copyright
 Copyright (c) 2019 Michael Kohlhase
 The package is distributed under the terms of the LaTeX Project Public License (LPPL)
