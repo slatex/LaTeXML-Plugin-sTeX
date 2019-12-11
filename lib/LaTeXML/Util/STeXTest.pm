@@ -31,7 +31,7 @@ use LaTeXML::Post::XMath;
 use Config;
 
 use base qw(Exporter);
-our @EXPORT = (qw(&latexml_stex_tests &make_latexml &make_latexmlpost),
+our @EXPORT = (qw(&latexml_stex_tests &latexml_stex_testall &make_latexml &make_latexmlpost),
   @Test::More::EXPORT);
 
 # 'core_options'
@@ -116,6 +116,21 @@ sub latexml_stex_tests {
                 latexmlpost_ok("$test.tex", "$test.omdoc", $test);
             }
         }
+    }
+
+    return done_testing();
+}
+
+# 'latexml_stex_testall' tests all the folders provided as arguments
+sub latexml_stex_testall {
+    my (@folders) = @_;
+
+    plan tests => (scalar(@folders));
+    my ($folder);
+    foreach $folder (@folders) {
+        subtest($folder, sub {
+            latexml_stex_tests($folder);
+        });
     }
 
     return done_testing();

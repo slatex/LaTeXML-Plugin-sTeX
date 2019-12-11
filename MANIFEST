@@ -177,13 +177,7 @@ README.md
 
 % File in t/, these should be updated from time to time
 t/.gitkeep
-t/00_pathsuris.t
-t/01_metakeys.t
-t/02_presentation.t
-t/03_sref.t
-t/04_cmath.t
-t/05_workaddress.t
-t/06_modules.t
+t/10_omdoc.t
 t/tests/.gitignore
 t/tests/Makefile
 t/tests/README.md
