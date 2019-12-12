@@ -15,7 +15,7 @@ use Term::ANSIColor;
 if (!$ENV{CI}) { # don't regenerate model in CI until we figure out why the default namespace isn't omdoc
   my @args = ("bash", "-c", "type trang || which trang ||echo '\n\033[0;31mTrang is not found which could lead to a make failure.\nYou can ignore this message if you do not intend to change the schema.\nSee README for more info!\n \033[0m' ");
   my $ifTrang = system(@args);
-  my $updateModel = `cd lib/LaTeXML/resources/RelaxNG/; make; make distclean`;
+  my $updateModel = `cd lib/LaTeXML/resources/RelaxNG/; make`;
 }
 
 #======================================================================

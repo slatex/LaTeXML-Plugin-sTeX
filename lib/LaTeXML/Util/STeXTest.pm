@@ -51,6 +51,24 @@ sub core_options {
     return \%core_options;
 }
 
+# 'post_document_options'
+sub post_document_options {
+    my ($source, $destination) = @_;
+    my %post_document_options = (
+        validate => 1,
+        searchpaths => [
+            './lib/LaTeXML/Package',
+            './lib/LaTeXML/resources/RelaxNG',
+            './lib/LaTeXML/resources/Profiles',
+            './lib/LaTeXML/resources/XSLT'
+        ],
+        sourceDirectory => pathname_directory($source),
+        destination => $destination,
+        siteDirectory => pathname_directory($destination),
+    );
+    return \%post_document_options;
+}
+
 ## to run this manually on the command line, use:
 # latexmlc --path './lib/LaTeXML/Package' --path './lib/LaTeXML/resources/RelaxNG' --path './lib/LaTeXML/resources/Profiles' --path './lib/LaTeXML/resources/XSLT' /path/to/test.tex --destination /path/to/output.xml
 # and then manually remove the 'searchpaths' line
@@ -255,8 +273,11 @@ sub postprocess_xmlfile {
     return do_fail($name, "Couldn't instanciate LaTeXML::Post:") unless $latexmlpost;
 
     # run the processing
+    my $post_document_options = post_document_options("$name.xml", "$name.omdoc");
+    use Data::Dumper;
+    #print STDERR Dumper(%$post_document_options);
     my ($doc) = $latexmlpost->ProcessChain(
-        LaTeXML::Post::Document->newFromFile("$name.xml", validate => 0), # TODO: We skip validation for now
+        LaTeXML::Post::Document->newFromFile("$name.xml", %$post_document_options),
     @procs);
     return do_fail($name, "Couldn't process $name.xml") unless $doc;
     
