@@ -1,0 +1,18 @@
+TEX = $(filter-out $(AUX), $(shell ls *.tex))
+PDF = $(TEX:%.tex=%.pdf)
+PDFLATEX = pdflatex -interaction nonstopmode -file-line-error
+
+all: $(PDF)
+
+$(PDF): %.pdf: %.tex $< pre
+	$(PDFLATEX) $< 
+
+# We generate a file localpath.tex which is needed for the tests.
+PWD = $(shell pwd)
+MATHHUB = $(PWD:%/$(REPOS)=%)
+
+localpaths.tex:
+	@echo "\defpath{MathHub}{$(MATHHUB)}\n\mhcurrentrepos{$(REPOS)}" > localpath.tex
+
+echo:
+	@echo $(PDF)
