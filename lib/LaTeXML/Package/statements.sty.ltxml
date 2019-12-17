@@ -92,7 +92,7 @@ DefStatement('{assertion} OptionalKeyVals:omtext', LookupValue('@omdocmode') ?
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
   .   "?&GetKeyVal(#1,'theory')(stex:theory='&GetKeyVal(#1,'theory')')() "
   .   "stex:type='&lowcase(&GetKeyVal(#1,'type'))'>"
-#  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "#body"
   ."</ltx:inline-block>\n"));
 
@@ -105,7 +105,7 @@ DefStatement('{example} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
      . "</omdoc:example>\n") : ("<ltx:inline-block class='omdoc_example'"
        . "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')() "
        . "?&GetKeyVal(#1,'for')(stex:for='&hash_wrapper(&GetKeyVal(#1,'for'))')()>"
-#       . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+       . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       . "#body"
      . "</ltx:inline-block>\n"));
 
@@ -116,7 +116,7 @@ DefStatement('{axiom} OptionalKeyVals:omtext',LookupValue('@omdocmode') ?
  . "#body"
   . "</omdoc:axiom>\n") : ("<ltx:inline-block class='omdoc_axiom'"
   .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')()>"
-#  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+  .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  . "#body"
   . "</ltx:inline-block>\n"));
 
@@ -143,7 +143,7 @@ DefStatement('{symboldec} OptionalKeyVals:symboldec',LookupValue('@omdocmode') ?
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "stex:name='&GetKeyVal(#1,'name')'>"
-#      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
       .  "<dc:description>#body"
       ."</ltx:inline-block>\n"));
 
@@ -189,7 +189,7 @@ DefStatement('{typedec} OptionalKeyVals:omtext {}',LookupValue('@omdocmode') ?
  ."</omdoc:type>") : ("<ltx:inline-block class='omdoc_type' stex:for='&GetKeyVal(#1,'for')'"
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'system')(xml:id='&GetKeyVal(#1,'system')')()>"
-# .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+ .   "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
  .  "#body"
  ."</ltx:inline-block>"));
@@ -297,7 +297,7 @@ DefStatement('{notation} OptionalKeyVals:omtext',(LookupValue('@omdocmode') ?
   . "</omdoc:definition>\n" : "<ltx:inline-block class='omdoc_definition' "
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
  .   "?&GetKeyVal(#1,'for')(stex:for='&simple_wrapper(&GetKeyVal(#1,'for'))')()>"
-# . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+ . "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
  . "#body"
   . "</ltx:inline-block>\n"));
 
@@ -314,10 +314,10 @@ DefConstructor('\@definiendum OptionalKeyVals:definiendum {}{}{}',(LookupValue('
      .   "#2"
      . "</omdoc:definiendum>" :
      "<ltx:inline-block class='omdoc_definiendum' stex:name='#name' stex:cd='#theory'>"
-     .   "?&GetKeyVal(#1,'lemma')(<ltx:inline-block class='omdoc_meta' stex:property='smglom:lemma'>&GetKeyVal(#1,'lemma')/>)()"
-     .   "?&GetKeyVal(#1,'recaps')(<ltx:inline-block class='omdoc_meta' stex:property='stex:recaps'>&GetKeyVal(#1,'recaps')/>)()"
+     .   "?&GetKeyVal(#1,'lemma')(<ltx:inline-block class='omdoc_meta' stex:property='smglom:lemma'>&GetKeyVal(#1,'lemma')</ltx:inline-block>)()/>"
+     .   "?&GetKeyVal(#1,'recaps')(<ltx:inline-block class='omdoc_meta' stex:property='stex:recaps'>&GetKeyVal(#1,'recaps')</ltx:inline-block>)()/>"
      .   "#2"
-     . "</ltx:inline-block>"),
+     . "</omdoc:definiendum>"),
        afterDigest => sub { defHelper(@_); });
 
 # This is directly lifted from statements.sty from the sTeX distribution. 
