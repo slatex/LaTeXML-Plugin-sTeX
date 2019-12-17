@@ -251,6 +251,70 @@ DefEnvironment('{definition} OptionalKeyVals:omtext', \&definitionBody,
     return; },
   afterDigest => sub { AssignValue('defs', undef); return; });
 
+# Just to get things to compile -------------------------------------------------------------
+
+DefConstructor('\Defi OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+ .   "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
+ afterDigest => sub { defHelper(@_, 'defi'); },
+ alias=>'\defi');
+
+DefConstructor('\Defis OptionalKeyVals:DEF {} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+ .     "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='#2') cd='#theory'>#2s</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp></omdoc:ide></omdoc:idx>)",
+ afterDigest => sub { defHelper(@_, 'defi'); },
+ alias=>'\defi');
+
+DefConstructor('\Defii OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+ .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
+ .      "#2 #3"
+ .    "</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defii'); },
+       alias=>'\defii');
+
+DefConstructor('\Defiis OptionalKeyVals:DEF {}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+ .    "<omdoc:definiendum ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3)') cd='#theory'>"
+ .      "#2 #3s"
+ .    "</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defii'); },
+       alias=>'\defii');
+
+DefConstructor('\Defiii OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defiii'); },
+       alias=>'\defiii');
+
+DefConstructor('\Defiiis OptionalKeyVals:DEF {}{}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4)')>#2 #3 #4s</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defiii'); },
+       alias=>'\defiii');
+
+DefConstructor('\Defiv OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defiv'); },
+       alias=>'\defiv');
+
+DefConstructor('\Defivs OptionalKeyVals:DEF {}{}{}{} OptionalKeyVals:INDEX',
+ "?#defindex(<omdoc:idx><omdoc:idt>)"
+         . "<omdoc:definiendum cd='#theory' ?&GetKeyVal(#1,'name')(name='&GetKeyVal(#1,'name')')(name='&dashed(#2,#3,#4,#5)')>#2 #3 #4 #5s</omdoc:definiendum>"
+ ."?#defindex(</omdoc:idt><omdoc:ide index='default'><omdoc:idp>#2</omdoc:idp><omdoc:idp>#3</omdoc:idp><omdoc:idp>#4</omdoc:idp><omdoc:idp>#5</omdoc:idp></omdoc:ide></omdoc:idx>)",
+       afterDigest => sub { defHelper(@_, 'defiv'); },
+       alias=>'\defiv');
+
+# -------------------------------------------------------------------------------------------
+
 DefStatement('{notation} OptionalKeyVals:omtext',
   "<omdoc:definition "
  .   "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id').not')()"
@@ -373,7 +437,7 @@ DefConstructor('\adefiv OptionalKeyVals:DEF {}{}{}{}{} OptionalKeyVals:INDEX',
 DefConstructor('\inlineex OptionalKeyVals:omtext {}',
               "<ltx:text class='example'>#2</ltx:text>");
 DefEnvironment('{inlineExample} OptionalKeyVals:omtext',
-	       "<ltx:inline-para class='example'>\n #body\n</ltx:inline-para>");
+	       "<ltx:para class='example'>\n #body\n</ltx:para>");
 
 DefConstructor('\inlineass OptionalKeyVals:omtext {}',
               "<ltx:text "
@@ -381,10 +445,10 @@ DefConstructor('\inlineass OptionalKeyVals:omtext {}',
             .    "#2"
             . "</ltx:text>");
 DefEnvironment('{inlineAssertion} OptionalKeyVals:omtext',
-	       "<ltx:inline-para "
+	       "<ltx:p "
             .    "?&GetKeyVal(#1,'type')(class='&GetKeyVal(#1,'type') assertion')(class='assertion') >"
             .    "#body"
-            . "</ltx:inline-para>");
+            . "</ltx:p>");
 
 # =======================================================
 # 2.5 Symbols II:                                       #
