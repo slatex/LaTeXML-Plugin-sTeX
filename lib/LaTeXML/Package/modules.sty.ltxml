@@ -150,8 +150,8 @@ DefEnvironment('{module} OptionalKeyVals:Module',
          .   "#body"
          . "</omdoc:theory>)") : ("<ltx:inline-block class='omdoc_theory'"
          ."?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
-#         .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
-#         .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
+         .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
+         .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
          .   "?&defined(&GetKeyVal(#1,'state'))(<ltx:inline-block class='omdoc_meta' stex:property='smglom:state'>&GetKeyVal(#1,'state')</ltx:inline-block>)()"
          ."#body"
          ."</ltx:inline-block>")),
@@ -208,9 +208,9 @@ DefConstructor('\conceptdef OptionalKeyVals:symboldec {}',
       .  "?&GetKeyVal(#1,'id')(xml:id='&GetKeyVal(#1,'id')')"
       .                   "(xml:id='&makeNCName(&GetKeyVal(#1,'name')).def.sym')"
       .               "stex:name='#1'>"
-#      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
-#      .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
-#      .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
+      .  "?&GetKeyVal(#1,'title')(<dc:title>&GetKeyVal(#1,'title')</dc:title>)()"
+      .  "?&GetKeyVal(#1,'subject')(<dc:subject>&GetKeyVal(#1,'subject')</dc:subject>)()"
+      .  "?&GetKeyVal(#1,'description')(<dc:description>&GetKeyVal(#1,'description')</dc:description>)()"
       ."</ltx:inline-block>\n") );
 DefMacro('\DefMathOp OptionalKeyVals:symdef {}', sub {
   my($self,$keyval,$pres)=@_;
