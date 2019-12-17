@@ -37,6 +37,7 @@ DefKeyVal('mhview','fromrepos','Semiverbatim');
 DefKeyVal('mhview','torepos','Semiverbatim');
 DefKeyVal('mhview','frompath','Semiverbatim');
 DefKeyVal('mhview','topath','Semiverbatim');
+DefKeyVal('mhview','sigpath','Semiverbatim');
 DefKeyVal('mhview','ext','Semiverbatim');
 
 # =======================================================
@@ -55,6 +56,16 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my ($gullet, $keyvals, $from_arg, $to_arg) = @_;
   my $from = ToString(Digest($from_arg));
   my $to = ToString(Digest($to_arg));
+  my $id = ToString(GetKeyVal($keyvals, 'id'));
+  # if $from or $to contains doesn't contian '@' then
+  # we need to store the loading info
+  if ($from =~ /views/ && $to =~ /views/) {
+      $from = LookupValue($from);
+      $to = LookupValue($to);
+  } else {
+      AssignValue('views@' . $id . '@from' => $from, 'global');
+      AssignValue('views@' . $id . '@to' => $to, 'global');
+  }
   AssignValue(from_module => $from);
   AssignValue(to_module => $to);
   my $from_repos = ToString(GetKeyVal($keyvals,'fromrepos'));
@@ -67,6 +78,13 @@ DefMacroI(T_CS('\begin{mhview}'),'OptionalKeyVals:mhview {}{}', sub {
   my $current_repos = LookupValue('current_repos');
   if (!$from_repos) { $from_repos = $current_repos; }
   if (!$to_repos) { $to_repos = $current_repos; }
+  # Load the signature if the loading paths aren't provided
+  if (!$from_path || !$to_path) {
+      my $sig = substr($id, 0, index($id, '.'));
+      InputDefinitions($sig, type => 'tex', noltxml => 1);
+      $from_path = LookupValue('views@' . $sig . '@from');
+      $to_path = LookupValue('views@' . $sig . '@to');
+  }
   return (
     Tokenize("\\importMHmoduleI[repos=$from_repos,path=$from_path,ext=$ext]{$from}")->unlist,
     Tokenize("\\importMHmoduleI[repos=$to_repos,path=$to_path,ext=$ext]{$to}")->unlist,

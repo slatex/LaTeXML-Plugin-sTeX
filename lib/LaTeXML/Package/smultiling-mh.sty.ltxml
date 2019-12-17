@@ -73,14 +73,25 @@ DefEnvironment('{mhmodnl} OptionalKeyVals:mhmodnl Semiverbatim Semiverbatim',
     return; },
   afterDigest=>sub {
     module_afterDigest(@_); });
-RawTeX('
+RawTeX(<<'EoTeX');
 \newenvironment{mhviewsig}[4][]{\def\@test{#1}\ifx\@test\@empty%
-\begin{mhview}[id=#2,ext=tex]{#3}{#4}\else%
-\begin{mhview}[id=#2,#1,ext=tex]{#3}{#4}\fi}
+\begin{mhview}[id=#2,fromext=tex,toext=tex]{#3}{#4}\else%
+\begin{mhview}[id=#2,#1,fromext=tex,toext=tex]{#3}{#4}\fi%
+}
 {\end{mhview}}
-\newenvironment{mhviewnl}[5][]{\def\@test{#1}\ifx\@test\@empty%
-\begin{mhview}[id=#2.#3,ext=tex]{#4}{#5}\else%
-\begin{mhview}[id=#2.#3,#1,ext=tex]{#4}{#5}\fi}
+\addmetakey{mhview}{sigpath}
+\addmetakey{mhview}{sigrepos}
+\newenvironment{mhviewnl}[3][]{\def\@test{#1}%
+  \metasetkeys{mhview}{#1}%
+    \ifx\mhview@sigrepos\@empty%
+    \requiremodules{\MathHub{\mh@currentrepos/source/\mhview@sigpath.tex}}\else%
+    \requiremodules{\MathHub{\mhview@sigrepos/source/\mhview@sigpath.tex}}\fi%
+   if@langfiles
+  \ifx\@test\@empty%
+  \begin{mhview}[id=#2.#3,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\else%
+  \begin{mhview}[id=#2.#3,#1,fromext=tex,toext=tex]{views@#2@from}{views@#2@to}\fi%
+  }
 {\end{mhview}}
-');
+EoTeX
+    
 1;

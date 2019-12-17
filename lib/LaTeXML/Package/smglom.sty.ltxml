@@ -81,24 +81,24 @@ RawTeX('
 \newenvironment{gviewsig}[4][]{%
   \def\test{#1}%
   \ifx\@test\@empty%
-    \begin{mhviewsig}[frompath=#3,topath=#4]{#2}{#3}{#4}%
+    \begin{mhviewsig}[frompath=#3,topath=#4,fromext=tex,toext=tex]{#2}{#3}{#4}%
   \else%
-    \begin{mhviewsig}[frompath=#3,topath=#4,#1]{#2}{#3}{#4}%
+    \begin{mhviewsig}[frompath=#3,topath=#4,fromext=tex,toext=tex,#1]{#2}{#3}{#4}%
   \fi%
 }{%
   \end{mhviewsig}%
 }%
 
-\newenvironment{gviewnl}[5][]{%
+\newenvironment{gviewnl}[3][]{%
   \def\@test{#1}\ifx\@test\@empty%
-    \begin{mhviewnl}[frompath=#4,topath=#5]{#2}{#3}{#4}{#5}%
+    \begin{mhviewnl}[#2]{#2}{#3}%
   \else%
-    \begin{mhviewnl}[frompath=#4,topath=#5,#1]{#2}{#3}{#4}{#5}%
+    \begin{mhviewnl}[#2,#1]{#2}{#3}%
   \fi%
 }{%
   \end{mhviewnl}%
 }%
-       ');
+');
 DefConstructor('\gincludeview[]{}','');
 
 # =======================================================
