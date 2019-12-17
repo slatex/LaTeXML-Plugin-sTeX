@@ -22,6 +22,7 @@ use LaTeXML::Util::Pathname;
 # =======================================================
 DeclareOption('mh', sub { AssignValue ('@omtext' => 1,'global');
 PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
+DeclareOption('omdocmode', sub {AssignValue ('@omdocmode' => 1)});
 DeclareOption('noindex','');
 DeclareOption(undef,sub {PassOptions('modules','sty',ToString(Digest(T_CS('\CurrentOption')))); });
 ProcessOptions();
@@ -208,13 +209,19 @@ DefConstructor('\@ogre',"\x{2B3F}");
 
 # experimental: Declarations 
 DefConstructor('\vdec [] {}',
-     "<omdoc:declaration ?#1(for='#1')()>#2</omdoc:declaration>");
+     LookupValue('@omdocmode') ? "<omdoc:declaration ?#1(for='#1')()>#2</omdoc:declaration>" :
+       "<ltx:block class='omdoc_declaration' ?#1(stex:for='#1')()>#2</ltx:block>"
+     );
 DefConstructor('\vcond []{}',
 	       "<omdoc:identifiers ?#1(for='#1')()>#2</omdoc:identifiers>");
 DefConstructor('\vrest [] {}',
 	       "<omdoc:restriction ?#1(for='#1')()>#2</omdoc:restriction>");
 DefConstructor('\strucdec [] {}',
-   "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>");  
+   LookupValue('@omdocmode') ? "<omdoc:declaration role='structure' name='#1'>#2</omdoc:declaration>" :
+       "<ltx:block class='omdoc_declaration' stex:role='structure' stex:name='#1'>#2</ltx:block>"
+   );  
 DefConstructor('\impdec {}',
-   "<omdoc:declaration role='imports'>#1</omdoc:declaration>");  
+   LookupValue('@omdocmode') ? "<omdoc:declaration role='imports'>#1</omdoc:declaration>" :
+       "<ltx:block class='omdoc_declaration' stex:role='imports'>#1</ltx:block>"
+   );  
 1;

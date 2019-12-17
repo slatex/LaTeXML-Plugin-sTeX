@@ -17,6 +17,9 @@ use LaTeXML::Package;
 # we are running LaTeXML. 
 RawTeX('\newif\if@latexml\@latexmltrue');
 
+RegisterNamespace('stex',"http://kwarc.info/ns/sTeX");
+RegisterDocumentNamespace('stex',"http://kwarc.info/ns/sTeX");
+
 sub numberIt {
   my($document,$node,$whatsit)=@_;
   my(@parents)=$document->findnodes('ancestor::*[@xml:id]',$node);
@@ -41,11 +44,11 @@ sub numberIt {
   if ($locator) {
     # There is a BUG with namespace declarations (or am I using the API wrongly??) which
     # does not recognize the stex namespace. Hence, I need to redeclare it...
-    my $parent=$document->getNode;
-    if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
-      { # namespace not already declared?
-        $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-      }
+#    my $parent=$document->getNode;
+#    if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
+#      { # namespace not already declared?
+#        $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
+#      }
     $node->setAttribute('stex:srcref'=>$locator); }
   return; }
 
@@ -92,11 +95,11 @@ sub locateIt {
     else { Error("stex","locator",undef, "Trailer is garbled, expect nonsense in stex:srcref ..."); } }
   else { Error("stex","locator",undef, "Locator \"$locator\" is garbled, expect nonsense in stex:srcref ..."); }
 
-  my $parent = $document->getNode;
-  if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
-    { # namespace not already declared?
-      $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
-    }
+#  my $parent = $document->getNode;
+#  if(! defined $parent->lookupNamespacePrefix("http://kwarc.info/ns/sTeX"))
+#    { # namespace not already declared?
+#      $document->getDocument->documentElement->setNamespace("http://kwarc.info/ns/sTeX","stex",0);
+#    }
   $node->setAttribute('stex:srcref' => $locator);
   return;
 }
