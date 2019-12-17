@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  A RelaxNG schema for Open Mathematical documents (OMDoc 1.3) Module VIEW
+  original in  http://github.com/KWARC/OMDoc-1.3/schema/rnc
+  See the documentation and examples at http://www.omdoc.org
+  Copyright (c) 2015 Michael Kohlhase, released under the GNU Public License (GPL) 
+-->
+<grammar ns="http://omdoc.org/ns" xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="fromto.attrib">
+    <interleave>
+      <ref name="from.attrib"/>
+      <attribute name="to">
+        <ref name="omdocref"/>
+      </attribute>
+    </interleave>
+  </define>
+  <!-- attributes 'to' and 'from' are URIref -->
+  <define name="view.attribs">
+    <interleave>
+      <ref name="id.attribs"/>
+      <ref name="fromto.attrib"/>
+    </interleave>
+  </define>
+  <define name="view.model">
+    <interleave>
+      <ref name="metadata.class"/>
+      <ref name="omdoc.class"/>
+    </interleave>
+  </define>
+  <define name="view">
+    <element name="view">
+      <choice>
+        <ref name="tref"/>
+        <interleave>
+          <ref name="view.attribs"/>
+          <ref name="view.model"/>
+        </interleave>
+      </choice>
+    </element>
+  </define>
+  <define name="structure.attribs">
+    <interleave>
+      <ref name="id.attribs"/>
+      <ref name="from.attrib"/>
+      <optional>
+        <ref name="name.attrib"/>
+      </optional>
+    </interleave>
+  </define>
+  <define name="structure.model">
+    <interleave>
+      <ref name="metadata.class"/>
+      <ref name="omdoc.class"/>
+    </interleave>
+  </define>
+  <define name="structure">
+    <element name="structure">
+      <choice>
+        <ref name="tref"/>
+        <interleave>
+          <ref name="structure.attribs"/>
+          <ref name="structure.model"/>
+        </interleave>
+      </choice>
+    </element>
+  </define>
+  <define name="omdoc.class" combine="interleave">
+    <zeroOrMore>
+      <ref name="view"/>
+    </zeroOrMore>
+  </define>
+  <define name="intheory.class" combine="interleave">
+    <zeroOrMore>
+      <ref name="structure"/>
+    </zeroOrMore>
+  </define>
+</grammar>

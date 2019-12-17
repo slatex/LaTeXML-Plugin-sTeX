@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+# /=====================================================================\ #
+# |  maketest                                                           | #
+# | Tool to generate an integration test                                | #
+# |=====================================================================| #
+# | Part of BibTeXML                                                    | #
+# |---------------------------------------------------------------------| #
+# | Tom Wiesing <tom.wiesing@gmail.com>                                 | #
+# \=====================================================================/ #
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+use LaTeXML::Core;
+use LaTeXML::Util::STeXTest;
+
+# check that the filename exists
+my ($fn) = @ARGV;
+die("No filename specified ") unless $fn;
+die("can't find $fn") unless (-e $fn);
+
+# check if we are using .xml or .omdoc
+my $isXML = $fn =~ /\.xml$/;
+my $isOMDOC = $fn =~ /\.omdoc$/;
+die("Need to specify either a '.omdoc' or a '.xml'") unless ($isXML || $isOMDOC);
+
+# trim the extension, and find the paths
+$fn =~ s/\.(xml|omdoc)$//;
+my $tex = "$fn.tex";
+die("can't find $tex") unless (-e $tex);
+my $xml = "$fn.xml";
+my $omdoc = "$fn.omdoc";
+
+# build the xml (always)
+print "Converting '$tex' => '$xml' ...\n";
+make_latexml($tex, $xml, $fn);
+print "Wrote '$xml'.\n";
+
+# build the omdoc (if needed)
+if ($isOMDOC) {
+    print "Converting '$xml' => '$omdoc' ...\n";
+    make_latexmlpost($xml, $omdoc, $fn);
+    print "Wrote '$omdoc'.\n";
+}
+
+1;

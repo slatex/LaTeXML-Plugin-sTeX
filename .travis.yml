@@ -45,6 +45,7 @@ install:
 # Create the main file and run the tests
 script:
   - docker exec redshirt perl Makefile.PL
+  - docker exec redshirt make install # needed because of the LaTeXML Hack (reason for a fork? Either way this is a terrible idea)
   - docker exec redshirt make test
 
 # stop the testing container
