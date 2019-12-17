@@ -106,6 +106,20 @@ this plugin is well documented. The documentation has two components:
   beneficial and it is also important for you to understand how LaTeXML works if you want
   to change the behaviors of the bindings.
 
+### Testcases
+
+The testcases in this repository are a git-subrepo pointing to [https://github.com/slatex/sTeX-tests](https://github.com/slatex/sTeX-tests). 
+The test script is roughly adapted from LaTeXML, however in addition to testing pure `.xml` generation we also test post-processing if an appropriate `.omdoc` file is present. 
+
+To manually generate `.omdoc` or `.xml` for testcases, use e.g.
+
+```
+# to build only the '.xml' from the '.tex'
+./tools/maketest t/tests/omdoc/pathsuris/defpath.xml
+# to build the '.xml' and the '.omdoc' from the '.tex'
+./tools/maketest t/tests/omdoc/pathsuris/defpath.omdoc
+```
+
 ### Copyright
 Copyright (c) 2019 Michael Kohlhase
 The package is distributed under the terms of the LaTeX Project Public License (LPPL)
