@@ -148,11 +148,11 @@ DefEnvironment('{module} OptionalKeyVals:Module',
          .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
          .   "?&defined(&GetKeyVal(#1,'state'))(<omdoc:meta property='smglom:state'>&GetKeyVal(#1,'state')</omdoc:meta>)()"
          .   "#body"
-         . "</omdoc:theory>)") : ("<ltx:block class='omdoc_module'"
+         . "</omdoc:theory>)") : ("<ltx:block class='omdoc_theory'"
          ."?&defined(&GetKeyVal(#1,'id'))(xml:id='&GetKeyVal(#1,'id')')(xml:id='#id')>"
          .   "?&defined(&GetKeyVal(#1,'creators'))(<dc:creator>&GetKeyVal(#1,'creators')</dc:creator>)()"
          .   "?&defined(&GetKeyVal(#1,'contributors'))(<dc:contributor>&GetKeyVal(#1,'contributors')</dc:contributor>)()"
-         .   "?&defined(&GetKeyVal(#1,'state'))(<omdoc:meta property='smglom:state'>&GetKeyVal(#1,'state')</omdoc:meta>)()"
+         .   "?&defined(&GetKeyVal(#1,'state'))(<ltx:block class='omdoc_meta' stex:property='smglom:state'>&GetKeyVal(#1,'state')</ltx:block>)()"
          ."#body"
          ."</ltx:block>")),
  afterDigestBegin=>\&module_afterDigestBegin,
@@ -830,7 +830,8 @@ sub symdef_assemble_presentation {
 # =======================================================
 # 4. Namespaces
 # =======================================================
-DefConstructor('\namespace[]{}',"<omdoc:namespace ?#1( name='#1')() url='#2'/>");
+DefConstructor('\namespace[]{}',(LookupValue('@omdocmode') ? "<omdoc:namespace ?#1( name='#1')() url='#2'/>" : 
+  "<ltx:block class='omdoc_namespace' ?#1( name='#1')() stex:url='#2'/>"));
 
 # =======================================================
 # 5. Deprecated Stuff                                    #
