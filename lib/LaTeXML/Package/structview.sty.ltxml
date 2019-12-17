@@ -71,6 +71,17 @@ DefConstructor('\vassign{}{}',
      $whatsit->setProperty('from',LookupValue("from_module"));
      $whatsit->setProperty('to',LookupValue("to_module"));
    });
+   # TODOOO -------------------------------------------------------------------
+DefConstructor('\fassign{}{}{}',
+    "<omdoc:definition for='#from&qmark()#1' type='simple'>"
+   .  "<ltx:Math><ltx:XMath>#2</ltx:XMath></ltx:Math>"
+   ."</omdoc:definition>",
+   afterDigest=> sub {
+     my ($stomach,$whatsit) = @_;
+     $whatsit->setProperty('from',LookupValue("from_module"));
+     $whatsit->setProperty('to',LookupValue("to_module"));
+   });
+   # --------------------------------------------------------------------------
 DefConstructor('\tassign{}{}',
     "<omdoc:definition for='#from&qmark()#1' type='simple'>"
    .  "<om:OMOBJ><om:OMS cd='#to' name='#2'/></om:OMOBJ>"

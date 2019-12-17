@@ -624,7 +624,7 @@ DefMacro('\symvariant{}[]{}{}', sub {
 
   if (!$notation) {
     #No symdef found, raise error:
-    Error("No \\symdef found for \\$cs! Please define symbol prior to introducing variants!");
+    Error("No \\symdef found for \\$cs (with name=$name and nargs=$nargs)! Please define symbol prior to introducing variants!");
     return;
   }
   $document->setNode($notation);
